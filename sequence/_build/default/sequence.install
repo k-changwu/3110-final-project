@@ -1,0 +1,8 @@
+lib: [
+  "_build/install/default/lib/sequence/META"
+  "_build/install/default/lib/sequence/dune-package"
+  "_build/install/default/lib/sequence/opam"
+]
+bin: [
+  "_build/install/default/bin/sequence"
+]
