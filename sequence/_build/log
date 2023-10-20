@@ -1,4 +1,4 @@
-# dune build
+# dune init proj sequence
 # OCAMLPARAM: unset
 # Shared cache: disabled
 # Workspace root: /Users/hou/Desktop/3110-final-project/sequence
