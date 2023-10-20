@@ -1,2 +1,3 @@
 (library
- (name sequence))
+ (name Sequence)
+ (public_name Sequence))

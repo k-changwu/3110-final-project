@@ -1,8 +1,21 @@
 lib: [
-  "_build/install/default/lib/sequence/META"
-  "_build/install/default/lib/sequence/dune-package"
-  "_build/install/default/lib/sequence/opam"
+  "_build/install/default/lib/Sequence/META"
+  "_build/install/default/lib/Sequence/Sequence.a"
+  "_build/install/default/lib/Sequence/Sequence.cma"
+  "_build/install/default/lib/Sequence/Sequence.cmxa"
+  "_build/install/default/lib/Sequence/deck.ml"
+  "_build/install/default/lib/Sequence/deck.mli"
+  "_build/install/default/lib/Sequence/dune-package"
+  "_build/install/default/lib/Sequence/opam"
+  "_build/install/default/lib/Sequence/sequence.cmi"
+  "_build/install/default/lib/Sequence/sequence.cmt"
+  "_build/install/default/lib/Sequence/sequence.cmx"
+  "_build/install/default/lib/Sequence/sequence.ml"
+  "_build/install/default/lib/Sequence/sequence__Deck.cmi"
+  "_build/install/default/lib/Sequence/sequence__Deck.cmt"
+  "_build/install/default/lib/Sequence/sequence__Deck.cmti"
+  "_build/install/default/lib/Sequence/sequence__Deck.cmx"
 ]
-bin: [
-  "_build/install/default/bin/sequence"
+libexec: [
+  "_build/install/default/lib/Sequence/Sequence.cmxs"
 ]

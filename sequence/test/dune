@@ -1,2 +1,3 @@
-(test
- (name sequence))
+(executable
+ (name main)
+ (libraries Sequence ounit2))

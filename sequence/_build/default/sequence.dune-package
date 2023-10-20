@@ -1,4 +1,45 @@
 (lang dune 3.10)
-(name sequence)
-(sections (lib .) (bin ../../bin))
-(files (lib (META dune-package opam)) (bin (sequence)))
+(name Sequence)
+(sections (lib .) (libexec .))
+(files
+ (lib
+  (META
+   Sequence.a
+   Sequence.cma
+   Sequence.cmxa
+   deck.ml
+   deck.mli
+   dune-package
+   opam
+   sequence.cmi
+   sequence.cmt
+   sequence.cmx
+   sequence.ml
+   sequence__Deck.cmi
+   sequence__Deck.cmt
+   sequence__Deck.cmti
+   sequence__Deck.cmx))
+ (libexec (Sequence.cmxs)))
+(library
+ (name Sequence)
+ (kind normal)
+ (archives (byte Sequence.cma) (native Sequence.cmxa))
+ (plugins (byte Sequence.cma) (native Sequence.cmxs))
+ (native_archives Sequence.a)
+ (main_module_name Sequence)
+ (modes byte native)
+ (modules
+  (wrapped
+   (group
+    (alias
+     (obj_name sequence)
+     (visibility public)
+     (kind alias)
+     (source (path Sequence) (impl (path sequence.ml-gen))))
+    (name Sequence)
+    (modules
+     (module
+      (obj_name sequence__Deck)
+      (visibility public)
+      (source (path Deck) (intf (path deck.mli)) (impl (path deck.ml))))))
+   (wrapped true))))

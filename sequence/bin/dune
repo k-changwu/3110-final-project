@@ -1,4 +1,3 @@
 (executable
- (public_name sequence)
  (name main)
- (libraries sequence))
+ (libraries Sequence))
