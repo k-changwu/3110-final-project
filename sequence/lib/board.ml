@@ -18,6 +18,7 @@ module Board = struct
   (* returns new board with no chips placed *)
   let init : t =
     [
+      (* row 0 *)
       [
         { row = 0; col = 0; chip = Free; card = Free_space; id = None };
         {
@@ -77,6 +78,724 @@ module Board = struct
           id = Some 0;
         };
         { row = 0; col = 9; chip = Free; card = Free_space; id = None };
+      ];
+      (* row 1 *)
+      [
+        {
+          row = 1;
+          col = 0;
+          chip = None;
+          card = Reg_Card { suit = Spades; rank = Nine };
+          id = Some 1;
+        };
+        {
+          row = 1;
+          col = 1;
+          chip = None;
+          card = Reg_Card { suit = Hearts; rank = Ten };
+          id = Some 1;
+        };
+        {
+          row = 1;
+          col = 2;
+          chip = None;
+          card = Reg_Card { suit = Hearts; rank = Nine };
+          id = Some 1;
+        };
+        {
+          row = 1;
+          col = 3;
+          chip = None;
+          card = Reg_Card { suit = Hearts; rank = Eight };
+          id = Some 1;
+        };
+        {
+          row = 1;
+          col = 4;
+          chip = None;
+          card = Reg_Card { suit = Hearts; rank = Seven };
+          id = Some 1;
+        };
+        {
+          row = 1;
+          col = 5;
+          chip = None;
+          card = Reg_Card { suit = Hearts; rank = Six };
+          id = Some 1;
+        };
+        {
+          row = 1;
+          col = 6;
+          chip = None;
+          card = Reg_Card { suit = Hearts; rank = Five };
+          id = Some 1;
+        };
+        {
+          row = 1;
+          col = 7;
+          chip = None;
+          card = Reg_Card { suit = Hearts; rank = Four };
+          id = Some 1;
+        };
+        {
+          row = 1;
+          col = 8;
+          chip = None;
+          card = Reg_Card { suit = Hearts; rank = Three };
+          id = Some 1;
+        };
+        {
+          row = 1;
+          col = 9;
+          chip = None;
+          card = Reg_Card { suit = Diamonds; rank = Six };
+          id = Some 0;
+        };
+      ];
+      (* row 2 *)
+      [
+        {
+          row = 2;
+          col = 0;
+          chip = None;
+          card = Reg_Card { suit = Spades; rank = Eight };
+          id = Some 1;
+        };
+        {
+          row = 2;
+          col = 1;
+          chip = None;
+          card = Reg_Card { suit = Hearts; rank = Queen };
+          id = Some 1;
+        };
+        {
+          row = 2;
+          col = 2;
+          chip = None;
+          card = Reg_Card { suit = Diamonds; rank = Seven };
+          id = Some 1;
+        };
+        {
+          row = 2;
+          col = 3;
+          chip = None;
+          card = Reg_Card { suit = Diamonds; rank = Eight };
+          id = Some 1;
+        };
+        {
+          row = 2;
+          col = 4;
+          chip = None;
+          card = Reg_Card { suit = Diamonds; rank = Nine };
+          id = Some 1;
+        };
+        {
+          row = 2;
+          col = 5;
+          chip = None;
+          card = Reg_Card { suit = Diamonds; rank = Ten };
+          id = Some 1;
+        };
+        {
+          row = 2;
+          col = 6;
+          chip = None;
+          card = Reg_Card { suit = Diamonds; rank = Queen };
+          id = Some 1;
+        };
+        {
+          row = 2;
+          col = 7;
+          chip = None;
+          card = Reg_Card { suit = Diamonds; rank = King };
+          id = Some 1;
+        };
+        {
+          row = 2;
+          col = 8;
+          chip = None;
+          card = Reg_Card { suit = Hearts; rank = Two };
+          id = Some 1;
+        };
+        {
+          row = 2;
+          col = 9;
+          chip = None;
+          card = Reg_Card { suit = Diamonds; rank = Seven };
+          id = Some 0;
+        };
+      ];
+      (* row 3 *)
+      [
+        {
+          row = 3;
+          col = 0;
+          chip = None;
+          card = Reg_Card { suit = Spades; rank = Seven };
+          id = Some 1;
+        };
+        {
+          row = 3;
+          col = 1;
+          chip = None;
+          card = Reg_Card { suit = Hearts; rank = King };
+          id = Some 1;
+        };
+        {
+          row = 3;
+          col = 2;
+          chip = None;
+          card = Reg_Card { suit = Diamonds; rank = Six };
+          id = Some 1;
+        };
+        {
+          row = 3;
+          col = 3;
+          chip = None;
+          card = Reg_Card { suit = Clubs; rank = Two };
+          id = Some 0;
+        };
+        {
+          row = 3;
+          col = 4;
+          chip = None;
+          card = Reg_Card { suit = Hearts; rank = Ace };
+          id = Some 0;
+        };
+        {
+          row = 3;
+          col = 5;
+          chip = None;
+          card = Reg_Card { suit = Hearts; rank = King };
+          id = Some 0;
+        };
+        {
+          row = 3;
+          col = 6;
+          chip = None;
+          card = Reg_Card { suit = Hearts; rank = Queen };
+          id = Some 0;
+        };
+        {
+          row = 3;
+          col = 7;
+          chip = None;
+          card = Reg_Card { suit = Diamonds; rank = Ace };
+          id = Some 1;
+        };
+        {
+          row = 3;
+          col = 8;
+          chip = None;
+          card = Reg_Card { suit = Spades; rank = Two };
+          id = Some 0;
+        };
+        {
+          row = 3;
+          col = 9;
+          chip = None;
+          card = Reg_Card { suit = Diamonds; rank = Eight };
+          id = Some 0;
+        };
+      ];
+      (* row 4 *)
+      [
+        {
+          row = 4;
+          col = 0;
+          chip = None;
+          card = Reg_Card { suit = Spades; rank = Six };
+          id = Some 1;
+        };
+        {
+          row = 4;
+          col = 1;
+          chip = None;
+          card = Reg_Card { suit = Hearts; rank = Ace };
+          id = Some 1;
+        };
+        {
+          row = 4;
+          col = 2;
+          chip = None;
+          card = Reg_Card { suit = Diamonds; rank = Five };
+          id = Some 1;
+        };
+        {
+          row = 4;
+          col = 3;
+          chip = None;
+          card = Reg_Card { suit = Clubs; rank = Three };
+          id = Some 0;
+        };
+        {
+          row = 4;
+          col = 4;
+          chip = None;
+          card = Reg_Card { suit = Hearts; rank = Four };
+          id = Some 0;
+        };
+        {
+          row = 4;
+          col = 5;
+          chip = None;
+          card = Reg_Card { suit = Hearts; rank = Three };
+          id = Some 0;
+        };
+        {
+          row = 4;
+          col = 6;
+          chip = None;
+          card = Reg_Card { suit = Hearts; rank = Ten };
+          id = Some 0;
+        };
+        {
+          row = 4;
+          col = 7;
+          chip = None;
+          card = Reg_Card { suit = Clubs; rank = Ace };
+          id = Some 0;
+        };
+        {
+          row = 4;
+          col = 8;
+          chip = None;
+          card = Reg_Card { suit = Spades; rank = Three };
+          id = Some 0;
+        };
+        {
+          row = 4;
+          col = 9;
+          chip = None;
+          card = Reg_Card { suit = Diamonds; rank = Nine };
+          id = Some 0;
+        };
+      ];
+      (* row 5 *)
+      [
+        {
+          row = 5;
+          col = 0;
+          chip = None;
+          card = Reg_Card { suit = Spades; rank = Five };
+          id = Some 1;
+        };
+        {
+          row = 5;
+          col = 1;
+          chip = None;
+          card = Reg_Card { suit = Clubs; rank = Two };
+          id = Some 1;
+        };
+        {
+          row = 5;
+          col = 2;
+          chip = None;
+          card = Reg_Card { suit = Diamonds; rank = Four };
+          id = Some 1;
+        };
+        {
+          row = 5;
+          col = 3;
+          chip = None;
+          card = Reg_Card { suit = Clubs; rank = Four };
+          id = Some 0;
+        };
+        {
+          row = 5;
+          col = 4;
+          chip = None;
+          card = Reg_Card { suit = Hearts; rank = Five };
+          id = Some 0;
+        };
+        {
+          row = 5;
+          col = 5;
+          chip = None;
+          card = Reg_Card { suit = Hearts; rank = Two };
+          id = Some 0;
+        };
+        {
+          row = 5;
+          col = 6;
+          chip = None;
+          card = Reg_Card { suit = Hearts; rank = Nine };
+          id = Some 0;
+        };
+        {
+          row = 5;
+          col = 7;
+          chip = None;
+          card = Reg_Card { suit = Clubs; rank = King };
+          id = Some 0;
+        };
+        {
+          row = 5;
+          col = 8;
+          chip = None;
+          card = Reg_Card { suit = Spades; rank = Four };
+          id = Some 0;
+        };
+        {
+          row = 5;
+          col = 9;
+          chip = None;
+          card = Reg_Card { suit = Diamonds; rank = Ten };
+          id = Some 0;
+        };
+      ];
+      (* row 6 *)
+      [
+        {
+          row = 6;
+          col = 0;
+          chip = None;
+          card = Reg_Card { suit = Spades; rank = Four };
+          id = Some 1;
+        };
+        {
+          row = 6;
+          col = 1;
+          chip = None;
+          card = Reg_Card { suit = Clubs; rank = Three };
+          id = Some 1;
+        };
+        {
+          row = 6;
+          col = 2;
+          chip = None;
+          card = Reg_Card { suit = Diamonds; rank = Three };
+          id = Some 1;
+        };
+        {
+          row = 6;
+          col = 3;
+          chip = None;
+          card = Reg_Card { suit = Clubs; rank = Five };
+          id = Some 0;
+        };
+        {
+          row = 6;
+          col = 4;
+          chip = None;
+          card = Reg_Card { suit = Hearts; rank = Six };
+          id = Some 0;
+        };
+        {
+          row = 6;
+          col = 5;
+          chip = None;
+          card = Reg_Card { suit = Hearts; rank = Seven };
+          id = Some 0;
+        };
+        {
+          row = 6;
+          col = 6;
+          chip = None;
+          card = Reg_Card { suit = Hearts; rank = Eight };
+          id = Some 0;
+        };
+        {
+          row = 6;
+          col = 7;
+          chip = None;
+          card = Reg_Card { suit = Clubs; rank = Queen };
+          id = Some 0;
+        };
+        {
+          row = 6;
+          col = 8;
+          chip = None;
+          card = Reg_Card { suit = Spades; rank = Five };
+          id = Some 0;
+        };
+        {
+          row = 6;
+          col = 9;
+          chip = None;
+          card = Reg_Card { suit = Diamonds; rank = Queen };
+          id = Some 0;
+        };
+      ];
+      (* row 7 *)
+      [
+        {
+          row = 7;
+          col = 0;
+          chip = None;
+          card = Reg_Card { suit = Spades; rank = Three };
+          id = Some 1;
+        };
+        {
+          row = 7;
+          col = 1;
+          chip = None;
+          card = Reg_Card { suit = Clubs; rank = Four };
+          id = Some 1;
+        };
+        {
+          row = 7;
+          col = 2;
+          chip = None;
+          card = Reg_Card { suit = Diamonds; rank = Two };
+          id = Some 1;
+        };
+        {
+          row = 7;
+          col = 3;
+          chip = None;
+          card = Reg_Card { suit = Clubs; rank = Six };
+          id = Some 0;
+        };
+        {
+          row = 7;
+          col = 4;
+          chip = None;
+          card = Reg_Card { suit = Clubs; rank = Seven };
+          id = Some 0;
+        };
+        {
+          row = 7;
+          col = 5;
+          chip = None;
+          card = Reg_Card { suit = Clubs; rank = Eight };
+          id = Some 0;
+        };
+        {
+          row = 7;
+          col = 6;
+          chip = None;
+          card = Reg_Card { suit = Clubs; rank = Nine };
+          id = Some 0;
+        };
+        {
+          row = 7;
+          col = 7;
+          chip = None;
+          card = Reg_Card { suit = Clubs; rank = Ten };
+          id = Some 0;
+        };
+        {
+          row = 7;
+          col = 8;
+          chip = None;
+          card = Reg_Card { suit = Spades; rank = Six };
+          id = Some 0;
+        };
+        {
+          row = 7;
+          col = 9;
+          chip = None;
+          card = Reg_Card { suit = Diamonds; rank = King };
+          id = Some 0;
+        };
+      ];
+      (* row 7 *)
+      [
+        {
+          row = 7;
+          col = 0;
+          chip = None;
+          card = Reg_Card { suit = Spades; rank = Three };
+          id = Some 1;
+        };
+        {
+          row = 7;
+          col = 1;
+          chip = None;
+          card = Reg_Card { suit = Clubs; rank = Four };
+          id = Some 1;
+        };
+        {
+          row = 7;
+          col = 2;
+          chip = None;
+          card = Reg_Card { suit = Diamonds; rank = Two };
+          id = Some 1;
+        };
+        {
+          row = 7;
+          col = 3;
+          chip = None;
+          card = Reg_Card { suit = Clubs; rank = Six };
+          id = Some 0;
+        };
+        {
+          row = 7;
+          col = 4;
+          chip = None;
+          card = Reg_Card { suit = Clubs; rank = Seven };
+          id = Some 0;
+        };
+        {
+          row = 7;
+          col = 5;
+          chip = None;
+          card = Reg_Card { suit = Clubs; rank = Eight };
+          id = Some 0;
+        };
+        {
+          row = 7;
+          col = 6;
+          chip = None;
+          card = Reg_Card { suit = Clubs; rank = Nine };
+          id = Some 0;
+        };
+        {
+          row = 7;
+          col = 7;
+          chip = None;
+          card = Reg_Card { suit = Clubs; rank = Ten };
+          id = Some 0;
+        };
+        {
+          row = 7;
+          col = 8;
+          chip = None;
+          card = Reg_Card { suit = Spades; rank = Six };
+          id = Some 0;
+        };
+        {
+          row = 7;
+          col = 9;
+          chip = None;
+          card = Reg_Card { suit = Diamonds; rank = King };
+          id = Some 0;
+        };
+      ];
+      (* row 8 *)
+      [
+        {
+          row = 8;
+          col = 0;
+          chip = None;
+          card = Reg_Card { suit = Spades; rank = Two };
+          id = Some 1;
+        };
+        {
+          row = 8;
+          col = 1;
+          chip = None;
+          card = Reg_Card { suit = Clubs; rank = Five };
+          id = Some 1;
+        };
+        {
+          row = 8;
+          col = 2;
+          chip = None;
+          card = Reg_Card { suit = Spades; rank = Ace };
+          id = Some 0;
+        };
+        {
+          row = 8;
+          col = 3;
+          chip = None;
+          card = Reg_Card { suit = Spades; rank = King };
+          id = Some 0;
+        };
+        {
+          row = 8;
+          col = 4;
+          chip = None;
+          card = Reg_Card { suit = Spades; rank = Queen };
+          id = Some 0;
+        };
+        {
+          row = 8;
+          col = 5;
+          chip = None;
+          card = Reg_Card { suit = Spades; rank = Ten };
+          id = Some 0;
+        };
+        {
+          row = 8;
+          col = 6;
+          chip = None;
+          card = Reg_Card { suit = Spades; rank = Nine };
+          id = Some 0;
+        };
+        {
+          row = 8;
+          col = 7;
+          chip = None;
+          card = Reg_Card { suit = Spades; rank = Eight };
+          id = Some 0;
+        };
+        {
+          row = 8;
+          col = 8;
+          chip = None;
+          card = Reg_Card { suit = Spades; rank = Seven };
+          id = Some 0;
+        };
+        {
+          row = 8;
+          col = 9;
+          chip = None;
+          card = Reg_Card { suit = Diamonds; rank = Ace };
+          id = Some 0;
+        };
+      ];
+      (* row 0 *)
+      [
+        { row = 9; col = 0; chip = Free; card = Free_space; id = None };
+        {
+          row = 9;
+          col = 1;
+          chip = None;
+          card = Reg_Card { suit = Clubs; rank = Six };
+          id = Some 1;
+        };
+        {
+          row = 9;
+          col = 2;
+          chip = None;
+          card = Reg_Card { suit = Clubs; rank = Seven };
+          id = Some 1;
+        };
+        {
+          row = 9;
+          col = 3;
+          chip = None;
+          card = Reg_Card { suit = Clubs; rank = Eight };
+          id = Some 1;
+        };
+        {
+          row = 9;
+          col = 4;
+          chip = None;
+          card = Reg_Card { suit = Clubs; rank = Nine };
+          id = Some 1;
+        };
+        {
+          row = 9;
+          col = 5;
+          chip = None;
+          card = Reg_Card { suit = Clubs; rank = Ten };
+          id = Some 1;
+        };
+        {
+          row = 9;
+          col = 6;
+          chip = None;
+          card = Reg_Card { suit = Clubs; rank = Queen };
+          id = Some 1;
+        };
+        {
+          row = 9;
+          col = 7;
+          chip = None;
+          card = Reg_Card { suit = Clubs; rank = King };
+          id = Some 1;
+        };
+        {
+          row = 9;
+          col = 8;
+          chip = None;
+          card = Reg_Card { suit = Clubs; rank = Ace };
+          id = Some 1;
+        };
+        { row = 9; col = 9; chip = Free; card = Free_space; id = None };
       ];
     ]
 
