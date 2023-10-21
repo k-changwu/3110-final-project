@@ -19,7 +19,7 @@ module Board = struct
   let init : t =
     [
       [
-        { row = 0; col = 0; chip = Free; card = Free_space; id = None };
+        { row = 0; col = 0; chip = Free; card = Free_space; id = Some 1 };
         {
           row = 0;
           col = 1;
@@ -76,9 +76,22 @@ module Board = struct
           card = Reg_Card { suit = Diamonds; rank = Five };
           id = Some 0;
         };
-        { row = 0; col = 9; chip = Free; card = Free_space; id = None };
+        { row = 0; col = 9; chip = Free; card = Free_space; id = Some 1 };
       ];
     ]
+
+  let square_to_string square =
+    match square.card with
+    | Free_space -> "Free"
+    | Reg_Card card ->
+      Deck.to_string card ^ string_of_int (Some card.id)
+
+  (*prints the board*)
+  let print_board board =
+    List.iter (fun row -> 
+      List.iter (fun square -> Printf.printf "%s\t" (square_to_string square)) row;
+      print_endline ""
+    ) board
 
   (* modifies board [b] and places chip [ch] in the spot (r, c) *)
   let place_chip (ch : chip) (r : int) (c : int) (b : t) : unit =

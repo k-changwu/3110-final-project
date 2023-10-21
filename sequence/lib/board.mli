@@ -19,6 +19,10 @@ module type Board = sig
   (* returns new board with no chips placed *)
   val init : t
 
+  val square_to_string: chip -> string
+
+  val print_board: t -> string
+
   (* modifies board [b] and places chip [ch] in the spot (r, c) *)
   val place_chip : chip -> int -> int -> t -> unit
 
