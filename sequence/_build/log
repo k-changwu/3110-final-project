@@ -1,9 +1,10 @@
 # dune build
 # OCAMLPARAM: unset
 # Shared cache: disabled
-# Workspace root: /home/nyajaj/cs3110/3110-final-project/sequence
+# Workspace root:
+# /Users/katherinechang/Documents/3110/3110-final-project/sequence
 # Auto-detected concurrency: 8
-$ /home/nyajaj/.opam/cs3110-2023fa/bin/ocamlc.opt -config > /tmp/dune_7830d9_output
+$ /Users/katherinechang/.opam/cs3110-2023fa/bin/ocamlc.opt -config > /var/folders/bc/zv9k6c991gxfr4lxx4575y800000gn/T/dune_d2a500_output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -12,79 +13,84 @@ $ /home/nyajaj/.opam/cs3110-2023fa/bin/ocamlc.opt -config > /tmp/dune_7830d9_out
 #  ; for_host = None
 #  ; fdo_target_exe = None
 #  ; build_dir = In_build_dir "default"
-#  ; ocaml_bin = External "/home/nyajaj/.opam/cs3110-2023fa/bin"
-#  ; ocaml = Ok External "/home/nyajaj/.opam/cs3110-2023fa/bin/ocaml"
-#  ; ocamlc = External "/home/nyajaj/.opam/cs3110-2023fa/bin/ocamlc.opt"
-#  ; ocamlopt = Ok External "/home/nyajaj/.opam/cs3110-2023fa/bin/ocamlopt.opt"
-#  ; ocamldep = Ok External "/home/nyajaj/.opam/cs3110-2023fa/bin/ocamldep.opt"
+#  ; ocaml_bin = External "/Users/katherinechang/.opam/cs3110-2023fa/bin"
+#  ; ocaml = Ok External "/Users/katherinechang/.opam/cs3110-2023fa/bin/ocaml"
+#  ; ocamlc =
+#      External "/Users/katherinechang/.opam/cs3110-2023fa/bin/ocamlc.opt"
+#  ; ocamlopt =
+#      Ok External "/Users/katherinechang/.opam/cs3110-2023fa/bin/ocamlopt.opt"
+#  ; ocamldep =
+#      Ok External "/Users/katherinechang/.opam/cs3110-2023fa/bin/ocamldep.opt"
 #  ; ocamlmklib =
-#      Ok External "/home/nyajaj/.opam/cs3110-2023fa/bin/ocamlmklib.opt"
+#      Ok
+#        External
+#          "/Users/katherinechang/.opam/cs3110-2023fa/bin/ocamlmklib.opt"
 #  ; env =
 #      map
 #        { "DUNE_OCAML_HARDCODED" :
-#            "/home/nyajaj/.opam/cs3110-2023fa/lib/ocaml:/home/nyajaj/.opam/cs3110-2023fa/lib"
-#        ; "DUNE_OCAML_STDLIB" : "/home/nyajaj/.opam/cs3110-2023fa/lib/ocaml"
+#            "/Users/katherinechang/.opam/cs3110-2023fa/lib/ocaml:/Users/katherinechang/.opam/cs3110-2023fa/lib"
+#        ; "DUNE_OCAML_STDLIB" :
+#            "/Users/katherinechang/.opam/cs3110-2023fa/lib/ocaml"
 #        ; "DUNE_SOURCEROOT" :
-#            "/home/nyajaj/cs3110/3110-final-project/sequence"
+#            "/Users/katherinechang/Documents/3110/3110-final-project/sequence"
 #        ; "INSIDE_DUNE" :
-#            "/home/nyajaj/cs3110/3110-final-project/sequence/_build/default"
+#            "/Users/katherinechang/Documents/3110/3110-final-project/sequence/_build/default"
 #        ; "OCAMLFIND_IGNORE_DUPS_IN" :
-#            "/home/nyajaj/cs3110/3110-final-project/sequence/_build/install/default/lib"
+#            "/Users/katherinechang/Documents/3110/3110-final-project/sequence/_build/install/default/lib"
 #        ; "OCAMLPATH" :
-#            "/home/nyajaj/cs3110/3110-final-project/sequence/_build/install/default/lib"
+#            "/Users/katherinechang/Documents/3110/3110-final-project/sequence/_build/install/default/lib"
 #        ; "OCAMLTOP_INCLUDE_PATH" :
-#            "/home/nyajaj/cs3110/3110-final-project/sequence/_build/install/default/lib/toplevel"
+#            "/Users/katherinechang/Documents/3110/3110-final-project/sequence/_build/install/default/lib/toplevel"
 #        ; "OCAML_COLOR" : "always"
 #        ; "OPAMCOLOR" : "always"
 #        }
 #  ; findlib_paths =
-#      [ External "/home/nyajaj/.opam/cs3110-2023fa/lib/ocaml"
-#      ; External "/home/nyajaj/.opam/cs3110-2023fa/lib"
+#      [ External "/Users/katherinechang/.opam/cs3110-2023fa/lib/ocaml"
+#      ; External "/Users/katherinechang/.opam/cs3110-2023fa/lib"
 #      ]
 #  ; natdynlink_supported = true
 #  ; supports_shared_libraries = true
 #  ; ocaml_config =
 #      { version = "5.0.0"
 #      ; standard_library_default =
-#          "/home/nyajaj/.opam/cs3110-2023fa/lib/ocaml"
-#      ; standard_library = "/home/nyajaj/.opam/cs3110-2023fa/lib/ocaml"
+#          "/Users/katherinechang/.opam/cs3110-2023fa/lib/ocaml"
+#      ; standard_library =
+#          "/Users/katherinechang/.opam/cs3110-2023fa/lib/ocaml"
 #      ; standard_runtime = "the_standard_runtime_variable_was_deleted"
 #      ; ccomp_type = "cc"
-#      ; c_compiler = "gcc"
+#      ; c_compiler = "cc"
 #      ; ocamlc_cflags =
-#          [ "-O2"; "-fno-strict-aliasing"; "-fwrapv"; "-pthread"; "-fPIC" ]
+#          [ "-O2"; "-fno-strict-aliasing"; "-fwrapv"; "-pthread" ]
 #      ; ocamlc_cppflags = [ "-D_FILE_OFFSET_BITS=64" ]
 #      ; ocamlopt_cflags =
-#          [ "-O2"; "-fno-strict-aliasing"; "-fwrapv"; "-pthread"; "-fPIC" ]
+#          [ "-O2"; "-fno-strict-aliasing"; "-fwrapv"; "-pthread" ]
 #      ; ocamlopt_cppflags = [ "-D_FILE_OFFSET_BITS=64" ]
 #      ; bytecomp_c_compiler =
-#          [ "gcc"
+#          [ "cc"
 #          ; "-O2"
 #          ; "-fno-strict-aliasing"
 #          ; "-fwrapv"
 #          ; "-pthread"
-#          ; "-fPIC"
 #          ; "-D_FILE_OFFSET_BITS=64"
 #          ]
 #      ; bytecomp_c_libraries = [ "-lm"; "-lpthread" ]
 #      ; native_c_compiler =
-#          [ "gcc"
+#          [ "cc"
 #          ; "-O2"
 #          ; "-fno-strict-aliasing"
 #          ; "-fwrapv"
 #          ; "-pthread"
-#          ; "-fPIC"
 #          ; "-D_FILE_OFFSET_BITS=64"
 #          ]
 #      ; native_c_libraries = [ "-lm"; "-lpthread" ]
 #      ; native_pack_linker = [ "ld"; "-r"; "-o" ]
 #      ; cc_profile = []
-#      ; architecture = "amd64"
+#      ; architecture = "arm64"
 #      ; model = "default"
 #      ; int_size = 63
 #      ; word_size = 64
-#      ; system = "linux"
-#      ; asm = [ "as" ]
+#      ; system = "macosx"
+#      ; asm = [ "cc"; "-c"; "-Wno-trigraphs" ]
 #      ; asm_cfi_supported = true
 #      ; with_frame_pointers = false
 #      ; ext_exe = ""
@@ -95,8 +101,8 @@ $ /home/nyajaj/.opam/cs3110-2023fa/bin/ocamlc.opt -config > /tmp/dune_7830d9_out
 #      ; os_type = "Unix"
 #      ; default_executable_name = "a.out"
 #      ; systhread_supported = true
-#      ; host = "x86_64-pc-linux-gnu"
-#      ; target = "x86_64-pc-linux-gnu"
+#      ; host = "aarch64-apple-darwin22.3.0"
+#      ; target = "aarch64-apple-darwin22.3.0"
 #      ; profiling = false
 #      ; flambda = false
 #      ; spacetime = false
@@ -116,22 +122,15 @@ $ /home/nyajaj/.opam/cs3110-2023fa/bin/ocamlc.opt -config > /tmp/dune_7830d9_out
 #      ; windows_unicode = false
 #      }
 #  }
-$ (cd _build/default && /home/nyajaj/.opam/cs3110-2023fa/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -49 -nopervasives -nostdlib -g -bin-annot -I lib/.Sequence.objs/byte -no-alias-deps -opaque -o lib/.Sequence.objs/byte/sequence.cmo -c -impl lib/sequence.ml-gen)
-$ (cd _build/default && /home/nyajaj/.opam/cs3110-2023fa/bin/ocamldep.opt -modules -intf lib/board.mli) > _build/default/lib/.Sequence.objs/sequence__Board.intf.d
-> File "lib/board.mli", line 3, characters 10-11:
-> 3 | type card : card of Deck | Free_space
->               ^
-> Error: Syntax error
+$ (cd _build/default && /Users/katherinechang/.opam/cs3110-2023fa/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I lib/.Sequence.objs/byte -no-alias-deps -opaque -open Sequence -o lib/.Sequence.objs/byte/sequence__Board.cmi -c -intf lib/board.mli)
+> File "lib/board.mli", line 2, characters 0-9:
+> 2 | open Deck
+>     ^^^^^^^^^
+> Error (warning 33 [unused-open]): unused open Sequence.Deck.
 [2]
-$ (cd _build/default && /home/nyajaj/.opam/cs3110-2023fa/bin/ocamldep.opt -modules -impl lib/deck.ml) > _build/default/lib/.Sequence.objs/sequence__Deck.impl.d
-$ (cd _build/default && /home/nyajaj/.opam/cs3110-2023fa/bin/ocamldep.opt -modules -impl lib/board.ml) > _build/default/lib/.Sequence.objs/sequence__Board.impl.d
+$ (cd _build/default && /Users/katherinechang/.opam/cs3110-2023fa/bin/ocamldep.opt -modules -impl lib/board.ml) > _build/default/lib/.Sequence.objs/sequence__Board.impl.d
 > File "lib/board.ml", line 4, characters 19-20:
 > 4 | type card = Deck.t | Free_space
 >                        ^
 > Error: Syntax error
 [2]
-$ (cd _build/default && /home/nyajaj/.opam/cs3110-2023fa/bin/ocamldep.opt -modules -intf lib/deck.mli) > _build/default/lib/.Sequence.objs/sequence__Deck.intf.d
-$ (cd _build/default && /home/nyajaj/.opam/cs3110-2023fa/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I lib/.Sequence.objs/byte -no-alias-deps -opaque -open Sequence -o lib/.Sequence.objs/byte/sequence__Deck.cmi -c -intf lib/deck.mli)
-$ (cd _build/default && /home/nyajaj/.opam/cs3110-2023fa/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -49 -nopervasives -nostdlib -g -I lib/.Sequence.objs/byte -I lib/.Sequence.objs/native -intf-suffix .ml-gen -no-alias-deps -opaque -o lib/.Sequence.objs/native/sequence.cmx -c -impl lib/sequence.ml-gen)
-$ (cd _build/default && /home/nyajaj/.opam/cs3110-2023fa/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I lib/.Sequence.objs/byte -intf-suffix .ml -no-alias-deps -opaque -open Sequence -o lib/.Sequence.objs/byte/sequence__Deck.cmo -c -impl lib/deck.ml)
-$ (cd _build/default && /home/nyajaj/.opam/cs3110-2023fa/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I lib/.Sequence.objs/byte -I lib/.Sequence.objs/native -intf-suffix .ml -no-alias-deps -opaque -open Sequence -o lib/.Sequence.objs/native/sequence__Deck.cmx -c -impl lib/deck.ml)

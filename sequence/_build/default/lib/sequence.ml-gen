@@ -5,3 +5,6 @@ module Board = Sequence__Board
 
 (** @canonical Sequence.Deck *)
 module Deck = Sequence__Deck
+
+(** @canonical Sequence.Player *)
+module Player = Sequence__Player
