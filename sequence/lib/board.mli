@@ -29,6 +29,9 @@ module type Board = sig
      Free if its the free space, or the color of the player who hold the space*)
   val check_space : int -> int -> t -> chip
 
+  (* returns the card in space (r,c). returns Free_space if its the free space, or the color of the player who hold the space*)
+  val check_card : int -> int -> t -> card
+
   (* returns true if there is a win on the board*)
   val is_win : t -> bool
 
