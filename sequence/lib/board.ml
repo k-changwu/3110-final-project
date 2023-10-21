@@ -1,10 +1,10 @@
 (* Defines type for board *)
 open Deck
 
-type card = Deck.t | Free_space
+type card = Reg_Card of Deck.t | Free_space
 type chip = Red | Blue | Free | None
-type square = {row: int; col :int; mutable chip: Chip; card: Card}
-type t
+type square = { row : int; col : int; mutable chip : chip; card : card }
+type t = square list list
 
 (* returns new board with no chips placed *)
 let init : t = failwith "Unimplimented"
