@@ -84,7 +84,7 @@ module Board = struct
     match square.card with
     | Free_space -> "Free"
     | Reg_Card card ->
-      Deck.to_string card ^ string_of_int (Some card.id)
+      Deck.to_string card ^ string_of_int square.id
 
   (*prints the board*)
   let print_board board =
