@@ -1,5 +1,5 @@
 (lang dune 3.10)
-(name Sequence)
+(name sequence)
 (sections (lib .) (libexec .))
 (files
  (lib
@@ -7,6 +7,8 @@
    Sequence.a
    Sequence.cma
    Sequence.cmxa
+   board.ml
+   board.mli
    deck.ml
    deck.mli
    dune-package
@@ -15,13 +17,17 @@
    sequence.cmt
    sequence.cmx
    sequence.ml
+   sequence__Board.cmi
+   sequence__Board.cmt
+   sequence__Board.cmti
+   sequence__Board.cmx
    sequence__Deck.cmi
    sequence__Deck.cmt
    sequence__Deck.cmti
    sequence__Deck.cmx))
  (libexec (Sequence.cmxs)))
 (library
- (name Sequence)
+ (name sequence)
  (kind normal)
  (archives (byte Sequence.cma) (native Sequence.cmxa))
  (plugins (byte Sequence.cma) (native Sequence.cmxs))
@@ -38,6 +44,10 @@
      (source (path Sequence) (impl (path sequence.ml-gen))))
     (name Sequence)
     (modules
+     (module
+      (obj_name sequence__Board)
+      (visibility public)
+      (source (path Board) (intf (path board.mli)) (impl (path board.ml))))
      (module
       (obj_name sequence__Deck)
       (visibility public)
