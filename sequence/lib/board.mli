@@ -1,5 +1,6 @@
 (* Defines type for board *)
-  type card = Reg_Card of Deck.t | Free_space
+
+type card = Reg_Card of Deck.t | Free_space
 
   type chip = Red | Blue | Free | None
 
