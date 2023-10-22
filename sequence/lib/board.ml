@@ -1,8 +1,6 @@
-open Deck
 
 (* Defines type for board *)
-module Board = struct
-  type card = Reg_Card of Deck.t | Free_space
+ type card = Reg_Card of Deck.t | Free_space
   type chip = Red | Blue | Free | None
 
   type square = {
@@ -16,8 +14,7 @@ module Board = struct
   type t = square list list
 
   (* returns new board with no chips placed *)
-  let init : t =
-    [
+  let init : t = [
       (* row 0 *)
       [
         { row = 0; col = 0; chip = Free; card = Free_space; id = 0 };
@@ -799,6 +796,7 @@ module Board = struct
       ];
     ]
 
+
   let square_to_string square =
     match square.card with
     | Free_space -> "Free"
@@ -829,8 +827,6 @@ module Board = struct
     (List.nth (List.nth b r) c).card
 
   (* returns true if there is a win on the board*)
-  let is_win (b : t) : bool = failwith "Unimplimented"
+  (* let is_win (b : t) : bool = failwith "Unimplimented" *)
 
-  (* prints ascii version of the board *)
-  let print_board (b : t) : unit = failwith "Unimplimented"
-end
+

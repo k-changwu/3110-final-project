@@ -1,9 +1,9 @@
 # dune build
 # OCAMLPARAM: unset
 # Shared cache: disabled
-# Workspace root: /home/nyajaj/cs3110/3110-final-project/sequence
+# Workspace root: /Users/nicolesin/Documents/cs3110/3110-final-project/sequence
 # Auto-detected concurrency: 8
-$ /Users/katherinechang/.opam/cs3110-2023fa/bin/ocamlc.opt -config > /var/folders/bc/zv9k6c991gxfr4lxx4575y800000gn/T/dune_3e70b2_output
+$ /Users/nicolesin/.opam/cs3110-2023fa/bin/ocamlc.opt -config > /var/folders/0_/q2tbc7qn0c3grjb06vsch1qc0000gn/T/dune_e177df_output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -12,79 +12,80 @@ $ /Users/katherinechang/.opam/cs3110-2023fa/bin/ocamlc.opt -config > /var/folder
 #  ; for_host = None
 #  ; fdo_target_exe = None
 #  ; build_dir = In_build_dir "default"
-#  ; ocaml_bin = External "/home/nyajaj/.opam/cs3110-2023fa/bin"
-#  ; ocaml = Ok External "/home/nyajaj/.opam/cs3110-2023fa/bin/ocaml"
-#  ; ocamlc = External "/home/nyajaj/.opam/cs3110-2023fa/bin/ocamlc.opt"
-#  ; ocamlopt = Ok External "/home/nyajaj/.opam/cs3110-2023fa/bin/ocamlopt.opt"
-#  ; ocamldep = Ok External "/home/nyajaj/.opam/cs3110-2023fa/bin/ocamldep.opt"
+#  ; ocaml_bin = External "/Users/nicolesin/.opam/cs3110-2023fa/bin"
+#  ; ocaml = Ok External "/Users/nicolesin/.opam/cs3110-2023fa/bin/ocaml"
+#  ; ocamlc = External "/Users/nicolesin/.opam/cs3110-2023fa/bin/ocamlc.opt"
+#  ; ocamlopt =
+#      Ok External "/Users/nicolesin/.opam/cs3110-2023fa/bin/ocamlopt.opt"
+#  ; ocamldep =
+#      Ok External "/Users/nicolesin/.opam/cs3110-2023fa/bin/ocamldep.opt"
 #  ; ocamlmklib =
-#      Ok External "/home/nyajaj/.opam/cs3110-2023fa/bin/ocamlmklib.opt"
+#      Ok External "/Users/nicolesin/.opam/cs3110-2023fa/bin/ocamlmklib.opt"
 #  ; env =
 #      map
 #        { "DUNE_OCAML_HARDCODED" :
-#            "/home/nyajaj/.opam/cs3110-2023fa/lib/ocaml:/home/nyajaj/.opam/cs3110-2023fa/lib"
-#        ; "DUNE_OCAML_STDLIB" : "/home/nyajaj/.opam/cs3110-2023fa/lib/ocaml"
+#            "/Users/nicolesin/.opam/cs3110-2023fa/lib/ocaml:/Users/nicolesin/.opam/cs3110-2023fa/lib"
+#        ; "DUNE_OCAML_STDLIB" :
+#            "/Users/nicolesin/.opam/cs3110-2023fa/lib/ocaml"
 #        ; "DUNE_SOURCEROOT" :
-#            "/home/nyajaj/cs3110/3110-final-project/sequence"
+#            "/Users/nicolesin/Documents/cs3110/3110-final-project/sequence"
 #        ; "INSIDE_DUNE" :
-#            "/home/nyajaj/cs3110/3110-final-project/sequence/_build/default"
+#            "/Users/nicolesin/Documents/cs3110/3110-final-project/sequence/_build/default"
 #        ; "OCAMLFIND_IGNORE_DUPS_IN" :
-#            "/home/nyajaj/cs3110/3110-final-project/sequence/_build/install/default/lib"
+#            "/Users/nicolesin/Documents/cs3110/3110-final-project/sequence/_build/install/default/lib"
 #        ; "OCAMLPATH" :
-#            "/home/nyajaj/cs3110/3110-final-project/sequence/_build/install/default/lib"
+#            "/Users/nicolesin/Documents/cs3110/3110-final-project/sequence/_build/install/default/lib"
 #        ; "OCAMLTOP_INCLUDE_PATH" :
-#            "/home/nyajaj/cs3110/3110-final-project/sequence/_build/install/default/lib/toplevel"
+#            "/Users/nicolesin/Documents/cs3110/3110-final-project/sequence/_build/install/default/lib/toplevel"
 #        ; "OCAML_COLOR" : "always"
 #        ; "OPAMCOLOR" : "always"
 #        }
 #  ; findlib_paths =
-#      [ External "/home/nyajaj/.opam/cs3110-2023fa/lib/ocaml"
-#      ; External "/home/nyajaj/.opam/cs3110-2023fa/lib"
+#      [ External "/Users/nicolesin/.opam/cs3110-2023fa/lib/ocaml"
+#      ; External "/Users/nicolesin/.opam/cs3110-2023fa/lib"
 #      ]
 #  ; natdynlink_supported = true
 #  ; supports_shared_libraries = true
 #  ; ocaml_config =
 #      { version = "5.0.0"
 #      ; standard_library_default =
-#          "/home/nyajaj/.opam/cs3110-2023fa/lib/ocaml"
-#      ; standard_library = "/home/nyajaj/.opam/cs3110-2023fa/lib/ocaml"
+#          "/Users/nicolesin/.opam/cs3110-2023fa/lib/ocaml"
+#      ; standard_library = "/Users/nicolesin/.opam/cs3110-2023fa/lib/ocaml"
 #      ; standard_runtime = "the_standard_runtime_variable_was_deleted"
 #      ; ccomp_type = "cc"
-#      ; c_compiler = "gcc"
+#      ; c_compiler = "cc"
 #      ; ocamlc_cflags =
-#          [ "-O2"; "-fno-strict-aliasing"; "-fwrapv"; "-pthread"; "-fPIC" ]
+#          [ "-O2"; "-fno-strict-aliasing"; "-fwrapv"; "-pthread" ]
 #      ; ocamlc_cppflags = [ "-D_FILE_OFFSET_BITS=64" ]
 #      ; ocamlopt_cflags =
-#          [ "-O2"; "-fno-strict-aliasing"; "-fwrapv"; "-pthread"; "-fPIC" ]
+#          [ "-O2"; "-fno-strict-aliasing"; "-fwrapv"; "-pthread" ]
 #      ; ocamlopt_cppflags = [ "-D_FILE_OFFSET_BITS=64" ]
 #      ; bytecomp_c_compiler =
-#          [ "gcc"
+#          [ "cc"
 #          ; "-O2"
 #          ; "-fno-strict-aliasing"
 #          ; "-fwrapv"
 #          ; "-pthread"
-#          ; "-fPIC"
 #          ; "-D_FILE_OFFSET_BITS=64"
 #          ]
 #      ; bytecomp_c_libraries = [ "-lm"; "-lpthread" ]
 #      ; native_c_compiler =
-#          [ "gcc"
+#          [ "cc"
 #          ; "-O2"
 #          ; "-fno-strict-aliasing"
 #          ; "-fwrapv"
 #          ; "-pthread"
-#          ; "-fPIC"
 #          ; "-D_FILE_OFFSET_BITS=64"
 #          ]
 #      ; native_c_libraries = [ "-lm"; "-lpthread" ]
 #      ; native_pack_linker = [ "ld"; "-r"; "-o" ]
 #      ; cc_profile = []
-#      ; architecture = "amd64"
+#      ; architecture = "arm64"
 #      ; model = "default"
 #      ; int_size = 63
 #      ; word_size = 64
-#      ; system = "linux"
-#      ; asm = [ "as" ]
+#      ; system = "macosx"
+#      ; asm = [ "cc"; "-c"; "-Wno-trigraphs" ]
 #      ; asm_cfi_supported = true
 #      ; with_frame_pointers = false
 #      ; ext_exe = ""
@@ -95,8 +96,8 @@ $ /Users/katherinechang/.opam/cs3110-2023fa/bin/ocamlc.opt -config > /var/folder
 #      ; os_type = "Unix"
 #      ; default_executable_name = "a.out"
 #      ; systhread_supported = true
-#      ; host = "x86_64-pc-linux-gnu"
-#      ; target = "x86_64-pc-linux-gnu"
+#      ; host = "aarch64-apple-darwin21.6.0"
+#      ; target = "aarch64-apple-darwin21.6.0"
 #      ; profiling = false
 #      ; flambda = false
 #      ; spacetime = false
@@ -116,137 +117,3 @@ $ /Users/katherinechang/.opam/cs3110-2023fa/bin/ocamlc.opt -config > /var/folder
 #      ; windows_unicode = false
 #      }
 #  }
-<<<<<<< Updated upstream
-$ (cd _build/default && /home/nyajaj/.opam/cs3110-2023fa/bin/ocamldep.opt -modules -intf lib/board.mli) > _build/default/lib/.Sequence.objs/sequence__Board.intf.d
-$ (cd _build/default && /home/nyajaj/.opam/cs3110-2023fa/bin/ocamldep.opt -modules -impl lib/board.ml) > _build/default/lib/.Sequence.objs/sequence__Board.impl.d
-$ (cd _build/default && /home/nyajaj/.opam/cs3110-2023fa/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I lib/.Sequence.objs/byte -no-alias-deps -opaque -open Sequence -o lib/.Sequence.objs/byte/sequence__Board.cmi -c -intf lib/board.mli)
-> File "lib/board.mli", line 1, characters 0-9:
-> 1 | open Deck
-=======
-$ (cd _build/default && /Users/katherinechang/.opam/cs3110-2023fa/bin/ocamldep.opt -modules -intf lib/board.mli) > _build/default/lib/.Sequence.objs/sequence__Board.intf.d
-$ (cd _build/default && /Users/katherinechang/.opam/cs3110-2023fa/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I lib/.Sequence.objs/byte -no-alias-deps -opaque -open Sequence -o lib/.Sequence.objs/byte/sequence__Board.cmi -c -intf lib/board.mli)
-$ (cd _build/default && /Users/katherinechang/.opam/cs3110-2023fa/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I test/.main.eobjs/byte -I /Users/katherinechang/.opam/cs3110-2023fa/lib/ocaml/unix -I /Users/katherinechang/.opam/cs3110-2023fa/lib/ounit2 -I /Users/katherinechang/.opam/cs3110-2023fa/lib/ounit2/advanced -I /Users/katherinechang/.opam/cs3110-2023fa/lib/seq -I /Users/katherinechang/.opam/cs3110-2023fa/lib/stdlib-shims -I lib/.Sequence.objs/byte -no-alias-deps -opaque -o test/.main.eobjs/byte/dune__exe__Main.cmi -c -intf test/main.mli)
-$ (cd _build/default && /Users/katherinechang/.opam/cs3110-2023fa/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I lib/.Sequence.objs/byte -intf-suffix .ml -no-alias-deps -opaque -open Sequence -o lib/.Sequence.objs/byte/sequence__Board.cmo -c -impl lib/board.ml)
-> File "lib/board.ml", line 2, characters 0-9:
-> 2 | open Deck
->>>>>>> Stashed changes
->     ^^^^^^^^^
-> Error (warning 33 [unused-open]): unused open Sequence.Deck.
-> File "lib/board.ml", line 13, characters 16-18:
-> 13 | let place_chip (ch : chip) (r : int) (c : int) (b : t) : unit =
->                      ^^
-> Error (warning 27 [unused-var-strict]): unused variable ch.
-> File "lib/board.ml", line 13, characters 28-29:
-> 13 | let place_chip (ch : chip) (r : int) (c : int) (b : t) : unit =
->                                  ^
-> Error (warning 27 [unused-var-strict]): unused variable r.
-> File "lib/board.ml", line 13, characters 38-39:
-> 13 | let place_chip (ch : chip) (r : int) (c : int) (b : t) : unit =
->                                            ^
-> Error (warning 27 [unused-var-strict]): unused variable c.
-> File "lib/board.ml", line 13, characters 48-49:
-> 13 | let place_chip (ch : chip) (r : int) (c : int) (b : t) : unit =
->                                                      ^
-> Error (warning 27 [unused-var-strict]): unused variable b.
-> File "lib/board.ml", line 17, characters 17-18:
-> 17 | let remove_chip (r : int) (c : int) (b : t) : unit = failwith "Unimplimented"
->                       ^
-> Error (warning 27 [unused-var-strict]): unused variable r.
-> File "lib/board.ml", line 17, characters 27-28:
-> 17 | let remove_chip (r : int) (c : int) (b : t) : unit = failwith "Unimplimented"
->                                 ^
-> Error (warning 27 [unused-var-strict]): unused variable c.
-> File "lib/board.ml", line 17, characters 37-38:
-> 17 | let remove_chip (r : int) (c : int) (b : t) : unit = failwith "Unimplimented"
->                                           ^
-> Error (warning 27 [unused-var-strict]): unused variable b.
-> File "lib/board.ml", line 21, characters 17-18:
-> 21 | let check_space (r : int) (c : int) (b : t) : chip = failwith "Unimplimented"
->                       ^
-> Error (warning 27 [unused-var-strict]): unused variable r.
-> File "lib/board.ml", line 21, characters 27-28:
-> 21 | let check_space (r : int) (c : int) (b : t) : chip = failwith "Unimplimented"
->                                 ^
-> Error (warning 27 [unused-var-strict]): unused variable c.
-> File "lib/board.ml", line 21, characters 37-38:
-> 21 | let check_space (r : int) (c : int) (b : t) : chip = failwith "Unimplimented"
->                                           ^
-> Error (warning 27 [unused-var-strict]): unused variable b.
-> File "lib/board.ml", line 24, characters 12-13:
-> 24 | let is_win (b : t) : bool = failwith "Unimplimented"
->                  ^
-> Error (warning 27 [unused-var-strict]): unused variable b.
-> File "lib/board.ml", line 27, characters 17-18:
-> 27 | let print_board (b : t) : unit = failwith "Unimplimented"
->                       ^
-> Error (warning 27 [unused-var-strict]): unused variable b.
-[2]
-<<<<<<< Updated upstream
-=======
-$ (cd _build/default && /Users/katherinechang/.opam/cs3110-2023fa/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I bin/.main.eobjs/byte -I lib/.Sequence.objs/byte -no-alias-deps -opaque -o bin/.main.eobjs/byte/dune__exe__Main.cmi -c -intf bin/main.mli)
-$ (cd _build/default && /Users/katherinechang/.opam/cs3110-2023fa/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I bin/.main.eobjs/byte -I bin/.main.eobjs/native -I lib/.Sequence.objs/byte -I lib/.Sequence.objs/native -intf-suffix .ml -no-alias-deps -opaque -o bin/.main.eobjs/native/dune__exe__Main.cmx -c -impl bin/main.ml)
-$ (cd _build/default && /Users/katherinechang/.opam/cs3110-2023fa/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I test/.main.eobjs/byte -I test/.main.eobjs/native -I /Users/katherinechang/.opam/cs3110-2023fa/lib/ocaml/unix -I /Users/katherinechang/.opam/cs3110-2023fa/lib/ounit2 -I /Users/katherinechang/.opam/cs3110-2023fa/lib/ounit2/advanced -I /Users/katherinechang/.opam/cs3110-2023fa/lib/seq -I /Users/katherinechang/.opam/cs3110-2023fa/lib/stdlib-shims -I lib/.Sequence.objs/byte -I lib/.Sequence.objs/native -intf-suffix .ml -no-alias-deps -opaque -o test/.main.eobjs/native/dune__exe__Main.cmx -c -impl test/main.ml)
-> File "test/main.ml", line 1, characters 0-11:
-> 1 | open OUnit2
->     ^^^^^^^^^^^
-> Error (warning 33 [unused-open]): unused open OUnit2.
-> File "test/main.ml", line 2, characters 0-13:
-> 2 | open Sequence
->     ^^^^^^^^^^^^^
-> Error (warning 33 [unused-open]): unused open Sequence.
-[2]
-$ (cd _build/default && /Users/katherinechang/.opam/cs3110-2023fa/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I lib/.Sequence.objs/byte -I lib/.Sequence.objs/native -intf-suffix .ml -no-alias-deps -opaque -open Sequence -o lib/.Sequence.objs/native/sequence__Board.cmx -c -impl lib/board.ml)
-> File "lib/board.ml", line 2, characters 0-9:
-> 2 | open Deck
->     ^^^^^^^^^
-> Error (warning 33 [unused-open]): unused open Sequence.Deck.
-> File "lib/board.ml", line 13, characters 16-18:
-> 13 | let place_chip (ch : chip) (r : int) (c : int) (b : t) : unit =
->                      ^^
-> Error (warning 27 [unused-var-strict]): unused variable ch.
-> File "lib/board.ml", line 13, characters 28-29:
-> 13 | let place_chip (ch : chip) (r : int) (c : int) (b : t) : unit =
->                                  ^
-> Error (warning 27 [unused-var-strict]): unused variable r.
-> File "lib/board.ml", line 13, characters 38-39:
-> 13 | let place_chip (ch : chip) (r : int) (c : int) (b : t) : unit =
->                                            ^
-> Error (warning 27 [unused-var-strict]): unused variable c.
-> File "lib/board.ml", line 13, characters 48-49:
-> 13 | let place_chip (ch : chip) (r : int) (c : int) (b : t) : unit =
->                                                      ^
-> Error (warning 27 [unused-var-strict]): unused variable b.
-> File "lib/board.ml", line 17, characters 17-18:
-> 17 | let remove_chip (r : int) (c : int) (b : t) : unit = failwith "Unimplimented"
->                       ^
-> Error (warning 27 [unused-var-strict]): unused variable r.
-> File "lib/board.ml", line 17, characters 27-28:
-> 17 | let remove_chip (r : int) (c : int) (b : t) : unit = failwith "Unimplimented"
->                                 ^
-> Error (warning 27 [unused-var-strict]): unused variable c.
-> File "lib/board.ml", line 17, characters 37-38:
-> 17 | let remove_chip (r : int) (c : int) (b : t) : unit = failwith "Unimplimented"
->                                           ^
-> Error (warning 27 [unused-var-strict]): unused variable b.
-> File "lib/board.ml", line 21, characters 17-18:
-> 21 | let check_space (r : int) (c : int) (b : t) : chip = failwith "Unimplimented"
->                       ^
-> Error (warning 27 [unused-var-strict]): unused variable r.
-> File "lib/board.ml", line 21, characters 27-28:
-> 21 | let check_space (r : int) (c : int) (b : t) : chip = failwith "Unimplimented"
->                                 ^
-> Error (warning 27 [unused-var-strict]): unused variable c.
-> File "lib/board.ml", line 21, characters 37-38:
-> 21 | let check_space (r : int) (c : int) (b : t) : chip = failwith "Unimplimented"
->                                           ^
-> Error (warning 27 [unused-var-strict]): unused variable b.
-> File "lib/board.ml", line 24, characters 12-13:
-> 24 | let is_win (b : t) : bool = failwith "Unimplimented"
->                  ^
-> Error (warning 27 [unused-var-strict]): unused variable b.
-> File "lib/board.ml", line 27, characters 17-18:
-> 27 | let print_board (b : t) : unit = failwith "Unimplimented"
->                       ^
-> Error (warning 27 [unused-var-strict]): unused variable b.
-[2]
->>>>>>> Stashed changes

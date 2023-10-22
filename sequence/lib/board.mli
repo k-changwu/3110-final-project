@@ -1,8 +1,6 @@
-open Deck
-
 (* Defines type for board *)
-module type Board = sig
   type card = Reg_Card of Deck.t | Free_space
+
   type chip = Red | Blue | Free | None
 
   type square = {
@@ -19,9 +17,7 @@ module type Board = sig
   (* returns new board with no chips placed *)
   val init : t
 
-  val square_to_string: chip -> string
-
-  val print_board: t -> string
+  val square_to_string: square -> string
 
   (* modifies board [b] and places chip [ch] in the spot (r, c) *)
   val place_chip : chip -> int -> int -> t -> unit
@@ -37,8 +33,7 @@ module type Board = sig
   val check_card : int -> int -> t -> card
 
   (* returns true if there is a win on the board*)
-  val is_win : t -> bool
+  (* val is_win : t -> bool *)
 
   (* prints ascii version of the board *)
-  val print_board : t -> unit
-end
+  val print_board : t -> unit 
