@@ -1,15 +1,16 @@
-1. cd lib (cd into the lib directory inside sequence folder)
+1. cd sequence (cd in to the sequence directory inside 3110 final project folder)
+2. cd lib (cd into the lib directory inside sequence folder)
 Run the next instructions inside the terminal. You should be in the lib directory.
-2. ocamlc -c deck.mli   
-3. ocamlc -c board.mli 
-4. ocamlc -c deck.ml
-5. ocamlc -c board.ml
-6. ocamlc -c -I . deck.cmo board.ml
-7. utop 
+3. ocamlc -c deck.mli   
+4. ocamlc -c board.mli 
+5. ocamlc -c deck.ml
+6. ocamlc -c board.ml
+7. ocamlc -c -I . deck.cmo board.ml
+8. utop 
 Now you should have entered utop. Run the following commands inside utop. Include the #
-8. #load "deck.cmo";;
-9. #load "board.cmo";;
-10. let n = Build.init;;
-11. Board.print_board n;;
+9. #load "deck.cmo";;
+10. #load "board.cmo";;
+11. let n = Build.init;;
+12. Board.print_board n;;
 The 10x10 Game Board should have printed.
 

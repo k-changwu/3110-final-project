@@ -796,7 +796,7 @@
       ];
     ]
 
-
+(*prints the to_string representation of each card*)
   let square_to_string square =
     match square.card with
     | Free_space -> "Free"
