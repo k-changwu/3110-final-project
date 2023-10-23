@@ -1,6 +1,0 @@
-description = ""
-requires = ""
-archive(byte) = "Sequence.cma"
-archive(native) = "Sequence.cmxa"
-plugin(byte) = "Sequence.cma"
-plugin(native) = "Sequence.cmxs"
