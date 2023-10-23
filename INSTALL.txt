@@ -10,7 +10,7 @@ Run the next instructions inside the terminal. You should be in the lib director
 Now you should have entered utop. Run the following commands inside utop. Include the #
 9. #load "deck.cmo";;
 10. #load "board.cmo";;
-11. let n = Build.init;;
+11. let n = Board.init;;
 12. Board.print_board n;;
 The 10x10 Game Board should have printed.
 
