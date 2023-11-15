@@ -829,17 +829,24 @@ let update_square ch c id square =
 let place_chip (ch : chip) (c : card) (id : int) (b : t) : unit =
   List.iter (List.iter (update_square ch c id)) b
 
-(* modifies board [b] and removes any chip in the spot (r, c) *)
+(* modifies board [b] and removes any chip in the square with card [c] and id
+   [i] *)
 let remove_chip (c : card) (id : int) (b : t) : unit =
   List.iter (List.iter (update_square None c id)) b
 
-(* returns the chip in space (r,c). Returns None if its empty, Free if its the
-   free space, or the color of the player who hold the space*)
-let check_space (r : int) (c : int) (b : t) : chip =
-  (List.nth (List.nth b r) c).chip
+(* returns the chip in square with card [c] and id [i]. Returns None if its
+   empty, Free if its the free space, or the color of the player who hold the
+   space*)
+let check_space (c : card) (id : int) (b : t) : chip =
+  let rec find_chip s =
+    match s with
+    | [] -> None
+    | h :: t -> if h.card = c && h.id = id then h.chip else find_chip t
+  in
+  find_chip (List.flatten b)
 
-let check_card (r : int) (c : int) (b : t) : card =
-  (List.nth (List.nth b r) c).card
+(* let check_card (r : int) (c : int) (b : t) : card = (List.nth (List.nth b r)
+   c).card *)
 
 (* returns true if there is a win on the board*)
 (* let is_win (b : t) : bool = failwith "Unimplimented" *)
