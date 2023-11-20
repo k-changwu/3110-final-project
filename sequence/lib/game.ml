@@ -7,7 +7,10 @@ type t = {
   mutable current_card : Deck.t; (* current card to play *)
 }
 
-type result = Ongoing | Won of int | Draw
+type result =
+  | Ongoing
+  | Won of int
+  | Draw
 
 let start () =
   let deck_shuffled = Deck.full_deck () |> Deck.shuffle in
@@ -34,3 +37,7 @@ let draw_card game =
       game.deck <- t;
       game.current_card <- h;
       Some h
+
+let play_turn = failwith "unimp"
+let check_game_over = failwith "unimp"
+let current_card = failwith "unimp"

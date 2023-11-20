@@ -1,3 +1,4 @@
 (library
  (name Sequence)
- (public_name sequence))
+ (public_name sequence)
+ (libraries str unix yojson))
