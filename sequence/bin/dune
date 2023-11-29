@@ -1,3 +1,3 @@
 (executable
  (name main)
- (libraries sequence))
+ (libraries yojson sequence))
