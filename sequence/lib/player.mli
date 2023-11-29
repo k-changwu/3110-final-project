@@ -10,8 +10,9 @@ val deal_cards : t -> Deck.t list -> t
 val get_hand : t -> Deck.t list
 
 (* Play a card from the player's hand. *)
-val play_card : t -> Deck.t -> t
+val play_card : t -> Deck.t -> t option
+val has_card : t -> Deck.t -> bool
+val get_id : t -> int
 
-val has_card : player -> card -> bool 
-
-val get_id : player -> int
+(* Adds a card to a playere's hand *)
+val add_card : t -> Deck.t -> t

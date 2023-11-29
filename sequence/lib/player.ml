@@ -32,13 +32,19 @@ let get_hand player = player.hand
 (* play_card function simulates a player playing a card from their hand. It
    takes a player and the card to be played and returns a new player with the
    same ID and a hand that no longer contains the played card. *)
-let play_card player card =
-  { player with hand = List.filter (fun c -> c <> card) player.hand }
 
-(* has_card function checks if the card a player wants to play exists in their deck *) 
-let has_card player card = 
-   List.exists (fun card -> card = target_card) player.hand
-   
+(* has_card function checks if the card a player wants to play exists in their
+   deck *)
+let has_card player target_card =
+  List.exists (fun card -> card = target_card) player.hand
+
+let play_card player card =
+  if has_card player card then
+    Some { player with hand = List.filter (fun c -> c <> card) player.hand }
+  else None
+
 (* get_id function returns the player's id *)
-let get_id player = 
-   player.id
+let get_id player = player.id
+
+(* add_card adds a card to a player's hand *)
+let add_card player card = { player with hand = card :: player.hand }
