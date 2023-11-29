@@ -24,7 +24,7 @@ type t = square list list
 
 (* returns new board with no chips placed *)
 let init : t =
-  let file_init = "data" ^ Filename.dir_sep ^ "board.txt" in
+  let file_init = "board.txt" in
   let str_init = file_init |> In_channel.open_text |> In_channel.input_all in
   let json = Yojson.Basic.from_string str_init in
   let rows =
