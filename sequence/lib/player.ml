@@ -1,4 +1,5 @@
 open Board
+open Deck
 
 type t = {
   id : int;
@@ -33,3 +34,11 @@ let get_hand player = player.hand
    same ID and a hand that no longer contains the played card. *)
 let play_card player card =
   { player with hand = List.filter (fun c -> c <> card) player.hand }
+
+(* has_card function checks if the card a player wants to play exists in their deck *) 
+let has_card player card = 
+   List.exists (fun card -> card = target_card) player.hand
+   
+(* get_id function returns the player's id *)
+let get_id player = 
+   player.id

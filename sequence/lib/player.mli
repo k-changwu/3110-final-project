@@ -11,3 +11,7 @@ val get_hand : t -> Deck.t list
 
 (* Play a card from the player's hand. *)
 val play_card : t -> Deck.t -> t
+
+val has_card : player -> card -> bool 
+
+val get_id : player -> int

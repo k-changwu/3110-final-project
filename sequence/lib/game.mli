@@ -1,4 +1,5 @@
 (* game.mli *)
+
 type t
 
 (* Represents the result of a game, whether it's ongoing, won, or a draw. *)
