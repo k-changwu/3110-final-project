@@ -14,3 +14,15 @@ Now you should have entered utop. Run the following commands inside utop. Includ
 12. Board.print_board n;;
 The 10x10 Game Board should have printed.
 
+
+NEW INSTRUCTIONS 
+ocamlc -c deck.mli
+ocamlc -c board.mli
+ocamlc -c deck.ml
+ocamlfind ocamlc -package yojson -linkpkg -c board.ml
+utop
+#require "yojson";;
+#load "deck.cmo";;
+#load "board.cmo";;
+let n = Board.init;;
+Board.print_board n;;
