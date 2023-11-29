@@ -17,6 +17,8 @@ default: build
 build:
 	dune build
 
+doc:
+	dune build @doc
 test:
 	OCAMLRUNPARAM=b dune exec test/main.exe
 
