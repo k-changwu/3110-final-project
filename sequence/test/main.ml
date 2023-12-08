@@ -85,7 +85,6 @@ let deck_tests =
       assert_equal "2 H" (to_string (card_of_string "2H"));
       assert_equal "10 D" (to_string (card_of_string "10D"));
       assert_equal "J S" (to_string (card_of_string "JS")) );
-    "";
   ]
 
 let suite =
