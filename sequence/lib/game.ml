@@ -130,5 +130,5 @@ let play_card game card id =
       None
 
 let play_turn = failwith "unimp"
-let check_game_over = board.is_win game.board
+let check_game_over g = if Board.is_win g.board then Won 0 else Ongoing
 let current_card = failwith "unimp"
