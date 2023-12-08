@@ -1,4 +1,4 @@
-(executable
+(test
  (name main)
  (libraries Sequence ounit2)
  (flags :standard -warn-error -A))

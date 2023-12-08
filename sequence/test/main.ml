@@ -3,7 +3,7 @@ open Sequence
 open Player
 open Deck
 
-let pp_string s = "\"" ^ s ^ "\""
+(* let pp_string s = "\"" ^ s ^ "\""
 
 let pp_list pp_elt lst =
   let pp_elts lst =
@@ -16,12 +16,73 @@ let pp_list pp_elt lst =
     in
     loop 0 "" lst
   in
-  "[" ^ pp_elts lst ^ "]"
+  "[" ^ pp_elts lst ^ "]" *)
 
 let p1 = Player.create 1
-(* let p2 = Player.create 2 *)
+let p2 = Player.create 2
 
-let player_tests = [ ("create test" >:: fun _ -> assert_equal 1 (get_id p1)) ]
+let player_tests = [ 
+  ("create test" >:: (fun _ -> 
+    assert_equal 1 (get_id p1)) 
+  );
+  "deal_card test empty initial hand" >:: (fun _ -> 
+    let initial_hand = Player.get_hand p1 in 
+    let cards_to_deal = Deck.full_deck () in 
+    let player_after = Player.deal_cards p1 cards_to_deal in 
+    let new_hand = Player.get_hand player_after in 
+    assert_equal cards_to_deal new_hand
+  );
+  "get_hand test" >:: (fun _ ->
+    let cards_to_deal = [
+      { suit = Clubs; rank = Three }; 
+      { suit = Spades; rank = Five }
+    ] in
+    let player_after = Player.deal_cards p2 cards_to_deal in
+    let new_hand = Player.get_hand player_after in
+    assert_equal cards_to_deal new_hand;
+  );
+  "has_card test card exists" >:: (fun _ ->
+    let initial_hand = [
+      { suit = Hearts; rank = Two }; 
+      { suit = Diamonds; rank = Jack }
+    ] in
+    let player = Player.create 1 |> Player.deal_cards initial_hand in
+    let target_card = { suit = Diamonds; rank = Jack } in
+    assert_equal true (Player.has_card player target_card);
+  );
+  "has_card test card does not exist" >:: (fun _ ->
+    let initial_hand = [
+      { suit = Hearts; rank = Two }; 
+      { suit = Diamonds; rank = Jack }
+    ] in
+    let player = Player.create 1 |> Player.deal_cards initial_hand in
+    let target_card = { suit = Spades; rank = Seven } in
+    assert_equal false (Player.has_card player target_card);
+  );
+  "play_card test valid card" >:: (fun _ ->
+    let initial_hand = [
+      { suit = Hearts; rank = Two }; 
+      { suit = Diamonds; rank = Jack }
+    ] in
+    let player = Player.create 1 |> Player.deal_cards initial_hand in
+    let card_to_play = { suit = Hearts; rank = Two } in
+    let player_after = Player.play_card player card_to_play in
+    let new_hand = Player.get_hand player_after in
+    assert_equal [ { suit = Diamonds; rank = Jack } ] new_hand;
+  )
+  "play_card test invalid card" >:: (fun _ ->
+    let initial_hand = [
+      { suit = Hearts; rank = Two }; 
+      { suit = Diamonds; rank = Jack }
+    ] in
+    let player = Player.create 1 |> Player.deal_cards initial_hand in
+    let card_to_play = { suit = Clubs; rank = Seven } in
+    let player_after = Player.play_card player card_to_play in
+    assert_equal None player_after;
+  )
+  
+
+  ]
 
 let deck_tests =
   [
