@@ -99,22 +99,6 @@ let init : t =
   in
   rows
 
-(* let init : t = let file_init = "board.txt" in let str_init = file_init |>
-   In_channel.open_text |> In_channel.input_all in let json =
-   Yojson.Basic.from_string str_init in let rows = json |>
-   Yojson.Basic.Util.to_list |> List.map (fun row -> row |>
-   Yojson.Basic.Util.to_list |> List.map (fun square_json -> let row =
-   square_json |> Yojson.Basic.Util.member "row" |> Yojson.Basic.Util.to_int in
-   let col = square_json |> Yojson.Basic.Util.member "col" |>
-   Yojson.Basic.Util.to_int in let chip = square_json |>
-   Yojson.Basic.Util.member "chip" |> Yojson.Basic.Util.to_string |> function |
-   "Red" -> Red | "Blue" -> Blue | "Free" -> Free | _ -> None in let card =
-   square_json |> Yojson.Basic.Util.member "card" |> Yojson.Basic.Util.to_string
-   |> function | "Free_space" -> Free_space | _ -> Reg_Card { suit = Spades;
-   rank = Two } (* Replace with the appropriate suit and rank *) in let id =
-   square_json |> Yojson.Basic.Util.member "id" |> Yojson.Basic.Util.to_int in {
-   row; col; chip; card; id })) in rows *)
-
 (*prints the to_string representation of each card*)
 let square_to_string square =
   match square.card with
@@ -156,9 +140,6 @@ let check_space (c : card) (id : int) (b : t) : chip =
     | h :: t -> if h.card = c && h.id = id then h.chip else find_chip t
   in
   find_chip (List.flatten b)
-
-(* let check_card (r : int) (c : int) (b : t) : card = (List.nth (List.nth b r)
-   c).card *)
 
 (*return a list of squares representing the specified column.*)
 let extract_col (b : t) col_index =

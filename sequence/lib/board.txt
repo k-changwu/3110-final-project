@@ -30,7 +30,7 @@
         "row" : 0,
         "col" : 4,
         "chip" : "None",
-        "card" : "Reg_Card { suit : Spades, rank : Ace}",
+        "card" : "Reg_Card { suit : Spades, rank : Ace }",
         "id" : 1
       },
       {
