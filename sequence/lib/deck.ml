@@ -74,8 +74,8 @@ let shuffle deck =
   let sond = List.sort compare nd in
   List.map snd sond
 
-let rank_of_string str =
-  match str with
+let rank_of_string s =
+  match s with
   | "2" -> Two
   | "3" -> Three
   | "4" -> Four
@@ -85,25 +85,29 @@ let rank_of_string str =
   | "8" -> Eight
   | "9" -> Nine
   | "10" -> Ten
+  | "J" -> Jack
   | "Q" -> Queen
   | "K" -> King
   | "A" -> Ace
   | _ -> failwith "Invalid rank"
 
-let suit_of_string str =
-  match str with
-  | "H" -> Hearts
-  | "D" -> Diamonds
-  | "C" -> Clubs
-  | "S" -> Spades
+let suit_of_char c =
+  match c with
+  | 'H' -> Hearts
+  | 'D' -> Diamonds
+  | 'C' -> Clubs
+  | 'S' -> Spades
   | _ -> failwith "Invalid suit"
 
 let card_of_string str =
-  if String.length str = 2 then
-    let rank_char = String.get str 0 in
-    let suit_char = String.get str 1 in
+  let len = String.length str in
+  if len = 3 || len = 2 then
+    let rank_str =
+      if len = 3 then String.sub str 0 2 else String.make 1 (String.get str 0)
+    in
+    let suit_char = String.get str (len - 1) in
     try
-      let rank = rank_of_char rank_char in
+      let rank = rank_of_string rank_str in
       let suit = suit_of_char suit_char in
       { suit; rank }
     with Failure msg -> failwith ("card_of_string: " ^ msg)
