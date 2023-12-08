@@ -112,8 +112,42 @@ let check_space (c : card) (id : int) (b : t) : chip =
   in
   find_chip (List.flatten b)
 
-(* let check_card (r : int) (c : int) (b : t) : card = (List.nth (List.nth b r)
-   c).card *)
+let check_card (r : int) (c : int) (b : t) : card = 
+  (List.nth (List.nth b r)
+   c).card
+  
+(*return a list of squares representing the specified column.*)
+  let extract_col (b : t) col_index =
+    List.map (fun row -> List.nth row col_index) b
+
+  (*extracts the left-to-right diagonal from the board [b]*)
+  let extract_diag1 (b : t) =
+    List.mapi (fun i row -> List.nth row i) b
+  
+    (*extracts the right-to-left diagonal from the board [b]*)
+  let extract_diag2 (b : t) =
+    List.mapi (fun i row -> List.nth row (List.length row - 1 - i)) b
+
+     (*checks if there is a winning sequence in a line*)
+   let check_line_for_win line =
+    let rec aux count = function
+      | [] -> count >= 4
+      | {chip = None; _} :: t -> aux 0 t
+      | h :: ( {chip = ch; _} :: _ as t) when h.chip = ch -> aux (count + 1) t
+      | _ :: t -> aux 1 t
+    in
+    aux 0 line
 
 (* returns true if there is a win on the board*)
-(* let is_win (b : t) : bool = failwith "Unimplimented" *)
+let is_win (b : t) : bool =
+let row_win = List.exists check_line_for_win b in
+let col_win = List.exists (fun i -> 
+  check_line_for_win (extract_col b i)) (List.init (List.length (List.hd b)) (fun x -> x)) in
+let diag1_win = check_line_for_win (extract_diag1 b) in
+let diag2_win = check_line_for_win (extract_diag2 b) in
+row_win || col_win || diag1_win || diag2_win
+
+
+
+
+  

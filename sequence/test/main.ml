@@ -1,2 +1,2 @@
-(* open OUnit2
-open Sequence *)
+open OUnit2
+open Sequence
