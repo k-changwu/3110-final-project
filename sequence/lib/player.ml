@@ -23,6 +23,11 @@ let deal_cards player cards = { player with hand = cards }
 (* get_hand function retrieves the list of cards (hand) from a player. *)
 let get_hand player = player.hand
 
+(* has_card function checks if the card a player wants to play exists in their
+   deck *)
+let has_card player target_card =
+  List.exists (fun card -> card = target_card) player.hand
+
 (* play_card function simulates a player playing a card from their hand. It
    takes a player and the card to be played and returns a new player with the
    same ID and a hand that no longer contains the played card. *)
@@ -30,11 +35,6 @@ let play_card player card =
   if has_card player card then
     Some { player with hand = List.filter (fun c -> c <> card) player.hand }
   else None
-
-(* has_card function checks if the card a player wants to play exists in their
-   deck *)
-let has_card player target_card =
-  List.exists (fun card -> card = target_card) player.hand
 
 (* get_id function returns the player's id *)
 let get_id player = player.id

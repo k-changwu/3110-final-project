@@ -46,7 +46,8 @@ let player_tests = [
       { suit = Hearts; rank = Two }; 
       { suit = Diamonds; rank = Jack }
     ] in
-    let player = Player.create 1 |> Player.deal_cards initial_hand in
+    let initial_player = Player.create 1 in
+    let player = Player.deal_cards initial_player initial_hand in
     let target_card = { suit = Diamonds; rank = Jack } in
     assert_equal true (Player.has_card player target_card);
   );
@@ -55,7 +56,8 @@ let player_tests = [
       { suit = Hearts; rank = Two }; 
       { suit = Diamonds; rank = Jack }
     ] in
-    let player = Player.create 1 |> Player.deal_cards initial_hand in
+    let initial_player = Player.create 1 in
+    let player = Player.deal_cards initial_player initial_hand in
     let target_card = { suit = Spades; rank = Seven } in
     assert_equal false (Player.has_card player target_card);
   );
@@ -64,21 +66,29 @@ let player_tests = [
       { suit = Hearts; rank = Two }; 
       { suit = Diamonds; rank = Jack }
     ] in
-    let player = Player.create 1 |> Player.deal_cards initial_hand in
+    let initial_player = Player.create 1 in
+    let player = Player.deal_cards initial_player initial_hand in
     let card_to_play = { suit = Hearts; rank = Two } in
-    let player_after = Player.play_card player card_to_play in
-    let new_hand = Player.get_hand player_after in
-    assert_equal [ { suit = Diamonds; rank = Jack } ] new_hand;
-  )
+    match Player.play_card player card_to_play with
+    | Some player_after ->
+      let new_hand = Player.get_hand player_after in
+      assert_equal [ { suit = Diamonds; rank = Jack } ] new_hand;
+    | None -> assert_failure "Failed to play the card"
+  );
   "play_card test invalid card" >:: (fun _ ->
     let initial_hand = [
       { suit = Hearts; rank = Two }; 
       { suit = Diamonds; rank = Jack }
     ] in
-    let player = Player.create 1 |> Player.deal_cards initial_hand in
+    let initial_player = Player.create 1 in
+    let player = Player.deal_cards initial_player initial_hand in
     let card_to_play = { suit = Clubs; rank = Seven } in
-    let player_after = Player.play_card player card_to_play in
-    assert_equal None player_after;
+    match Player.play_card player card_to_play with
+    | None ->
+      (* This is the expected behavior for an invalid card *)
+      ()
+    | Some _ ->
+      assert_failure "Expected None for an invalid card"
   )
   
 
