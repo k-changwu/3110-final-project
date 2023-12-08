@@ -15,5 +15,5 @@ val play_card : t -> Deck.t -> t option
 val has_card : t -> Deck.t -> bool
 val get_id : t -> int
 
-(* Adds a card to a playere's hand *)
+(* Adds a card to a player's hand *)
 val add_card : t -> Deck.t -> t

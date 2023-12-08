@@ -1,20 +1,14 @@
-open Board
-open Deck
+(* open Board *)
+(* open Deck *)
 
 type t = {
   id : int;
   hand : Deck.t list;
 }
 
-type hand = card list
+(* type color = | Red | Blue *)
 
-type color =
-  | Red
-  | Blue
-
-type currTurn =
-  | True
-  | False
+(* type currTurn = | True | False *)
 
 (* create takes an integer id and returns a new player with the given ID and an
    empty hand of cards. This function is used to initialize a new player when

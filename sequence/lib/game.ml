@@ -3,8 +3,10 @@ type t = {
   mutable current_player_id : int;
   players : Player.t array; (* array of players *)
   mutable deck : Deck.t list; (* remaining deck *)
-  board : Board.t; (* game board *)
-  mutable current_card : Deck.t; (* current card to play *)
+  board : Board.t;
+      (* game board *)
+      (* current card to play *)
+      (* mutable current_card : Deck.t; *)
 }
 
 type result =
@@ -21,7 +23,7 @@ let start () =
     deck = deck_shuffled;
     board = Board.init;
     (* initialize a new game board *)
-    current_card = List.hd deck_shuffled;
+    (* current_card = List.hd deck_shuffled; *)
     (* current card to play *)
   }
 
@@ -45,8 +47,7 @@ let draw_card game =
       game.deck <- remaining_deck;
 
       (* Optionally, update the current card *)
-      game.current_card <- card;
-
+      (* game.current_card <- card; *)
       Some card
 
 (* Checks if the card is a special jack *)
@@ -129,5 +130,5 @@ let play_card game card id =
       None
 
 let play_turn = failwith "unimp"
-let check_game_over = failwith "unimp"
+let check_game_over = board.is_win game.board
 let current_card = failwith "unimp"
