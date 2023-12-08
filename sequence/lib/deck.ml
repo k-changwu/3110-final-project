@@ -76,36 +76,35 @@ let shuffle deck =
 
 let rank_of_string str =
   match str with
-  | "Two" -> Two
-  | "Three" -> Three
-  | "Four" -> Four
-  | "Five" -> Five
-  | "Six" -> Six
-  | "Seven" -> Seven
-  | "Eight" -> Eight
-  | "Nine" -> Nine
-  | "Ten" -> Ten
-  | "Jack" -> Jack
-  | "Queen" -> Queen
-  | "King" -> King
-  | "Ace" -> Ace
+  | "2" -> Two
+  | "3" -> Three
+  | "4" -> Four
+  | "5" -> Five
+  | "6" -> Six
+  | "7" -> Seven
+  | "8" -> Eight
+  | "9" -> Nine
+  | "10" -> Ten
+  | "Q" -> Queen
+  | "K" -> King
+  | "A" -> Ace
   | _ -> failwith "Invalid rank"
 
 let suit_of_string str =
   match str with
-  | "Hearts" -> Hearts
-  | "Diamonds" -> Diamonds
-  | "Clubs" -> Clubs
-  | "Spades" -> Spades
+  | "H" -> Hearts
+  | "D" -> Diamonds
+  | "C" -> Clubs
+  | "S" -> Spades
   | _ -> failwith "Invalid suit"
 
 let card_of_string str =
-  try
-    let parts = String.split_on_char ' ' str in
-    match parts with
-    | [ rank_str; suit_str ] ->
-        let rank = rank_of_string rank_str in
-        let suit = suit_of_string suit_str in
-        { suit; rank }
-    | _ -> failwith "Invalid card format"
-  with Failure msg -> failwith ("card_of_string: " ^ msg)
+  if String.length str = 2 then
+    let rank_char = String.get str 0 in
+    let suit_char = String.get str 1 in
+    try
+      let rank = rank_of_char rank_char in
+      let suit = suit_of_char suit_char in
+      { suit; rank }
+    with Failure msg -> failwith ("card_of_string: " ^ msg)
+  else failwith "Invalid card format"
