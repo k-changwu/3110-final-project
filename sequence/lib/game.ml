@@ -4,9 +4,9 @@ type t = {
   players : Player.t array; (* array of players *)
   mutable deck : Deck.t list; (* remaining deck *)
   board : Board.t;
-      (* game board *)
-      (* current card to play *)
-      (* mutable current_card : Deck.t; *)
+  (* game board *)
+  (* current card to play *)
+  mutable current_card : Deck.t;
 }
 
 type result =
@@ -23,7 +23,7 @@ let start () =
     deck = deck_shuffled;
     board = Board.init;
     (* initialize a new game board *)
-    (* current_card = List.hd deck_shuffled; *)
+    current_card = List.hd deck_shuffled;
     (* current card to play *)
   }
 
