@@ -199,8 +199,8 @@ let all_possible_cards () =
 let rec play_ai_card game current_player =
   let ai_hand = Player.get_hand current_player in
   match random_select ai_hand with
-  | Some card -> (
-      match card.Deck.rank with
+  | Some card ->
+      (match card.Deck.rank with
       | Jack -> begin
           match card.Deck.suit with
           | TwoEyed ->
@@ -257,7 +257,8 @@ let rec play_ai_card game current_player =
             Printf.printf "Placed %s Token on %s%d\n"
               (if game.current_player_id = 1 then "Red" else "Blue")
               (Deck.to_string card) 1)
-          else play_ai_card game current_player)
+          else play_ai_card game current_player);
+      ignore (Player.play_card current_player card)
   | None -> ()
 
 let play_turn game =
