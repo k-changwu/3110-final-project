@@ -90,6 +90,17 @@ let player_tests =
           let new_hand = Player.get_hand player_after in
           assert_equal [ { suit = Clubs; rank = King }; { suit = Hearts; rank = Two } ] new_hand
       | None -> assert_failure "Failed to play the card" );
+    ( "play_card test valid card duplicate" >:: fun _ ->
+      let initial_hand =
+        [ { suit = Clubs; rank = King }; { suit = Clubs; rank = King } ]
+      in
+      let player = Player.create 5 initial_hand in
+      let card_to_play = { suit = Clubs; rank = King } in
+      match Player.play_card player card_to_play with
+      | Some player_after ->
+          let new_hand = Player.get_hand player_after in
+          assert_equal [ { suit = Clubs; rank = King } ] new_hand
+      | None -> assert_failure "Failed to play the card" );
     ( "play_card test invalid card" >:: fun _ ->
       let initial_hand =
         [ { suit = Hearts; rank = Two }; { suit = Diamonds; rank = Jack } ]
