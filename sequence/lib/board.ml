@@ -101,9 +101,16 @@ let init : t =
 
 (*prints the to_string representation of each card*)
 let square_to_string square =
+  let start =
+    match square.chip with
+    | Red -> "\027[31m "
+    | Blue -> "\027[34m "
+    | Free -> "\027[32m "
+    | None -> "\027[39m "
+  in
   match square.card with
-  | Free_space -> "Free"
-  | Reg_Card card -> Deck.to_string card ^ string_of_int square.id
+  | Free_space -> "\027[32m Free"
+  | Reg_Card card -> start ^ Deck.to_string card ^ string_of_int square.id
 
 (*prints the board*)
 let print_board board =
