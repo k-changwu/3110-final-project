@@ -181,5 +181,3 @@ let play_turn game =
 
   (* Change players *)
   game.current_player_id <- (if game.current_player_id = 1 then 2 else 1)
-
-let current_card = failwith "unimp"
