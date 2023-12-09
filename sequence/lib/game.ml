@@ -216,6 +216,7 @@ let rec play_ai_card game current_player =
               begin
                 match random_select open_locations with
                 | Some (c, id) ->
+                    Printf.printf "Placed Blue Token Using Two-Eyed Jack";
                     Board.place_chip
                       (if game.current_player_id = 1 then Board.Red
                        else Board.Blue)
@@ -235,7 +236,7 @@ let rec play_ai_card game current_player =
               begin
                 match random_select opponent_chip_locations with
                 | Some (c, id) ->
-                    ignore (Player.play_card current_player card);
+                    Printf.printf "Removed Red Token Using One-Eyed Jack";
                     Board.remove_chip c id game.board
                 | None -> play_ai_card game current_player
               end
