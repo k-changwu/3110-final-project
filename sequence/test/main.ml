@@ -207,6 +207,23 @@ let board_tests =
     assert_bool "win" (Board.is_win board)
   );
 
+  "vertical_win" >:: (fun _ ->
+    let board = [
+      [{row=0; col=0; chip=Red; card=Reg_Card {suit=Diamonds; rank=Two}; id=0};
+       {row=0; col=1; chip=None; card=Reg_Card {suit=Diamonds; rank=Three}; id=1}];
+      [{row=1; col=0; chip=Red; card=Reg_Card {suit=Diamonds; rank=Four}; id=5};
+       {row=1; col=1; chip=None; card=Reg_Card {suit=Diamonds; rank=Five}; id=6}];
+      [{row=2; col=0; chip=Red; card=Reg_Card {suit=Diamonds; rank=Six}; id=10};
+       {row=2; col=1; chip=None; card=Reg_Card {suit=Diamonds; rank=Seven}; id=11}];
+      [{row=3; col=0; chip=Red; card=Reg_Card {suit=Diamonds; rank=Eight}; id=15};
+       {row=3; col=1; chip=None; card=Reg_Card {suit=Diamonds; rank=Nine}; id=16}];
+      [{row=4; col=0; chip=Red; card=Reg_Card {suit=Diamonds; rank=Ten}; id=20};
+       {row=4; col=1; chip=None; card=Reg_Card {suit=Diamonds; rank=Jack}; id=21}]
+    ] in
+    assert_bool "win" (Board.is_win board)
+  );
+
+  
 ]
 
 let suite =
