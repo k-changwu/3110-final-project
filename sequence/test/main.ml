@@ -2,6 +2,7 @@ open OUnit2
 open Sequence
 open Player
 open Deck
+open Board
 
 (* let pp_string s = "\"" ^ s ^ "\""
 
@@ -17,7 +18,6 @@ let player_tests =
   [
     ("create test" >:: fun _ -> assert_equal 1 (get_id p1));
     ( "deal_card test empty initial hand" >:: fun _ ->
-      let initial_hand = Player.get_hand p1 in
       let cards_to_deal = Deck.full_deck () in
       let player_after = Player.deal_cards p1 cards_to_deal in
       let new_hand = Player.get_hand player_after in
@@ -137,7 +137,28 @@ let deck_tests =
       assert_raises (Failure "Invalid suit") (fun () -> suit_of_char 'a'));
   ]
 
+let board_tests = [
+  ( "square_to_string free space" >:: fun _ -> 
+    let free = { row = 1; col = 2; chip = None; card = Free_space; id = 3 } in 
+    assert_equal "Free" (Board.square_to_string free));
+  ( "square_to_string regular card" >:: fun _ -> 
+    let reg = { row = 2; col = 3; chip = None; 
+    card = Reg_Card { suit = Hearts; rank = Two}; id = 5} in 
+    assert_equal "2 H5" (Board.square_to_string reg));
+  ( "place_chip tests" >:: fun _ -> 
+    let board = Board.init in 
+    let card_to = Reg_Card { suit = Hearts; rank = Two } in 
+    let id_to = 1 in 
+    let updated_board = place_chip Red card_to id_to board in 
+    let chip_in_square = check_space card_to id_to updated_board in 
+    assert_equal Red chip_in_square
+    );
+  
+  
+
+]
+
 let suite =
-  "test suite for Sequence" >::: List.flatten [ player_tests; deck_tests ]
+  "test suite for Sequence" >::: List.flatten [ player_tests; deck_tests; board_tests]
 
 let () = run_test_tt_main suite
