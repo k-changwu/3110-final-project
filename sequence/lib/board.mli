@@ -38,7 +38,10 @@ val remove_chip : card -> int -> t -> unit
 val check_space : card -> int -> t -> chip
 
 (* returns true if there is a win on the board*)
-val is_win : t -> bool
+(* val is_win : t -> bool *)
 
 (* prints ascii version of the board *)
 val print_board : t -> unit
+
+(* checks if there is a win on the board *)
+val is_win : t -> bool

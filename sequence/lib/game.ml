@@ -57,22 +57,41 @@ let is_special_jack card =
   | _ -> false
 
 (* receive input from user *)
-let rec get_card_square_and_id () =
-  Printf.printf "Enter the card (format: Rank Suit, e.g., 'Ten Hearts'): ";
+
+let rec ask_for_card player =
+  Printf.printf "Which card do you want to play: ";
   let card_str = read_line () in
-  let card =
-    (* Convert card_str to a card, handling errors *)
-    try Some (Deck.card_of_string card_str)
-    with _ ->
-      Printf.printf "Invalid card format.\n";
-      None
-  in
-  Printf.printf "Enter the card ID (1 or 2): ";
-  match (read_int_opt (), card) with
-  | Some id, Some c when id = 1 || id = 2 -> Some (c, id)
+  try
+    let card = Deck.card_of_string card_str in
+    if List.exists (fun c -> c = card) (Player.get_hand player) then card
+    else (
+      Printf.printf "That is not a valid card!\n";
+      ask_for_card player)
+  with Failure _ ->
+    Printf.printf "Invalid card format!\n";
+    ask_for_card player
+
+let rec ask_for_square () =
+  Printf.printf "Which square (1 or 0): ";
+  match read_int_opt () with
+  | Some square when square = 0 || square = 1 -> square
   | _ ->
       Printf.printf "Invalid input. Try again.\n";
-      get_card_square_and_id ()
+      ask_for_square ()
+
+let rec get_card_square_and_id () =
+  Printf.printf "Enter the card (format: RankSuit, e.g., '10H'): ";
+  let card_str = read_line () in
+  try
+    let card = Deck.card_of_string card_str in
+    Printf.printf "Enter the card ID (1 or 2): ";
+    match read_int_opt () with
+    | Some id when id = 1 || id = 2 -> Some (card, id)
+    | _ -> Printf.printf "Invalid card ID. Try again.\n"; 
+    get_card_square_and_id ()
+  with
+  | Failure _ -> Printf.printf "Invalid card format. Try again.\n"; 
+  get_card_square_and_id ()
 
 (* Apply special functionality for one-eyed or two-eyed jacks *)
 let apply_jack_effect board player_id card =
@@ -129,6 +148,9 @@ let play_card game card id =
       Printf.printf "You don't have that card. Please choose another.\n";
       None
 
-let play_turn = failwith "unimp"
+let play_turn game = 
+  Board.print_board game.board;
+  
+
 let check_game_over g = if Board.is_win g.board then Won 0 else Ongoing
 let current_card = failwith "unimp"

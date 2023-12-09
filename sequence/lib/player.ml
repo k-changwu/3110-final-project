@@ -27,6 +27,11 @@ let deal_cards player cards = { player with hand = cards }
 (* get_hand function retrieves the list of cards (hand) from a player. *)
 let get_hand player = player.hand
 
+(* hand_to_string converts a hand of cards to its string representation *)
+let hand_to_string hand =
+  let card_strings = List.map Deck.to_string hand in
+  "[" ^ String.concat ", " card_strings ^ "]"
+
 (* has_card function checks if the card a player wants to play exists in their
    deck *)
 let has_card player target_card =
