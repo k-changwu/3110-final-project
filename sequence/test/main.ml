@@ -4,12 +4,12 @@ open Player
 open Deck
 open Board
 
-(* let pp_string s = "\"" ^ s ^ "\""
+(* Test Plan 
+Tested Player, Deck, and Board module functions by OUnit test suite here 
+Our test cases were developed with both the black box and glass box approach, some methods were tested by testing every input possible (eg. card_of_string) while others were created using black box testing (eg. place_card)
+Game module was tested manually by play 
+This testing approach demonstrates the correctness of the system because we created test cases for all the functions that game calls/builds off of. Since these fundamental functions passed, we know that our game functions work.  *)
 
-   let pp_list pp_elt lst = let pp_elts lst = let rec loop n acc = function | []
-   -> acc | [ h ] -> acc ^ pp_elt h | h1 :: (h2 :: t as t') -> if n = 100 then
-   acc ^ "..." (* stop printing long list *) else loop (n + 1) (acc ^ pp_elt h1
-   ^ "; ") t' in loop 0 "" lst in "[" ^ pp_elts lst ^ "]" *)
 
 let p1 =
   Player.create 1
@@ -67,7 +67,6 @@ let player_tests =
       let card_to_play = { suit = Clubs; rank = Seven } in
       match Player.play_card player card_to_play with
       | None ->
-          (* This is the expected behavior for an invalid card *)
           ()
       | Some _ -> assert_failure "Expected None for an invalid card" );
     ( "hand_to_string empty hand" >:: fun _ ->
