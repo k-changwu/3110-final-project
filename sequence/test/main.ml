@@ -176,6 +176,17 @@ let board_tests =
     assert_bool "win" (Board.is_win board)
   );
 
+  "is_win test horizontal win" >:: (fun _ ->
+    let board = [
+      [{row=0; col=0; chip=Red; card=Reg_Card {suit=Hearts; rank=Two}; id=0};
+       {row=0; col=1; chip=Red; card=Reg_Card {suit=Hearts; rank=Three}; id=1};
+       {row=0; col=2; chip=Red; card=Reg_Card {suit=Hearts; rank=Four}; id=2};
+       {row=0; col=3; chip=Red; card=Reg_Card {suit=Hearts; rank=Five}; id=3};
+       {row=0; col=4; chip=None; card=Reg_Card {suit=Hearts; rank=Six}; id=4}];
+    ] in
+    assert_bool "win" (Board.is_win board)
+  );
+
   "is_vertical_win" >:: (fun _ ->
     let board = [
       [{row=0; col=0; chip=Red; card=Reg_Card {suit=Spades; rank=Two}; id=0};
@@ -190,6 +201,14 @@ let board_tests =
        {row=4; col=1; chip=Red; card=Reg_Card {suit=Spades; rank=Jack}; id=21}]
     ] in
     assert_bool "vertical_win" (Board.is_win board)
+);
+
+"no win horizontal_board_with_free_space" >:: (fun _ ->
+  let board = [
+    [{row=0; col=0; chip=Free; card=Free_space; id=0};
+     {row=0; col=1; chip=None; card=Reg_Card {suit=Spades; rank=Ten}; id=1}]
+  ] in
+  assert_bool "no win" (not (Board.is_win board))
 );
 
   "diagonal_win" >:: (fun _ ->
@@ -239,6 +258,10 @@ let board_tests =
   ] in
   assert_bool "vertical_win" (Board.is_win board)
 );
+
+
+
+
 
 ]
 
