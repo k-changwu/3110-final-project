@@ -38,3 +38,9 @@ val shuffle : t list -> t list
 
 (* Translate a string to a card *)
 val card_of_string : string -> t
+
+(* Translate a string to a rank *)
+val rank_of_string : string -> rank
+
+(* Translate a string to a suit *)
+val suit_of_char : char -> suit

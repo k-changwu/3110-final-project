@@ -15,6 +15,7 @@ val hand_to_string : Deck.t list -> string
 (* Play a card from the player's hand such that the player's hand no longer has
    that card*)
 val play_card : t -> Deck.t -> t option
+
 val has_card : t -> Deck.t -> bool
 val get_id : t -> int
 
