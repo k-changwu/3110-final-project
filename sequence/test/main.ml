@@ -162,7 +162,6 @@ let board_tests =
       place_chip Red card_to_place id_to_place board;
       let chip_in_square = check_space card_to_place id_to_place board in
       assert_equal Red chip_in_square );
-    (* hello this is a push *)
   ]
 
   let board_tests_2 = [
