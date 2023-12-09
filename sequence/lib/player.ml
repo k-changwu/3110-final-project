@@ -19,7 +19,6 @@ type currTurn =
    the game starts. *)
 let create i cards = { id = i; hand = cards }
 
-
 (* get_hand function retrieves the list of cards (hand) from a player. *)
 let get_hand player = player.hand
 
@@ -33,12 +32,16 @@ let hand_to_string hand =
 let has_card player target_card =
   List.exists (fun card -> card = target_card) player.hand
 
+let rec filter c = function
+  | [] -> []
+  | h :: t -> if h = c then t else h :: filter c t
+
 (* play_card function simulates a player playing a card from their hand. It
    takes a player and the card to be played and returns a new player with the
    same ID and a hand that no longer contains the played card. *)
 let play_card player card =
   if has_card player card then
-    Some { player with hand = List.filter (fun c -> c <> card) player.hand }
+    Some { player with hand = filter card player.hand }
   else None
 
 (* get_id function returns the player's id *)
