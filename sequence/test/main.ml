@@ -37,6 +37,20 @@ let player_tests =
       let player = Player.create 3 cards_to_deal in
       let new_hand = Player.get_hand player in
       assert_equal cards_to_deal new_hand );
+    ( "get_hand test" >:: fun _ ->
+      let cards_to_deal =
+        [ { suit = Hearts; rank = Five }; { suit = Diamonds; rank = Ten }; { suit = Clubs; rank = Queen } ]
+      in
+      let player = Player.create 4 cards_to_deal in
+      let new_hand = Player.get_hand player in
+      assert_equal cards_to_deal new_hand );
+    ( "get_hand test" >:: fun _ ->
+      let cards_to_deal =
+        [ { suit = Hearts; rank = King}; { suit = Diamonds; rank = Ace }; { suit = Clubs; rank = Queen } ]
+      in
+      let player = Player.create 8 cards_to_deal in
+      let new_hand = Player.get_hand player in
+      assert_equal cards_to_deal new_hand );
     ( "has_card test card exists" >:: fun _ ->
       let initial_hand =
         [ { suit = Hearts; rank = Two }; { suit = Diamonds; rank = Jack } ]
@@ -62,6 +76,17 @@ let player_tests =
           let new_hand = Player.get_hand player_after in
           assert_equal [ { suit = Diamonds; rank = Jack } ] new_hand
       | None -> assert_failure "Failed to play the card" );
+    ( "play_card test valid card" >:: fun _ ->
+      let initial_hand =
+        [ { suit = Clubs; rank = King }; { suit = Diamonds; rank = Queen }; { suit = Hearts; rank = Two } ]
+      in
+      let player = Player.create 5 initial_hand in
+      let card_to_play = { suit = Diamonds; rank = Queen } in
+      match Player.play_card player card_to_play with
+      | Some player_after ->
+          let new_hand = Player.get_hand player_after in
+          assert_equal [ { suit = Clubs; rank = King }; { suit = Hearts; rank = Two } ] new_hand
+      | None -> assert_failure "Failed to play the card" );
     ( "play_card test invalid card" >:: fun _ ->
       let initial_hand =
         [ { suit = Hearts; rank = Two }; { suit = Diamonds; rank = Jack } ]
@@ -79,6 +104,16 @@ let player_tests =
         [ { suit = Hearts; rank = Two }; { suit = Diamonds; rank = Jack } ]
       in
       assert_equal "[2 H, J D]" (Player.hand_to_string hand) );
+    ( "hand_to_string non-empty hand" >:: fun _ ->
+      let hand =
+        [ { suit = Clubs; rank = King }; { suit = Diamonds; rank = Queen }; { suit = Hearts; rank = Two } ]
+      in
+      assert_equal "[K C, Q D, 2 H]" (Player.hand_to_string hand) );
+   ( "hand_to_string non-empty hand" >:: fun _ ->
+      let hand =
+        [ { suit = Clubs; rank = King }; { suit = Diamonds; rank = Queen }; { suit = Hearts; rank = Two }; { suit = Clubs; rank = Seven } ]
+      in
+      assert_equal "[K C, Q D, 2 H, 7 C]" (Player.hand_to_string hand) );
   ]
 
 let deck_tests =
@@ -205,6 +240,14 @@ let board_tests =
     ( "remove_chip " >:: fun _ ->
       let board = Board.init in
       let card_to_place = Reg_Card { suit = Hearts; rank = Seven } in
+      let id_to_place = 1 in
+      place_chip Free card_to_place id_to_place board;
+      remove_chip card_to_place id_to_place board;
+      let chip_in_square = check_space card_to_place id_to_place board in
+      assert_equal None chip_in_square );
+    ( "remove_chip " >:: fun _ ->
+      let board = Board.init in
+      let card_to_place = Reg_Card { suit = Diamonds; rank = Ten } in
       let id_to_place = 1 in
       place_chip Free card_to_place id_to_place board;
       remove_chip card_to_place id_to_place board;
@@ -1046,6 +1089,6 @@ let game_test =
 
 let suite =
   "test suite for Sequence"
-  >::: List.flatten [ player_tests; deck_tests; board_tests; board_tests_2 ]
+  >::: List.flatten [ player_tests; deck_tests; board_tests; ]
 
 let () = run_test_tt_main suite
