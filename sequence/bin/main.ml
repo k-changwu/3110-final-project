@@ -26,14 +26,11 @@ let instructions () =
     "Two eyed Jacks are wild cards that can be used to claim any unclaimed spot";
   print_endline
     "One eyed Jacks are anti-wild. They can be used to free any claimed spot \
-     on the board.\n";
-  print_endline
-    "If you want to see the instructions again, type 'instructions' when \
-     prompted for input.\n"
+     on the board.\n"
 
 let () =
   print_endline "\nWelcome to Sequence!\n";
   instructions ();
-  print_endline "With that out of the way, let's begin the game!"
-(* let g = Sequence.Game.start () in print_endline ("\n It's player " ^
-   string_of_int (Sequence.Game.current_player g) ^ "'s turn!") *)
+  print_endline "With that out of the way, let's begin the game!";
+  let g = Sequence.Game.start () in
+  Sequence.Game.play_turn g
