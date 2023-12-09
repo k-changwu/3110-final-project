@@ -5,14 +5,19 @@ open Deck
 open Game
 open Board
 
-(* Test Plan Tested Player, Deck, and Board module functions by OUnit test suite
-   here Our test cases were developed with both the black box and glass box
-   approach, some methods were tested by testing every input possible (eg.
-   card_of_string) while others were created using black box testing (eg.
-   place_card) Game module was tested manually by play This testing approach
-   demonstrates the correctness of the system because we created test cases for
-   all the functions that game calls/builds off of. Since these fundamental
-   functions passed, we know that our game functions work. *)
+(* Test Plan
+Which parts of the system were automatically tested by OUnit vs. manually tested:
+- bin/main.ml is not tested by OUnit (manually tested)
+- the game loop is not tested by OUnit (manually tested)
+- the modules were automatially tested by OUnit
+What modules were tested by OUnit and how test cases were developed (black box, glass box, randomized, etc.).
+- Player, Dec, and Board were tested with OUnit test suite. The test cases were developed using both black box
+testing and glass box testing. Some methods (eg. card_of_string) were tested with glass-box as we tested for every possible
+input, knowing how the function works. Some methods (eg. place_card) were tested with black box testing.
+Why the testing approach demonstrates the correctness of the system
+- This testing approach demonstrates the correctness of the system because we created test cases for all the functions that
+game calls/builds off of. Since these fundamental functions passed, we know that our game functions work.  *)
+
 
 let p1 =
   Player.create 1
