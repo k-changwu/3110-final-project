@@ -29,6 +29,7 @@ let start vs_ai =
   {
     current_player_id = 1;
     players =
+      (* start with two humans or one human one ai depending on choice *)
       (if vs_ai then
          [| Player.create 1 drawn_cards_1; Player.create 2 drawn_cards_2 |]
        else [| Player.create 1 drawn_cards_1; Player.create 2 drawn_cards_2 |]);
@@ -94,9 +95,9 @@ let rec get_card_square_and_id () =
   let card_str = read_line () in
   try
     let card = Deck.card_of_string card_str in
-    Printf.printf "Enter the card ID (1 or 2): ";
+    Printf.printf "Enter the card ID (0 or 1): ";
     match read_int_opt () with
-    | Some id when id = 1 || id = 2 -> Some (card, id)
+    | Some id when id = 0 || id = 1 -> Some (card, id)
     | _ ->
         Printf.printf "Invalid card ID. Try again.\n";
         get_card_square_and_id ()

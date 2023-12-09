@@ -837,10 +837,201 @@ let board_tests_2 =
         ]
       in
       assert_bool "vertical_win" (Board.is_win board) );
+    ( "is_win test - diagonal win with strategic Blue placement" >:: fun _ ->
+      let board =
+        [
+          [
+            {
+              row = 0;
+              col = 0;
+              chip = Red;
+              card = Reg_Card { suit = Hearts; rank = Two };
+              id = 0;
+            };
+            {
+              row = 0;
+              col = 1;
+              chip = Blue;
+              card = Reg_Card { suit = Hearts; rank = Three };
+              id = 1;
+            };
+            {
+              row = 0;
+              col = 2;
+              chip = None;
+              card = Reg_Card { suit = Hearts; rank = Four };
+              id = 2;
+            };
+            {
+              row = 0;
+              col = 3;
+              chip = Blue;
+              card = Reg_Card { suit = Hearts; rank = Five };
+              id = 3;
+            };
+            {
+              row = 0;
+              col = 4;
+              chip = None;
+              card = Reg_Card { suit = Hearts; rank = Six };
+              id = 4;
+            };
+          ];
+          [
+            {
+              row = 1;
+              col = 0;
+              chip = None;
+              card = Reg_Card { suit = Hearts; rank = Seven };
+              id = 5;
+            };
+            {
+              row = 1;
+              col = 1;
+              chip = Red;
+              card = Reg_Card { suit = Hearts; rank = Eight };
+              id = 6;
+            };
+            {
+              row = 1;
+              col = 2;
+              chip = Blue;
+              card = Reg_Card { suit = Hearts; rank = Nine };
+              id = 7;
+            };
+            {
+              row = 1;
+              col = 3;
+              chip = None;
+              card = Reg_Card { suit = Hearts; rank = Ten };
+              id = 8;
+            };
+            {
+              row = 1;
+              col = 4;
+              chip = Blue;
+              card = Reg_Card { suit = Hearts; rank = Jack };
+              id = 9;
+            };
+          ];
+          [
+            {
+              row = 2;
+              col = 0;
+              chip = Blue;
+              card = Reg_Card { suit = Diamonds; rank = Two };
+              id = 10;
+            };
+            {
+              row = 2;
+              col = 1;
+              chip = None;
+              card = Reg_Card { suit = Diamonds; rank = Three };
+              id = 11;
+            };
+            {
+              row = 2;
+              col = 2;
+              chip = Red;
+              card = Reg_Card { suit = Diamonds; rank = Four };
+              id = 12;
+            };
+            {
+              row = 2;
+              col = 3;
+              chip = None;
+              card = Reg_Card { suit = Diamonds; rank = Five };
+              id = 13;
+            };
+            {
+              row = 2;
+              col = 4;
+              chip = None;
+              card = Reg_Card { suit = Diamonds; rank = Six };
+              id = 14;
+            };
+          ];
+          [
+            {
+              row = 3;
+              col = 0;
+              chip = None;
+              card = Reg_Card { suit = Diamonds; rank = Seven };
+              id = 15;
+            };
+            {
+              row = 3;
+              col = 1;
+              chip = Blue;
+              card = Reg_Card { suit = Diamonds; rank = Eight };
+              id = 16;
+            };
+            {
+              row = 3;
+              col = 2;
+              chip = None;
+              card = Reg_Card { suit = Diamonds; rank = Nine };
+              id = 17;
+            };
+            {
+              row = 3;
+              col = 3;
+              chip = Red;
+              card = Reg_Card { suit = Diamonds; rank = Ten };
+              id = 18;
+            };
+            {
+              row = 3;
+              col = 4;
+              chip = None;
+              card = Reg_Card { suit = Diamonds; rank = Jack };
+              id = 19;
+            };
+          ];
+          [
+            {
+              row = 4;
+              col = 0;
+              chip = None;
+              card = Reg_Card { suit = Clubs; rank = Two };
+              id = 20;
+            };
+            {
+              row = 4;
+              col = 1;
+              chip = None;
+              card = Reg_Card { suit = Clubs; rank = Three };
+              id = 21;
+            };
+            {
+              row = 4;
+              col = 2;
+              chip = Blue;
+              card = Reg_Card { suit = Clubs; rank = Four };
+              id = 22;
+            };
+            {
+              row = 4;
+              col = 3;
+              chip = None;
+              card = Reg_Card { suit = Clubs; rank = Five };
+              id = 23;
+            };
+            {
+              row = 4;
+              col = 4;
+              chip = Red;
+              card = Reg_Card { suit = Clubs; rank = Six };
+              id = 24;
+            };
+          ];
+        ]
+      in
+      assert_bool "win red" (Board.is_win board) );
   ]
 
 let suite =
   "test suite for Sequence"
-  >::: List.flatten [ player_tests; deck_tests; board_tests; board_tests_2  ]
+  >::: List.flatten [ player_tests; deck_tests; board_tests; board_tests_2 ]
 
 let () = run_test_tt_main suite
