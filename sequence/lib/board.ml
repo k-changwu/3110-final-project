@@ -178,7 +178,9 @@ let row_win b =
         else if chip = Free || chip = square.chip then
           if count = 4 then true else win_in_row square.chip (count + 1) t
         else if square.chip = Free then
-          if count = 4 then true else win_in_row chip (count + 1) t
+          if count = 4 then true
+          else if chip = None then win_in_row Free (count + 1) t
+          else win_in_row chip (count + 1) t
         else win_in_row square.chip 1 t
   in
   List.fold_left ( || ) false (List.map (win_in_row None 0) b)
@@ -207,9 +209,10 @@ let diag_win b =
                   then if count = 4 then true else false
                   else false
               | hr2 :: tr2 ->
-                  let col = 11 - List.length t in
+                  let col = 10 - List.length t in
                   (* end of row *)
-                  if col >= 10 then if count = 5 then true else false
+                  if col >= List.length hr2 then
+                    if count = 5 then true else false
                   else if square.chip = None then
                     (* square is empty, continue down the diag *)
                     check_diag None 0 (sublist_from_index col hr2 :: tr2)
@@ -221,6 +224,9 @@ let diag_win b =
                         (sublist_from_index col hr2 :: tr2)
                   else if square.chip = Free then
                     if count = 4 then true
+                    else if chip = None then
+                      check_diag Free (count + 1)
+                        (sublist_from_index col hr2 :: tr2)
                     else
                       check_diag chip (count + 1)
                         (sublist_from_index col hr2 :: tr2)
@@ -235,10 +241,10 @@ let diag_win b =
       match b with
       | [] -> false
       | [] :: _ -> false
-      | [ h1 ] :: t1 :: t ->
+      | (h1 :: t1) :: t ->
           if check_diag None 0 b then true else start_row (t1 :: t)
-      | _ -> false
     in
+
     if start_row bd then true
     else
       let rec start_col b =
@@ -264,9 +270,3 @@ let is_win (b : t) : bool =
   else if diag_win b then true
   else if anti_diag_win b then true
   else false
-(* let row_win = List.exists check_line_for_win b in if row_win then true else
-   let col_win = List.exists (fun i -> check_line_for_win (extract_col b i))
-   (List.init (List.length (List.hd b)) (fun x -> x)) in if col_win then true
-   else let diag1_win = check_line_for_win (extract_diag1 b) in if diag1_win
-   then true else let diag2_win = check_line_for_win (extract_diag2 b) in
-   diag2_win *)
