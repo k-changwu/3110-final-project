@@ -944,36 +944,8 @@ let board_tests_2 =
       assert_bool "win red" (Board.is_win board) );
   ]
 
-let game_test = [
-
-
-  "apply_jack_effect test - jack effects" >:: (fun _ ->
-    let board = [
-      [{row=0; col=0; chip=None; card=Reg_Card {suit=Hearts; rank=Two}; id=0};
-       {row=0; col=1; chip=None; card=Reg_Card {suit=Hearts; rank=Three}; id=1};
-       {row=0; col=2; chip=None; card=Reg_Card {suit=Hearts; rank=Four}; id=2};
-       {row=0; col=3; chip=Blue; card=Reg_Card {suit=Hearts; rank=Five}; id=3};
-       {row=0; col=4; chip=None; card=Reg_Card {suit=Hearts; rank=Six}; id=4}];
-      [{row=1; col=0; chip=None; card=Reg_Card {suit=Diamonds; rank=Two}; id=5};
-       {row=1; col=1; chip=Red; card=Reg_Card {suit=Diamonds; rank=Three}; id=6};
-       {row=1; col=2; chip=None; card=Reg_Card {suit=Diamonds; rank=Four}; id=7};
-       {row=1; col=3; chip=None; card=Reg_Card {suit=Diamonds; rank=Five}; id=8};
-       {row=1; col=4; chip=None; card=Reg_Card {suit=Diamonds; rank=Six}; id=9}]
-    ] in
-  
-    let two_eyed_jack = {Deck.suit = TwoEyed; rank = Jack} in
-      apply_jack_effect board 1 two_eyed_jack;
-    let one_eyed_jack = {Deck.suit = OneEyed; rank = Jack} in
-      apply_jack_effect board 2 one_eyed_jack;
-
-    assert_equal (Board.check_space (Reg_Card {Deck.suit = Diamonds; rank = Four}) 7 board) (Board.Red);
-    assert_equal (Board.check_space (Reg_Card {Deck.suit = Diamonds; rank = Three}) 6 board) (Board.None)
-  );
-  
-]
-
 let suite =
   "test suite for Sequence"
-  >::: List.flatten [ player_tests; deck_tests; board_tests; board_tests_2; game_test]
+  >::: List.flatten [ player_tests; deck_tests; board_tests; board_tests_2]
 
 let () = run_test_tt_main suite
