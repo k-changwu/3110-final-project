@@ -176,7 +176,7 @@ let board_tests =
     assert_bool "win" (Board.is_win board)
   );
 
-  "is_win test vertical win" >:: (fun _ ->
+  "is_vertical_win" >:: (fun _ ->
     let board = [
       [{row=0; col=0; chip=Red; card=Reg_Card {suit=Spades; rank=Two}; id=0};
        {row=0; col=1; chip=None; card=Reg_Card {suit=Spades; rank=Three}; id=1}];
@@ -187,25 +187,58 @@ let board_tests =
       [{row=3; col=0; chip=Red; card=Reg_Card {suit=Spades; rank=Eight}; id=15};
        {row=3; col=1; chip=None; card=Reg_Card {suit=Spades; rank=Nine}; id=16}];
       [{row=4; col=0; chip=Red; card=Reg_Card {suit=Spades; rank=Ten}; id=20};
-       {row=4; col=1; chip=None; card=Reg_Card {suit=Spades; rank=Jack}; id=21}]
+       {row=4; col=1; chip=Red; card=Reg_Card {suit=Spades; rank=Jack}; id=21}]
     ] in
-    assert_bool "win" (Board.is_win board)
-  );
+    assert_bool "vertical_win" (Board.is_win board)
+);
 
-  "diagonal_win " >:: (fun _ ->
+  "diagonal_win" >:: (fun _ ->
     let board = [
       [{row=0; col=0; chip=Red; card=Reg_Card {suit=Spades; rank=Two}; id=0};
        {row=0; col=1; chip=None; card=Reg_Card {suit=Spades; rank=Three}; id=1};
-       {row=0; col=2; chip=None; card=Reg_Card {suit=Spades; rank=Four}; id=2}];
-      [{row=1; col=0; chip=None; card=Reg_Card {suit=Spades; rank=Five}; id=3};
-       {row=1; col=1; chip=Red; card=Reg_Card {suit=Spades; rank=Six}; id=4};
-       {row=1; col=2; chip=None; card=Reg_Card {suit=Spades; rank=Seven}; id=5}];
-      [{row=2; col=0; chip=None; card=Reg_Card {suit=Spades; rank=Eight}; id=6};
-       {row=2; col=1; chip=None; card=Reg_Card {suit=Spades; rank=Nine}; id=7};
-       {row=2; col=2; chip=Red; card=Reg_Card {suit=Spades; rank=Ten}; id=8}]
+       {row=0; col=2; chip=None; card=Reg_Card {suit=Spades; rank=Four}; id=2};
+       {row=0; col=3; chip=None; card=Reg_Card {suit=Spades; rank=Five}; id=3};
+       {row=0; col=4; chip=Red; card=Reg_Card {suit=Spades; rank=Six}; id=4}];
+      [{row=1; col=0; chip=None; card=Reg_Card {suit=Spades; rank=Seven}; id=5};
+       {row=1; col=1; chip=Red; card=Reg_Card {suit=Spades; rank=Eight}; id=6};
+       {row=1; col=2; chip=None; card=Reg_Card {suit=Spades; rank=Nine}; id=7};
+       {row=1; col=3; chip=Red; card=Reg_Card {suit=Spades; rank=Ten}; id=8};
+       {row=1; col=4; chip=None; card=Reg_Card {suit=Spades; rank=Jack}; id=9}];
+      [{row=2; col=0; chip=None; card=Reg_Card {suit=Spades; rank=Queen}; id=10};
+       {row=2; col=1; chip=None; card=Reg_Card {suit=Spades; rank=King}; id=11};
+       {row=2; col=2; chip=Red; card=Reg_Card {suit=Spades; rank=Ace}; id=12};
+       {row=2; col=3; chip=None; card=Reg_Card {suit=Spades; rank=Two}; id=13};
+       {row=2; col=4; chip=None; card=Reg_Card {suit=Spades; rank=Three}; id=14}];
+      [{row=3; col=0; chip=None; card=Reg_Card {suit=Spades; rank=Four}; id=15};
+       {row=3; col=1; chip=None; card=Reg_Card {suit=Spades; rank=Five}; id=16};
+       {row=3; col=2; chip=Red; card=Reg_Card {suit=Spades; rank=Six}; id=17};
+       {row=3; col=3; chip=None; card=Reg_Card {suit=Spades; rank=Seven}; id=18};
+       {row=3; col=4; chip=None; card=Reg_Card {suit=Spades; rank=Eight}; id=19}];
+      [{row=4; col=0; chip=None; card=Reg_Card {suit=Spades; rank=Nine}; id=20};
+       {row=4; col=1; chip=None; card=Reg_Card {suit=Spades; rank=Ten}; id=21};
+       {row=4; col=2; chip=Red; card=Reg_Card {suit=Spades; rank=Jack}; id=22};
+       {row=4; col=3; chip=None; card=Reg_Card {suit=Spades; rank=Queen}; id=23};
+       {row=4; col=4; chip=None; card=Reg_Card {suit=Spades; rank=King}; id=24}];
     ] in
     assert_bool "win" (Board.is_win board)
-  );
+);
+
+
+"vertical_win" >:: (fun _ ->
+  let board = [
+    [{row=0; col=0; chip=Red; card=Reg_Card {suit=Diamonds; rank=Two}; id=0};
+     {row=0; col=1; chip=None; card=Reg_Card {suit=Diamonds; rank=Three}; id=1}];
+    [{row=1; col=0; chip=Red; card=Reg_Card {suit=Diamonds; rank=Four}; id=5};
+     {row=1; col=1; chip=None; card=Reg_Card {suit=Diamonds; rank=Five}; id=6}];
+    [{row=2; col=0; chip=Red; card=Reg_Card {suit=Diamonds; rank=Six}; id=10};
+     {row=2; col=1; chip=Red; card=Reg_Card {suit=Diamonds; rank=Seven}; id=11}];
+    [{row=3; col=0; chip=Red; card=Reg_Card {suit=Diamonds; rank=Eight}; id=15};
+     {row=3; col=1; chip=None; card=Reg_Card {suit=Diamonds; rank=Nine}; id=16}];
+    [{row=4; col=0; chip=Red; card=Reg_Card {suit=Diamonds; rank=Ten}; id=20};
+     {row=4; col=1; chip=None; card=Reg_Card {suit=Diamonds; rank=Jack}; id=21}]
+  ] in
+  assert_bool "vertical_win" (Board.is_win board)
+);
 
 ]
 
