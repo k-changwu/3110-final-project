@@ -140,17 +140,17 @@ let deck_tests =
 let board_tests = [
   ( "square_to_string free space" >:: fun _ -> 
     let free = { row = 1; col = 2; chip = None; card = Free_space; id = 3 } in 
-    assert_equal "Free" (Board.square_to_string free));
+    assert_equal "\027[32m Free" (Board.square_to_string free));
   ( "square_to_string regular card" >:: fun _ -> 
     let reg = { row = 2; col = 3; chip = None; 
     card = Reg_Card { suit = Hearts; rank = Two}; id = 5} in 
-    assert_equal "2 H5" (Board.square_to_string reg));
+    assert_equal "\027[39m 2 H5" (Board.square_to_string reg));
   ( "place_chip tests" >:: fun _ -> 
-    let board = Board.init in 
-    let card_to = Reg_Card { suit = Hearts; rank = Two } in 
-    let id_to = 1 in 
-    let updated_board = place_chip Red card_to id_to board in 
-    let chip_in_square = check_space card_to id_to updated_board in 
+    let board = Board.init in
+    let card_to_place = Reg_Card { suit = Hearts; rank = Two } in
+    let id_to_place = 1 in
+    place_chip Red card_to_place id_to_place board;
+    let chip_in_square = check_space card_to_place id_to_place board in
     assert_equal Red chip_in_square
     );
   
