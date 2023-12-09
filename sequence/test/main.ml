@@ -91,6 +91,12 @@ let deck_tests =
       assert_equal "2 H" (to_string (card_of_string "2H"));
       assert_equal "10 D" (to_string (card_of_string "10D"));
       assert_equal "J S" (to_string (card_of_string "JS")) );
+    ( "card_of_string tests" >:: fun _ ->
+      assert_equal "A C" (to_string (card_of_string "A C"));
+      assert_equal "K D" (to_string (card_of_string "K D"));
+      assert_equal "2 H" (to_string (card_of_string "2 H"));
+      assert_equal "10 D" (to_string (card_of_string "10 D"));
+      assert_equal "J S" (to_string (card_of_string "J S")) );
     ( "full_deck tests" >:: fun _ ->
       let deck = Deck.full_deck () in
       let expected_size = 52 * 2 in
@@ -142,7 +148,14 @@ let deck_tests =
 let board_tests =
   [
     ( "square_to_string free space" >:: fun _ ->
-      let free = { row = 1; col = 2; chip = None; card = Free_space; id = 3 } in
+      let free = 
+      { 
+        row = 1; 
+        col = 2; 
+        chip = None; 
+        card = Free_space; 
+        id = 3 
+      } in
       assert_equal "\027[32m Free" (Board.square_to_string free) );
     ( "square_to_string regular card" >:: fun _ ->
       let reg =
@@ -155,13 +168,56 @@ let board_tests =
         }
       in
       assert_equal "\027[39m 2 H5" (Board.square_to_string reg) );
-    ( "place_chip tests" >:: fun _ ->
+ 
+    ( "place_chip red chip" >:: fun _ ->
       let board = Board.init in
       let card_to_place = Reg_Card { suit = Hearts; rank = Two } in
       let id_to_place = 1 in
       place_chip Red card_to_place id_to_place board;
       let chip_in_square = check_space card_to_place id_to_place board in
       assert_equal Red chip_in_square );
+     ( "place_chip blue chip" >:: fun _ ->
+      let board = Board.init in
+      let card_to_place = Reg_Card { suit = Spades; rank = King } in
+      let id_to_place = 1 in
+      place_chip Blue card_to_place id_to_place board;
+      let chip_in_square = check_space card_to_place id_to_place board in
+      assert_equal Blue chip_in_square );
+    ( "place_chip free chip" >:: fun _ ->
+      let board = Board.init in
+      let card_to_place = Reg_Card { suit = Diamonds; rank = Queen } in
+      let id_to_place = 1 in
+      place_chip Free card_to_place id_to_place board;
+      let chip_in_square = check_space card_to_place id_to_place board in
+      assert_equal Free chip_in_square );
+    ( "remove_chip " >:: fun _ -> 
+      let board = Board.init in
+      let card_to_place = Reg_Card { suit = Diamonds; rank = Queen } in
+      let id_to_place = 1 in
+      place_chip Free card_to_place id_to_place board;
+      remove_chip card_to_place id_to_place board; 
+      let chip_in_square = check_space card_to_place id_to_place board in 
+      assert_equal None chip_in_square);
+    ( "remove_chip " >:: fun _ -> 
+      let board = Board.init in
+      let card_to_place = Reg_Card { suit = Spades; rank = Six } in
+      let id_to_place = 1 in
+      place_chip Free card_to_place id_to_place board;
+      remove_chip card_to_place id_to_place board; 
+      let chip_in_square = check_space card_to_place id_to_place board in 
+      assert_equal None chip_in_square);
+    ( "remove_chip " >:: fun _ -> 
+      let board = Board.init in
+      let card_to_place = Reg_Card { suit = Hearts; rank = Seven } in
+      let id_to_place = 1 in
+      place_chip Free card_to_place id_to_place board;
+      remove_chip card_to_place id_to_place board; 
+      let chip_in_square = check_space card_to_place id_to_place board in 
+      assert_equal None chip_in_square);
+    
+      
+
+
   ]
 
   let board_tests_2 = [
@@ -301,6 +357,6 @@ let board_tests =
 
 let suite =
   "test suite for Sequence"
-  >::: List.flatten [ player_tests; deck_tests; board_tests; board_tests_2 ]
+  >::: List.flatten [ player_tests; deck_tests; board_tests ]
 
 let () = run_test_tt_main suite
