@@ -148,20 +148,6 @@ let check_space (c : card) (id : int) (b : t) : chip =
   in
   find_chip (List.flatten b)
 
-(* return a list of squares representing the specified column. let extract_col
-   (b : t) col_index = List.map (fun row -> List.nth row col_index) b
-
-   (*extracts the left-to-right diagonal from the board [b]*) let extract_diag1
-   (b : t) = List.mapi (fun i row -> List.nth row i) b
-
-   (*extracts the right-to-left diagonal from the board [b]*) let extract_diag2
-   (b : t) = List.mapi (fun i row -> List.nth row (List.length row - 1 - i))
-   b *)
-
-(*checks if there is a winning sequence in a line*)
-(* let check_line_for_win line = let rec aux count = function | [] -> count >= 5
-   | { chip = None; _ } :: t -> aux 0 t | h :: ({ chip = ch; _ } :: _ as t) when
-   h.chip = ch -> aux (count + 1) t | _ :: t -> aux 1 t in aux 0 line *)
 let rec sublist_from_index i lst =
   if i <= 0 then lst
   else
