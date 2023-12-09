@@ -117,7 +117,7 @@ let print_board board =
   List.iter
     (fun row ->
       List.iter
-        (fun square -> Printf.printf "%s\t" (square_to_string square))
+        (fun square -> Printf.printf "%s\t\027[39m" (square_to_string square))
         row;
       print_endline "")
     board
