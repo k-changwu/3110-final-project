@@ -3,7 +3,6 @@ type t
 (* Create a new player with a specified ID. *)
 val create : int -> Deck.t list -> t
 
-
 (* Get the player's hand. *)
 val get_hand : t -> Deck.t list
 

@@ -5,19 +5,32 @@ open Deck
 open Game
 open Board
 
-(* Test Plan
-Which parts of the system were automatically tested by OUnit vs. manually tested:
-- bin/main.ml is not tested by OUnit (manually tested)
-- the game loop is not tested by OUnit (manually tested)
-- the modules were automatially tested by OUnit
-What modules were tested by OUnit and how test cases were developed (black box, glass box, randomized, etc.).
-- Player, Dec, and Board were tested with OUnit test suite. The test cases were developed using both black box
-testing and glass box testing. Some methods (eg. card_of_string) were tested with glass-box as we tested for every possible
-input, knowing how the function works. Some methods (eg. place_card) were tested with black box testing.
-Why the testing approach demonstrates the correctness of the system
-- This testing approach demonstrates the correctness of the system because we created test cases for all the functions that
-game calls/builds off of. Since these fundamental functions passed, we know that our game functions work.  *)
+(*** Test Plan:
 
+  Which parts of the system were automatically tested by OUnit vs. manually
+  tested:
+
+  - bin/main.ml is not tested by OUnit (manually tested)
+
+  - the game loop is not tested by OUnit (manually tested)
+
+  - the player, deck, and board modules were automatially tested by OUnit
+
+  What modules were tested by OUnit and how test cases were developed (black
+  box, glass box, randomized, etc.).
+
+  - Player, Deck, and Board were tested with OUnit test suite. The test cases
+  were developed using both black box testing and glass box testing. Some
+  methods (eg. card_of_string) were tested with glass-box as we tested for every
+  possible input, knowing how the function works. Some methods (eg. place_card)
+  were tested with black box testing.
+
+  Why the testing approach demonstrates the correctness of the system
+
+  - This testing approach demonstrates the correctness of the system because we
+  created test cases for all the functions that game calls/builds off of. Since
+  these fundamental functions passed, we know that our game functions work. We
+  also play tested several times to ensure we did not miss any bugs ***)
 
 let p1 =
   Player.create 1
@@ -33,8 +46,13 @@ let player_tests =
         [ { suit = Clubs; rank = Three }; { suit = Spades; rank = Five } ]
         (get_hand p1) );
     ( "create duplicate hand" >:: fun _ ->
-        let player = Player.create 3 [ { suit = Clubs; rank = Three }; { suit = Clubs; rank = Three } ] in 
-         assert_equal [ { suit = Clubs; rank = Three }; { suit = Clubs; rank = Three } ] (get_hand player));
+      let player =
+        Player.create 3
+          [ { suit = Clubs; rank = Three }; { suit = Clubs; rank = Three } ]
+      in
+      assert_equal
+        [ { suit = Clubs; rank = Three }; { suit = Clubs; rank = Three } ]
+        (get_hand player) );
     ( "create empty hand" >:: fun _ ->
       assert_equal 2 (get_id p2);
       assert_equal [] (get_hand p2) );
@@ -47,14 +65,22 @@ let player_tests =
       assert_equal cards_to_deal new_hand );
     ( "get_hand test" >:: fun _ ->
       let cards_to_deal =
-        [ { suit = Hearts; rank = Five }; { suit = Diamonds; rank = Ten }; { suit = Clubs; rank = Queen } ]
+        [
+          { suit = Hearts; rank = Five };
+          { suit = Diamonds; rank = Ten };
+          { suit = Clubs; rank = Queen };
+        ]
       in
       let player = Player.create 4 cards_to_deal in
       let new_hand = Player.get_hand player in
       assert_equal cards_to_deal new_hand );
     ( "get_hand test" >:: fun _ ->
       let cards_to_deal =
-        [ { suit = Hearts; rank = King}; { suit = Diamonds; rank = Ace }; { suit = Clubs; rank = Queen } ]
+        [
+          { suit = Hearts; rank = King };
+          { suit = Diamonds; rank = Ace };
+          { suit = Clubs; rank = Queen };
+        ]
       in
       let player = Player.create 8 cards_to_deal in
       let new_hand = Player.get_hand player in
@@ -86,14 +112,20 @@ let player_tests =
       | None -> assert_failure "Failed to play the card" );
     ( "play_card test valid card" >:: fun _ ->
       let initial_hand =
-        [ { suit = Clubs; rank = King }; { suit = Diamonds; rank = Queen }; { suit = Hearts; rank = Two } ]
+        [
+          { suit = Clubs; rank = King };
+          { suit = Diamonds; rank = Queen };
+          { suit = Hearts; rank = Two };
+        ]
       in
       let player = Player.create 5 initial_hand in
       let card_to_play = { suit = Diamonds; rank = Queen } in
       match Player.play_card player card_to_play with
       | Some player_after ->
           let new_hand = Player.get_hand player_after in
-          assert_equal [ { suit = Clubs; rank = King }; { suit = Hearts; rank = Two } ] new_hand
+          assert_equal
+            [ { suit = Clubs; rank = King }; { suit = Hearts; rank = Two } ]
+            new_hand
       | None -> assert_failure "Failed to play the card" );
     ( "play_card test valid card duplicate" >:: fun _ ->
       let initial_hand =
@@ -117,7 +149,7 @@ let player_tests =
       | Some _ -> assert_failure "Expected None for an invalid card" );
     ( "play_card test invalid card" >:: fun _ ->
       let initial_hand =
-        [ { suit = Hearts; rank = Two }; { suit = Hearts; rank = Ace} ]
+        [ { suit = Hearts; rank = Two }; { suit = Hearts; rank = Ace } ]
       in
       let player = Player.create 1 initial_hand in
       let card_to_play = { suit = Spades; rank = Six } in
@@ -128,28 +160,35 @@ let player_tests =
       let empty_hand = [] in
       assert_equal "[]" (Player.hand_to_string empty_hand) );
     ( "hand_to_string non-empty hand" >:: fun _ ->
-      let hand =
-        [ { suit = Diamonds; rank = Nine } ]
-      in
+      let hand = [ { suit = Diamonds; rank = Nine } ] in
       assert_equal "[9 D]" (Player.hand_to_string hand) );
     ( "hand_to_string non-empty hand" >:: fun _ ->
       let hand =
         [ { suit = Hearts; rank = Two }; { suit = Diamonds; rank = Jack } ]
       in
       assert_equal "[2 H, J D]" (Player.hand_to_string hand) );
-     ( "hand_to_string duplicate hand" >:: fun _ ->
+    ( "hand_to_string duplicate hand" >:: fun _ ->
       let hand =
         [ { suit = Hearts; rank = Two }; { suit = Hearts; rank = Two } ]
       in
       assert_equal "[2 H, 2 H]" (Player.hand_to_string hand) );
     ( "hand_to_string non-empty hand" >:: fun _ ->
       let hand =
-        [ { suit = Clubs; rank = King }; { suit = Diamonds; rank = Queen }; { suit = Hearts; rank = Two } ]
+        [
+          { suit = Clubs; rank = King };
+          { suit = Diamonds; rank = Queen };
+          { suit = Hearts; rank = Two };
+        ]
       in
       assert_equal "[K C, Q D, 2 H]" (Player.hand_to_string hand) );
-   ( "hand_to_string non-empty hand" >:: fun _ ->
+    ( "hand_to_string non-empty hand" >:: fun _ ->
       let hand =
-        [ { suit = Clubs; rank = King }; { suit = Diamonds; rank = Queen }; { suit = Hearts; rank = Two }; { suit = Clubs; rank = Seven } ]
+        [
+          { suit = Clubs; rank = King };
+          { suit = Diamonds; rank = Queen };
+          { suit = Hearts; rank = Two };
+          { suit = Clubs; rank = Seven };
+        ]
       in
       assert_equal "[K C, Q D, 2 H, 7 C]" (Player.hand_to_string hand) );
   ]
@@ -177,8 +216,8 @@ let deck_tests =
     ( "full_deck tests" >:: fun _ ->
       let deck = Deck.full_deck () in
       let expected_size = 52 * 2 in
-      assert_equal expected_size (List.length deck));
-     ( "full_deck tests" >:: fun _ ->
+      assert_equal expected_size (List.length deck) );
+    ( "full_deck tests" >:: fun _ ->
       let deck = Deck.full_deck () in
       let count_jacks =
         List.filter
@@ -240,7 +279,7 @@ let board_tests =
         }
       in
       assert_equal "\027[39m 2 H5" (Board.square_to_string reg) );
-  ( "square_to_string regular card" >:: fun _ ->
+    ( "square_to_string regular card" >:: fun _ ->
       let reg =
         {
           row = 2;
@@ -269,13 +308,13 @@ let board_tests =
       place_chip Red card_to_place id_to_place board;
       let chip_in_square = check_space card_to_place id_to_place board in
       assert_equal Red chip_in_square );
-      ( "place_chip red chip" >:: fun _ ->
-        let board = Board.init in
-        let card_to_place = Reg_Card { suit = Diamonds; rank = Ace } in
-        let id_to_place = 1 in
-        place_chip Red card_to_place id_to_place board;
-        let chip_in_square = check_space card_to_place id_to_place board in
-        assert_equal Red chip_in_square );
+    ( "place_chip red chip" >:: fun _ ->
+      let board = Board.init in
+      let card_to_place = Reg_Card { suit = Diamonds; rank = Ace } in
+      let id_to_place = 1 in
+      place_chip Red card_to_place id_to_place board;
+      let chip_in_square = check_space card_to_place id_to_place board in
+      assert_equal Red chip_in_square );
     ( "place_chip blue chip" >:: fun _ ->
       let board = Board.init in
       let card_to_place = Reg_Card { suit = Spades; rank = King } in

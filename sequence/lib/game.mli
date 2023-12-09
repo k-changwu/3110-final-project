@@ -31,28 +31,23 @@ val get_card_square_and_id : unit -> (Deck.t * int) option
 val ask_for_square : unit -> int
 
 (* Asks a player to choose a card from their hand. *)
-val ask_for_card: Player.t -> Deck.t
+val ask_for_card : Player.t -> Deck.t
 
-(*Determines if a given card from the deck is a special 
-   Jack card (like One-Eyed or Two-Eyed Jacks)*)
+(*Determines if a given card from the deck is a special Jack card (like One-Eyed
+  or Two-Eyed Jacks)*)
 val is_special_jack : Deck.t -> bool
 
 (*Allows a player to draw a card from the deck in the current game state.*)
 val draw_card : t -> Deck.t option
 
 (*Advances the game to the next player's turn*)
-val next_player: t -> unit
+val next_player : t -> unit
 
 (*Returns the current active player based on the game state*)
-val current_player: t -> Player.t
+val current_player : t -> Player.t
 
 (*player playing a card*)
 val play_card : t -> Player.t -> unit
 
 (*player plays a turn*)
-val play_turn: t -> unit
-
-
-
-
-
+val play_turn : t -> unit
