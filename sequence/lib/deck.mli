@@ -30,6 +30,9 @@ type t = {
 (* String representation of a card. *)
 val to_string : t -> string
 
+(* Get a list of unique "regular cards", not including special Jacks *)
+val regular_cards : unit -> t list
+
 (* Create a full deck of cards, considering special Jacks. *)
 val full_deck : unit -> t list
 

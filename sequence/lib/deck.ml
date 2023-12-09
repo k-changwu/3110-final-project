@@ -54,10 +54,17 @@ let to_string card =
   in
   rank ^ " " ^ suit
 
+let regular_cards () =
+  let suits = [ Hearts; Diamonds; Clubs; Spades ] in
+  let ranks =
+    [ Two; Three; Four; Five; Six; Seven; Eight; Nine; Ten; Queen; King; Ace ]
+  in
+  List.flatten
+    (List.map (fun suit -> List.map (fun rank -> { suit; rank }) ranks) suits)
+
 (* Create an unshuffled full deck of cards (2 regular decks of cards)
    considering special Jacks. *)
 let full_deck () =
-  let suits = [ Hearts; Diamonds; Clubs; Spades ] in
   (* 4 special_jacks per 52 card deck *)
   let special_jacks =
     [
@@ -67,13 +74,7 @@ let full_deck () =
       { suit = TwoEyed; rank = Jack };
     ]
   in
-  let ranks =
-    [ Two; Three; Four; Five; Six; Seven; Eight; Nine; Ten; Queen; King; Ace ]
-  in
-  let regular_cards =
-    List.flatten
-      (List.map (fun suit -> List.map (fun rank -> { suit; rank }) ranks) suits)
-  in
+  let regular_cards = regular_cards () in
   let full_single_deck = special_jacks @ regular_cards in
   full_single_deck @ full_single_deck
 

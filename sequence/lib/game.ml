@@ -4,6 +4,7 @@ type t = {
   players : Player.t array; (* array of players *)
   mutable deck : Deck.t list; (* remaining deck *)
   board : Board.t; (* game board *)
+  vs_ai : bool;
 }
 
 type result =
@@ -22,7 +23,7 @@ let draw_cards num_cards deck =
   in
   draw num_cards deck []
 
-let start vs_ai =
+let start ai_bool =
   let deck_shuffled = Deck.full_deck () |> Deck.shuffle in
   let new_deck, drawn_cards_1 = draw_cards 7 deck_shuffled in
   let newest_deck, drawn_cards_2 = draw_cards 7 new_deck in
@@ -30,13 +31,13 @@ let start vs_ai =
     current_player_id = 1;
     players =
       (* start with two humans or one human one ai depending on choice *)
-      (if vs_ai then
+      (if ai_bool then
          [| Player.create 1 drawn_cards_1; Player.create 2 drawn_cards_2 |]
        else [| Player.create 1 drawn_cards_1; Player.create 2 drawn_cards_2 |]);
     (* initialize two players *)
     deck = newest_deck;
     board = Board.init;
-    (* initialize a new game board *)
+    vs_ai = ai_bool (* initialize a new game board *);
   }
 
 let current_player_id game = game.current_player_id
@@ -182,6 +183,83 @@ let rec play_card game current_player =
          happen as ask_for_card forces card in hand *)
       Printf.printf "Card not in hand. Please choose another card.\n"
 
+(* Function to randomly select an element from a list *)
+let random_select lst =
+  let len = List.length lst in
+  if len = 0 then None else Some (List.nth lst (Random.int len))
+
+let all_possible_cards () =
+  let regular_cards = Deck.regular_cards () in
+  let ids = [ 0; 1 ] in
+  List.fold_left
+    (fun acc card ->
+      List.fold_left (fun acc id -> (Board.Reg_Card card, id) :: acc) acc ids)
+    [] regular_cards
+
+let rec play_ai_card game current_player =
+  let ai_hand = Player.get_hand current_player in
+  match random_select ai_hand with
+  | Some card -> (
+      match card.Deck.rank with
+      | Jack -> begin
+          match card.Deck.suit with
+          | TwoEyed ->
+              (* AI plays Two-eyed Jack: Place a chip on any open space *)
+              let open_locations =
+                List.fold_left
+                  (fun acc (card, id) ->
+                    match Board.check_space card id game.board with
+                    | None -> (card, id) :: acc
+                    | _ -> acc)
+                  [] (all_possible_cards ())
+              in
+              begin
+                match random_select open_locations with
+                | Some (c, id) ->
+                    Board.place_chip
+                      (if game.current_player_id = 1 then Board.Red
+                       else Board.Blue)
+                      c id game.board
+                | None -> ()
+              end
+          | OneEyed ->
+              (* AI plays One-eyed Jack: Remove an opponent's chip *)
+              let opponent_chip_locations =
+                List.fold_left
+                  (fun acc (card, id) ->
+                    match Board.check_space card id game.board with
+                    | Red -> (card, id) :: acc
+                    | _ -> acc)
+                  [] (all_possible_cards ())
+              in
+              begin
+                match random_select opponent_chip_locations with
+                | Some (c, id) -> Board.remove_chip c id game.board
+                | None -> play_ai_card game current_player
+              end
+          | _ -> ()
+        end
+      | _ ->
+          if Board.check_space (Board.Reg_Card card) 0 game.board = None then (
+            (* Call Board.place_chip with the arguments card & square *)
+            Board.place_chip
+              (if game.current_player_id = 1 then Board.Red else Board.Blue)
+              (Board.Reg_Card card) 0 game.board;
+            Printf.printf "Placed %s Token on %s%d\n"
+              (if game.current_player_id = 1 then "Red" else "Blue")
+              (Deck.to_string card) 0)
+          else if Board.check_space (Board.Reg_Card card) 1 game.board = None
+          then (
+            (* Call Board.place_chip with the arguments card & square *)
+            Board.place_chip
+              (if game.current_player_id = 1 then Board.Red else Board.Blue)
+              (Board.Reg_Card card) 1 game.board;
+            Printf.printf "Placed %s Token on %s%d\n"
+              (if game.current_player_id = 1 then "Red" else "Blue")
+              (Deck.to_string card) 1)
+          else play_ai_card game current_player)
+  | None -> ()
+
 let play_turn game =
   (* Print the board *)
   Board.print_board game.board;
@@ -191,7 +269,9 @@ let play_turn game =
   Printf.printf "Your Hand: %s\n"
     (Player.hand_to_string (Player.get_hand current_player));
 
-  play_card game current_player;
+  if game.current_player_id = 2 && game.vs_ai then
+    play_ai_card game current_player
+  else play_card game current_player;
   (* Check if the game is over *)
   (if check_game_over game = Won then (
      Board.print_board game.board;
@@ -203,4 +283,4 @@ let play_turn game =
      | None -> Printf.printf "No more cards to draw. The game ends in a draw \n");
 
   (* Change players *)
-  game.current_player_id <- (if game.current_player_id = 1 then 2 else 1)
+  next_player game

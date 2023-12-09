@@ -8,7 +8,7 @@ type result =
   | Won
   | Draw
 
-(* Starts a new game with two players. *)
+(* Starts a new game with two players or one player and one AI *)
 val start : bool -> t
 
 (* Gets the current player's ID. *)
