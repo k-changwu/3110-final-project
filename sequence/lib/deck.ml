@@ -116,8 +116,17 @@ let suit_of_char c =
   | _ -> failwith "Invalid suit"
 
 let card_of_string str =
-  if str = "JOneEyed" then { suit = OneEyed; rank = Jack }
-  else if str = "JTwoEyed" then { suit = TwoEyed; rank = Jack }
+  if str = "J One-Eyed" || str = "JOneEyed" then { suit = OneEyed; rank = Jack }
+  else if str = "J Two-Eyed" || str = "JTwoEyed" then
+    { suit = TwoEyed; rank = Jack }
+  else if String.contains str ' ' then
+    let parts = String.split_on_char ' ' str in
+    match parts with
+    | [ rank_str; suit_str ] ->
+        let rank = rank_of_string rank_str in
+        let suit = suit_of_char (String.get suit_str 0) in
+        { suit; rank }
+    | _ -> failwith "Invalid card format"
   else
     let len = String.length str in
     if len = 3 || len = 2 then

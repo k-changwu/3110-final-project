@@ -87,7 +87,7 @@ let rec ask_for_square () =
       ask_for_square ()
 
 let rec get_card_square_and_id () =
-  Printf.printf "Enter the card (format: RankSuit, e.g., '10H'): ";
+  Printf.printf "Enter the card (format: Rank Suit, e.g., '10H' or '10 H'): ";
   let card_str = read_line () in
   try
     let card = Deck.card_of_string card_str in
