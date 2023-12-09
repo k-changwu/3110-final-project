@@ -131,71 +131,60 @@ let apply_jack_effect board player_id card =
     end
   | _ -> () (* shouldn't happen *)
 
-let play_card game card id =
-  let current_player = Array.get game.players (game.current_player_id - 1) in
-  match Player.play_card current_player card with
-  | Some updated_player ->
-      Array.set game.players (game.current_player_id - 1) updated_player;
-      if is_special_jack card then
-        apply_jack_effect game.board game.current_player_id card
-      else
-        Board.place_chip
-          (if game.current_player_id = 1 then Board.Red else Board.Blue)
-          (Reg_Card card) 0 game.board;
-      (* Assumes ID is 0 for regular cards *)
-      Some game
-  | None ->
-      Printf.printf "You don't have that card. Please choose another.\n";
-      None
-
 let check_game_over g = if Board.is_win g.board then Won else Ongoing
 
 let play_turn game =
   (* Print the board *)
   Board.print_board game.board;
 
-  let current_player = Array.get game.players (game.current_player_id - 1) in
+  let current_player = current_player game in
   Printf.printf "Player %d's turn.\n" game.current_player_id;
   Printf.printf "Your Hand: %s\n"
     (Player.hand_to_string (Player.get_hand current_player));
 
   let card = ask_for_card current_player in
-  let square = ask_for_square () in
+  let card_effect () =
+    match card with
+    | { suit = _; rank = Jack } ->
+        apply_jack_effect game.board game.current_player_id card;
+        ignore (Player.play_card current_player card)
+    | _ ->
+        let square = ask_for_square () in
 
-  (* Check if the card can be played *)
-  if Board.check_space (Board.Reg_Card card) square game.board = None then begin
-    (* Call Board.place_chip with the arguments card & square *)
-    Board.place_chip
-      (if game.current_player_id = 1 then Board.Red else Board.Blue)
-      (Board.Reg_Card card) square game.board;
-    Printf.printf "Placed %s Token on %s%d\n"
-      (if game.current_player_id = 1 then "Red" else "Blue")
-      (Deck.to_string card) square;
+        (* Check if the card can be played *)
+        if Board.check_space (Board.Reg_Card card) square game.board = None then (
+          (* Call Board.place_chip with the arguments card & square *)
+          Board.place_chip
+            (if game.current_player_id = 1 then Board.Red else Board.Blue)
+            (Board.Reg_Card card) square game.board;
+          Printf.printf "Placed %s Token on %s%d\n"
+            (if game.current_player_id = 1 then "Red" else "Blue")
+            (Deck.to_string card) square)
+        else
+          Printf.printf
+            "That move is not possible. Please choose another card or square.\n"
+  in
+  card_effect ();
 
-    (* Update the player's hand *)
-    (match Player.play_card current_player card with
-    | Some updated_player ->
-        (* Update the array with the new player state *)
-        Array.set game.players (game.current_player_id - 1) updated_player
-    | None ->
-        (* Handle the case where the card is not in the player's hand -
-           shouldn't happen as ask_for_card forces card in hand *)
-        Printf.printf "Card not in hand. Please choose another card.\n");
-    (* Check if the game is over *)
-    if check_game_over game = Won then
-      Printf.printf "Player %d wins!\n" game.current_player_id
-    else begin
-      (* Draw a card for the player *)
-      (match draw_card game with
-      | Some card -> Printf.printf "You drew %s\n" (Deck.to_string card)
-      | None -> Printf.printf "No more cards to draw.\n");
+  (* Update the player's hand *)
+  (match Player.play_card current_player card with
+  | Some updated_player ->
+      (* Update the array with the new player state *)
+      Array.set game.players (game.current_player_id - 1) updated_player
+  | None ->
+      (* Handle the case where the card is not in the player's hand - shouldn't
+         happen as ask_for_card forces card in hand *)
+      Printf.printf "Card not in hand. Please choose another card.\n");
+  (* Check if the game is over *)
+  (if check_game_over game = Won then
+     Printf.printf "Player %d wins!\n" game.current_player_id
+   else
+     (* Draw a card for the player *)
+     match draw_card game with
+     | Some card -> Printf.printf "You drew %s\n" (Deck.to_string card)
+     | None -> Printf.printf "No more cards to draw.\n");
 
-      (* Change players *)
-      game.current_player_id <- (if game.current_player_id = 1 then 2 else 1)
-    end
-  end
-  else
-    Printf.printf
-      "That move is not possible. Please choose another card or square.\n"
+  (* Change players *)
+  game.current_player_id <- (if game.current_player_id = 1 then 2 else 1)
 
 let current_card = failwith "unimp"

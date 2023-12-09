@@ -116,15 +116,18 @@ let suit_of_char c =
   | _ -> failwith "Invalid suit"
 
 let card_of_string str =
-  let len = String.length str in
-  if len = 3 || len = 2 then
-    let rank_str =
-      if len = 3 then String.sub str 0 2 else String.make 1 (String.get str 0)
-    in
-    let suit_char = String.get str (len - 1) in
-    try
-      let rank = rank_of_string rank_str in
-      let suit = suit_of_char suit_char in
-      { suit; rank }
-    with Failure msg -> failwith ("card_of_string: " ^ msg)
-  else failwith "Invalid card format"
+  if str = "JOneEyed" then { suit = OneEyed; rank = Jack }
+  else if str = "JTwoEyed" then { suit = TwoEyed; rank = Jack }
+  else
+    let len = String.length str in
+    if len = 3 || len = 2 then
+      let rank_str =
+        if len = 3 then String.sub str 0 2 else String.make 1 (String.get str 0)
+      in
+      let suit_char = String.get str (len - 1) in
+      try
+        let rank = rank_of_string rank_str in
+        let suit = suit_of_char suit_char in
+        { suit; rank }
+      with Failure msg -> failwith ("card_of_string: " ^ msg)
+    else failwith "Invalid card format"

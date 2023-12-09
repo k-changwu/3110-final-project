@@ -5,7 +5,7 @@ type t
 (* Represents the result of a game, whether it's ongoing, won, or a draw. *)
 type result =
   | Ongoing
-  | Won of int
+  | Won
   | Draw
 
 (* Starts a new game with two players. *)
