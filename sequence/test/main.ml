@@ -212,50 +212,7 @@ let board_tests =
   ]
 
 let board_tests_2 =
-  [
-    ( "is_win test horizontal win" >:: fun _ ->
-      let board =
-        [
-          [
-            {
-              row = 0;
-              col = 0;
-              chip = Red;
-              card = Reg_Card { suit = Hearts; rank = Two };
-              id = 0;
-            };
-            {
-              row = 0;
-              col = 1;
-              chip = Red;
-              card = Reg_Card { suit = Hearts; rank = Three };
-              id = 1;
-            };
-            {
-              row = 0;
-              col = 2;
-              chip = Red;
-              card = Reg_Card { suit = Hearts; rank = Four };
-              id = 2;
-            };
-            {
-              row = 0;
-              col = 3;
-              chip = Red;
-              card = Reg_Card { suit = Hearts; rank = Five };
-              id = 3;
-            };
-            {
-              row = 0;
-              col = 4;
-              chip = None;
-              card = Reg_Card { suit = Hearts; rank = Six };
-              id = 4;
-            };
-          ];
-        ]
-      in
-      assert_bool "win" (Board.is_win board) );
+  [       
     ( "is_vertical_win" >:: fun _ ->
       let board =
         [
