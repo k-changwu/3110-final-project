@@ -192,7 +192,7 @@ let board_tests =
     assert_bool "win" (Board.is_win board)
   );
 
-  "diagonal_win_left_to_right" >:: (fun _ ->
+  "diagonal_win " >:: (fun _ ->
     let board = [
       [{row=0; col=0; chip=Red; card=Reg_Card {suit=Spades; rank=Two}; id=0};
        {row=0; col=1; chip=None; card=Reg_Card {suit=Spades; rank=Three}; id=1};
