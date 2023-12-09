@@ -22,13 +22,16 @@ let draw_cards num_cards deck =
   in
   draw num_cards deck []
 
-let start () =
+let start vs_ai =
   let deck_shuffled = Deck.full_deck () |> Deck.shuffle in
   let new_deck, drawn_cards_1 = draw_cards 7 deck_shuffled in
   let newest_deck, drawn_cards_2 = draw_cards 7 new_deck in
   {
     current_player_id = 1;
-    players = [| Player.create 1 drawn_cards_1; Player.create 2 drawn_cards_2 |];
+    players =
+      (if vs_ai then
+         [| Player.create 1 drawn_cards_1; Player.create 2 drawn_cards_2 |]
+       else [| Player.create 1 drawn_cards_1; Player.create 2 drawn_cards_2 |]);
     (* initialize two players *)
     deck = newest_deck;
     board = Board.init;

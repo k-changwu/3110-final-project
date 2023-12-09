@@ -28,6 +28,21 @@ let instructions () =
     "One eyed Jacks are anti-wild. They can be used to free any claimed spot \
      on the board.\n"
 
+let ask_game_mode () =
+  Printf.printf "Choose game mode:\n";
+  Printf.printf "1: Player vs Player\n";
+  Printf.printf "2: Player vs AI\n";
+  let rec get_choice () =
+    Printf.printf "Enter your choice (1 or 2): ";
+    match read_int_opt () with
+    | Some 1 -> false (* PvP mode *)
+    | Some 2 -> true (* PvAI mode *)
+    | _ ->
+        Printf.printf "Invalid choice. Please enter 1 or 2.\n";
+        get_choice ()
+  in
+  get_choice ()
+
 let rec game_loop game =
   match Sequence.Game.check_game_over game with
   | Ongoing ->
@@ -39,5 +54,6 @@ let () =
   print_endline "\nWelcome to Sequence!\n";
   instructions ();
   print_endline "With that out of the way, let's begin the game!";
-  let g = Sequence.Game.start () in
+  let vs_ai = ask_game_mode () in
+  let g = Sequence.Game.start vs_ai in
   game_loop g

@@ -11,15 +11,20 @@ open Board
    acc ^ "..." (* stop printing long list *) else loop (n + 1) (acc ^ pp_elt h1
    ^ "; ") t' in loop 0 "" lst in "[" ^ pp_elts lst ^ "]" *)
 
-let p1 = Player.create 1  [ { suit = Clubs; rank = Three }; { suit = Spades; rank = Five } ]
+let p1 =
+  Player.create 1
+    [ { suit = Clubs; rank = Three }; { suit = Spades; rank = Five } ]
+
 let p2 = Player.create 2 []
 
 let player_tests =
   [
-    ("create  non empty hand" >:: fun _ -> 
+    ( "create  non empty hand" >:: fun _ ->
       assert_equal 1 (get_id p1);
-      assert_equal [ { suit = Clubs; rank = Three }; { suit = Spades; rank = Five } ] (get_hand p1));
-    ("create empty hand" >:: fun _ -> 
+      assert_equal
+        [ { suit = Clubs; rank = Three }; { suit = Spades; rank = Five } ]
+        (get_hand p1) );
+    ( "create empty hand" >:: fun _ ->
       assert_equal 2 (get_id p2);
       assert_equal [] (get_hand p2) );
     ( "get_hand test" >:: fun _ ->
@@ -47,7 +52,7 @@ let player_tests =
       let initial_hand =
         [ { suit = Hearts; rank = Two }; { suit = Diamonds; rank = Jack } ]
       in
-      let player = Player.create 1 initial_hand  in
+      let player = Player.create 1 initial_hand in
       let card_to_play = { suit = Hearts; rank = Two } in
       match Player.play_card player card_to_play with
       | Some player_after ->
@@ -65,17 +70,15 @@ let player_tests =
           (* This is the expected behavior for an invalid card *)
           ()
       | Some _ -> assert_failure "Expected None for an invalid card" );
-    ( "hand_to_string empty hand" >:: fun _ -> 
-      let empty_hand = [] in 
-      assert_equal "[]" (Player.hand_to_string empty_hand));
-    ( "hand_to_string non-empty hand" >:: fun _ -> 
-      let hand = [ 
-        { suit = Hearts; rank = Two }; 
-        { suit = Diamonds; rank = Jack}
-      ] in 
-      assert_equal "[2 H, J D]" (Player.hand_to_string hand));
-       
-    ]
+    ( "hand_to_string empty hand" >:: fun _ ->
+      let empty_hand = [] in
+      assert_equal "[]" (Player.hand_to_string empty_hand) );
+    ( "hand_to_string non-empty hand" >:: fun _ ->
+      let hand =
+        [ { suit = Hearts; rank = Two }; { suit = Diamonds; rank = Jack } ]
+      in
+      assert_equal "[2 H, J D]" (Player.hand_to_string hand) );
+  ]
 
 let deck_tests =
   [
@@ -148,14 +151,7 @@ let deck_tests =
 let board_tests =
   [
     ( "square_to_string free space" >:: fun _ ->
-      let free = 
-      { 
-        row = 1; 
-        col = 2; 
-        chip = None; 
-        card = Free_space; 
-        id = 3 
-      } in
+      let free = { row = 1; col = 2; chip = None; card = Free_space; id = 3 } in
       assert_equal "\027[32m Free" (Board.square_to_string free) );
     ( "square_to_string regular card" >:: fun _ ->
       let reg =
@@ -168,7 +164,6 @@ let board_tests =
         }
       in
       assert_equal "\027[39m 2 H5" (Board.square_to_string reg) );
- 
     ( "place_chip red chip" >:: fun _ ->
       let board = Board.init in
       let card_to_place = Reg_Card { suit = Hearts; rank = Two } in
@@ -176,7 +171,7 @@ let board_tests =
       place_chip Red card_to_place id_to_place board;
       let chip_in_square = check_space card_to_place id_to_place board in
       assert_equal Red chip_in_square );
-     ( "place_chip blue chip" >:: fun _ ->
+    ( "place_chip blue chip" >:: fun _ ->
       let board = Board.init in
       let card_to_place = Reg_Card { suit = Spades; rank = King } in
       let id_to_place = 1 in
@@ -190,170 +185,659 @@ let board_tests =
       place_chip Free card_to_place id_to_place board;
       let chip_in_square = check_space card_to_place id_to_place board in
       assert_equal Free chip_in_square );
-    ( "remove_chip " >:: fun _ -> 
+    ( "remove_chip " >:: fun _ ->
       let board = Board.init in
       let card_to_place = Reg_Card { suit = Diamonds; rank = Queen } in
       let id_to_place = 1 in
       place_chip Free card_to_place id_to_place board;
-      remove_chip card_to_place id_to_place board; 
-      let chip_in_square = check_space card_to_place id_to_place board in 
-      assert_equal None chip_in_square);
-    ( "remove_chip " >:: fun _ -> 
+      remove_chip card_to_place id_to_place board;
+      let chip_in_square = check_space card_to_place id_to_place board in
+      assert_equal None chip_in_square );
+    ( "remove_chip " >:: fun _ ->
       let board = Board.init in
       let card_to_place = Reg_Card { suit = Spades; rank = Six } in
       let id_to_place = 1 in
       place_chip Free card_to_place id_to_place board;
-      remove_chip card_to_place id_to_place board; 
-      let chip_in_square = check_space card_to_place id_to_place board in 
-      assert_equal None chip_in_square);
-    ( "remove_chip " >:: fun _ -> 
+      remove_chip card_to_place id_to_place board;
+      let chip_in_square = check_space card_to_place id_to_place board in
+      assert_equal None chip_in_square );
+    ( "remove_chip " >:: fun _ ->
       let board = Board.init in
       let card_to_place = Reg_Card { suit = Hearts; rank = Seven } in
       let id_to_place = 1 in
       place_chip Free card_to_place id_to_place board;
-      remove_chip card_to_place id_to_place board; 
-      let chip_in_square = check_space card_to_place id_to_place board in 
-      assert_equal None chip_in_square);
-    
-      
-
-
+      remove_chip card_to_place id_to_place board;
+      let chip_in_square = check_space card_to_place id_to_place board in
+      assert_equal None chip_in_square );
   ]
 
-  let board_tests_2 = [
-  "is_win test horizontal win" >:: (fun _ ->
-    let board = [
-      [{row=0; col=0; chip=Red; card=Reg_Card {suit=Hearts; rank=Two}; id=0};
-       {row=0; col=1; chip=Red; card=Reg_Card {suit=Hearts; rank=Three}; id=1};
-       {row=0; col=2; chip=Red; card=Reg_Card {suit=Hearts; rank=Four}; id=2};
-       {row=0; col=3; chip=Red; card=Reg_Card {suit=Hearts; rank=Five}; id=3};
-       {row=0; col=4; chip=Red; card=Reg_Card {suit=Hearts; rank=Six}; id=4}];
-    ] in
-    assert_bool "win" (Board.is_win board)
-  );
-
-  "is_win test horizontal win" >:: (fun _ ->
-    let board = [
-      [{row=0; col=0; chip=Red; card=Reg_Card {suit=Hearts; rank=Two}; id=0};
-       {row=0; col=1; chip=Red; card=Reg_Card {suit=Hearts; rank=Three}; id=1};
-       {row=0; col=2; chip=Red; card=Reg_Card {suit=Hearts; rank=Four}; id=2};
-       {row=0; col=3; chip=Red; card=Reg_Card {suit=Hearts; rank=Five}; id=3};
-       {row=0; col=4; chip=None; card=Reg_Card {suit=Hearts; rank=Six}; id=4}];
-    ] in
-    assert_bool "win" (Board.is_win board)
-  );
-
-  "is_vertical_win" >:: (fun _ ->
-    let board = [
-      [{row=0; col=0; chip=Red; card=Reg_Card {suit=Spades; rank=Two}; id=0};
-       {row=0; col=1; chip=None; card=Reg_Card {suit=Spades; rank=Three}; id=1}];
-      [{row=1; col=0; chip=Red; card=Reg_Card {suit=Spades; rank=Four}; id=5};
-       {row=1; col=1; chip=None; card=Reg_Card {suit=Spades; rank=Five}; id=6}];
-      [{row=2; col=0; chip=Red; card=Reg_Card {suit=Spades; rank=Six}; id=10};
-       {row=2; col=1; chip=None; card=Reg_Card {suit=Spades; rank=Seven}; id=11}];
-      [{row=3; col=0; chip=Red; card=Reg_Card {suit=Spades; rank=Eight}; id=15};
-       {row=3; col=1; chip=None; card=Reg_Card {suit=Spades; rank=Nine}; id=16}];
-      [{row=4; col=0; chip=Red; card=Reg_Card {suit=Spades; rank=Ten}; id=20};
-       {row=4; col=1; chip=Red; card=Reg_Card {suit=Spades; rank=Jack}; id=21}]
-    ] in
-    assert_bool "vertical_win" (Board.is_win board)
-);
-
-"no win horizontal_board_with_free_space" >:: (fun _ ->
-  let board = [
-    [{row=0; col=0; chip=Free; card=Free_space; id=0};
-     {row=0; col=1; chip=None; card=Reg_Card {suit=Spades; rank=Ten}; id=1}]
-  ] in
-  assert_bool "no win" (not (Board.is_win board))
-);
-
-  "diagonal_win" >:: (fun _ ->
-    let board = [
-      [{row=0; col=0; chip=Red; card=Reg_Card {suit=Spades; rank=Two}; id=0};
-       {row=0; col=1; chip=None; card=Reg_Card {suit=Spades; rank=Three}; id=1};
-       {row=0; col=2; chip=None; card=Reg_Card {suit=Spades; rank=Four}; id=2};
-       {row=0; col=3; chip=None; card=Reg_Card {suit=Spades; rank=Five}; id=3};
-       {row=0; col=4; chip=Red; card=Reg_Card {suit=Spades; rank=Six}; id=4}];
-      [{row=1; col=0; chip=None; card=Reg_Card {suit=Spades; rank=Seven}; id=5};
-       {row=1; col=1; chip=Red; card=Reg_Card {suit=Spades; rank=Eight}; id=6};
-       {row=1; col=2; chip=None; card=Reg_Card {suit=Spades; rank=Nine}; id=7};
-       {row=1; col=3; chip=Red; card=Reg_Card {suit=Spades; rank=Ten}; id=8};
-       {row=1; col=4; chip=None; card=Reg_Card {suit=Spades; rank=Jack}; id=9}];
-      [{row=2; col=0; chip=None; card=Reg_Card {suit=Spades; rank=Queen}; id=10};
-       {row=2; col=1; chip=None; card=Reg_Card {suit=Spades; rank=King}; id=11};
-       {row=2; col=2; chip=Red; card=Reg_Card {suit=Spades; rank=Ace}; id=12};
-       {row=2; col=3; chip=None; card=Reg_Card {suit=Spades; rank=Two}; id=13};
-       {row=2; col=4; chip=None; card=Reg_Card {suit=Spades; rank=Three}; id=14}];
-      [{row=3; col=0; chip=None; card=Reg_Card {suit=Spades; rank=Four}; id=15};
-       {row=3; col=1; chip=None; card=Reg_Card {suit=Spades; rank=Five}; id=16};
-       {row=3; col=2; chip=Red; card=Reg_Card {suit=Spades; rank=Six}; id=17};
-       {row=3; col=3; chip=None; card=Reg_Card {suit=Spades; rank=Seven}; id=18};
-       {row=3; col=4; chip=None; card=Reg_Card {suit=Spades; rank=Eight}; id=19}];
-      [{row=4; col=0; chip=None; card=Reg_Card {suit=Spades; rank=Nine}; id=20};
-       {row=4; col=1; chip=None; card=Reg_Card {suit=Spades; rank=Ten}; id=21};
-       {row=4; col=2; chip=Red; card=Reg_Card {suit=Spades; rank=Jack}; id=22};
-       {row=4; col=3; chip=None; card=Reg_Card {suit=Spades; rank=Queen}; id=23};
-       {row=4; col=4; chip=None; card=Reg_Card {suit=Spades; rank=King}; id=24}];
-    ] in
-    assert_bool "win" (Board.is_win board)
-);
-
-"horizontal_win_with_free_space" >:: (fun _ ->
-  let board = [
-    [{row=0; col=0; chip=Red; card=Reg_Card {suit=Hearts; rank=Two}; id=0};
-     {row=0; col=1; chip=Red; card=Reg_Card {suit=Hearts; rank=Three}; id=1};
-     {row=0; col=2; chip=Red; card=Reg_Card {suit=Hearts; rank=Four}; id=2};
-     {row=0; col=3; chip=Red; card=Reg_Card {suit=Hearts; rank=Five}; id=3};
-     {row=0; col=4; chip=None; card=Free_space; id=4}]
-  ] in
-  assert_bool "horizontal_win" (Board.is_win board)
-);
-
-"vertical_win" >:: (fun _ ->
-  let board = [
-    [{row=0; col=0; chip=Red; card=Reg_Card {suit=Diamonds; rank=Two}; id=0};
-     {row=0; col=1; chip=None; card=Reg_Card {suit=Diamonds; rank=Three}; id=1}];
-    [{row=1; col=0; chip=Red; card=Reg_Card {suit=Diamonds; rank=Four}; id=5};
-     {row=1; col=1; chip=None; card=Reg_Card {suit=Diamonds; rank=Five}; id=6}];
-    [{row=2; col=0; chip=Red; card=Reg_Card {suit=Diamonds; rank=Six}; id=10};
-     {row=2; col=1; chip=Red; card=Reg_Card {suit=Diamonds; rank=Seven}; id=11}];
-    [{row=3; col=0; chip=Red; card=Reg_Card {suit=Diamonds; rank=Eight}; id=15};
-     {row=3; col=1; chip=None; card=Reg_Card {suit=Diamonds; rank=Nine}; id=16}];
-    [{row=4; col=0; chip=Red; card=Reg_Card {suit=Diamonds; rank=Ten}; id=20};
-     {row=4; col=1; chip=None; card=Reg_Card {suit=Diamonds; rank=Jack}; id=21}]
-  ] in
-  assert_bool "vertical_win" (Board.is_win board)
-);
-
-"vertical_win_with_free_space" >:: (fun _ ->
-  let board = [
-    [{row=0; col=0; chip=Red; card=Reg_Card {suit=Diamonds; rank=Two}; id=0};
-     {row=0; col=1; chip=None; card=Free_space; id=1}];
-    [{row=1; col=0; chip=Red; card=Reg_Card {suit=Diamonds; rank=Four}; id=5};
-     {row=1; col=1; chip=Red; card=Reg_Card {suit=Diamonds; rank=Five}; id=6}];
-    [{row=2; col=0; chip=Red; card=Reg_Card {suit=Diamonds; rank=Six}; id=10};
-     {row=2; col=1; chip=Red; card=Reg_Card {suit=Diamonds; rank=Seven}; id=11}]
-  ] in
-  assert_bool "vertical_win" (Board.is_win board)
-);
-
-"vertical_win_with_free_space" >:: (fun _ ->
-  let board = [
-    [{row=0; col=0; chip=Blue; card=Reg_Card {suit=Diamonds; rank=Two}; id=0};
-     {row=0; col=1; chip=Red; card=Reg_Card {suit=Diamonds; rank=Three}; id=1}];
-    [{row=1; col=0; chip=Blue; card=Reg_Card {suit=Diamonds; rank=Four}; id=5};
-     {row=1; col=1; chip=Red; card=Reg_Card {suit=Diamonds; rank=Five}; id=6}];
-    [{row=2; col=0; chip=Blue; card=Reg_Card {suit=Diamonds; rank=Six}; id=10};
-     {row=2; col=1; chip=Red; card=Reg_Card {suit=Diamonds; rank=Seven}; id=11}];
-    [{row=3; col=0; chip=Blue; card=Reg_Card {suit=Diamonds; rank=Eight}; id=15};
-     {row=3; col=1; chip=Blue; card=Reg_Card {suit=Diamonds; rank=Nine}; id=16}];
-    [{row=4; col=0; chip=Blue; card=Free_space; id=1};
-     {row=4; col=1; chip=None; card=Free_space; id=21}]
-  ] in
-  assert_bool "vertical_win" (Board.is_win board)
-);
-
-]
+let board_tests_2 =
+  [
+    ( "is_win test horizontal win" >:: fun _ ->
+      let board =
+        [
+          [
+            {
+              row = 0;
+              col = 0;
+              chip = Red;
+              card = Reg_Card { suit = Hearts; rank = Two };
+              id = 0;
+            };
+            {
+              row = 0;
+              col = 1;
+              chip = Red;
+              card = Reg_Card { suit = Hearts; rank = Three };
+              id = 1;
+            };
+            {
+              row = 0;
+              col = 2;
+              chip = Red;
+              card = Reg_Card { suit = Hearts; rank = Four };
+              id = 2;
+            };
+            {
+              row = 0;
+              col = 3;
+              chip = Red;
+              card = Reg_Card { suit = Hearts; rank = Five };
+              id = 3;
+            };
+            {
+              row = 0;
+              col = 4;
+              chip = Red;
+              card = Reg_Card { suit = Hearts; rank = Six };
+              id = 4;
+            };
+          ];
+        ]
+      in
+      assert_bool "win" (Board.is_win board) );
+    ( "is_win test horizontal win" >:: fun _ ->
+      let board =
+        [
+          [
+            {
+              row = 0;
+              col = 0;
+              chip = Red;
+              card = Reg_Card { suit = Hearts; rank = Two };
+              id = 0;
+            };
+            {
+              row = 0;
+              col = 1;
+              chip = Red;
+              card = Reg_Card { suit = Hearts; rank = Three };
+              id = 1;
+            };
+            {
+              row = 0;
+              col = 2;
+              chip = Red;
+              card = Reg_Card { suit = Hearts; rank = Four };
+              id = 2;
+            };
+            {
+              row = 0;
+              col = 3;
+              chip = Red;
+              card = Reg_Card { suit = Hearts; rank = Five };
+              id = 3;
+            };
+            {
+              row = 0;
+              col = 4;
+              chip = None;
+              card = Reg_Card { suit = Hearts; rank = Six };
+              id = 4;
+            };
+          ];
+        ]
+      in
+      assert_bool "win" (Board.is_win board) );
+    ( "is_vertical_win" >:: fun _ ->
+      let board =
+        [
+          [
+            {
+              row = 0;
+              col = 0;
+              chip = Red;
+              card = Reg_Card { suit = Spades; rank = Two };
+              id = 0;
+            };
+            {
+              row = 0;
+              col = 1;
+              chip = None;
+              card = Reg_Card { suit = Spades; rank = Three };
+              id = 1;
+            };
+          ];
+          [
+            {
+              row = 1;
+              col = 0;
+              chip = Red;
+              card = Reg_Card { suit = Spades; rank = Four };
+              id = 5;
+            };
+            {
+              row = 1;
+              col = 1;
+              chip = None;
+              card = Reg_Card { suit = Spades; rank = Five };
+              id = 6;
+            };
+          ];
+          [
+            {
+              row = 2;
+              col = 0;
+              chip = Red;
+              card = Reg_Card { suit = Spades; rank = Six };
+              id = 10;
+            };
+            {
+              row = 2;
+              col = 1;
+              chip = None;
+              card = Reg_Card { suit = Spades; rank = Seven };
+              id = 11;
+            };
+          ];
+          [
+            {
+              row = 3;
+              col = 0;
+              chip = Red;
+              card = Reg_Card { suit = Spades; rank = Eight };
+              id = 15;
+            };
+            {
+              row = 3;
+              col = 1;
+              chip = None;
+              card = Reg_Card { suit = Spades; rank = Nine };
+              id = 16;
+            };
+          ];
+          [
+            {
+              row = 4;
+              col = 0;
+              chip = Red;
+              card = Reg_Card { suit = Spades; rank = Ten };
+              id = 20;
+            };
+            {
+              row = 4;
+              col = 1;
+              chip = Red;
+              card = Reg_Card { suit = Spades; rank = Jack };
+              id = 21;
+            };
+          ];
+        ]
+      in
+      assert_bool "vertical_win" (Board.is_win board) );
+    ( "no win horizontal_board_with_free_space" >:: fun _ ->
+      let board =
+        [
+          [
+            { row = 0; col = 0; chip = Free; card = Free_space; id = 0 };
+            {
+              row = 0;
+              col = 1;
+              chip = None;
+              card = Reg_Card { suit = Spades; rank = Ten };
+              id = 1;
+            };
+          ];
+        ]
+      in
+      assert_bool "no win" (not (Board.is_win board)) );
+    ( "diagonal_win" >:: fun _ ->
+      let board =
+        [
+          [
+            {
+              row = 0;
+              col = 0;
+              chip = Red;
+              card = Reg_Card { suit = Spades; rank = Two };
+              id = 0;
+            };
+            {
+              row = 0;
+              col = 1;
+              chip = None;
+              card = Reg_Card { suit = Spades; rank = Three };
+              id = 1;
+            };
+            {
+              row = 0;
+              col = 2;
+              chip = None;
+              card = Reg_Card { suit = Spades; rank = Four };
+              id = 2;
+            };
+            {
+              row = 0;
+              col = 3;
+              chip = None;
+              card = Reg_Card { suit = Spades; rank = Five };
+              id = 3;
+            };
+            {
+              row = 0;
+              col = 4;
+              chip = Red;
+              card = Reg_Card { suit = Spades; rank = Six };
+              id = 4;
+            };
+          ];
+          [
+            {
+              row = 1;
+              col = 0;
+              chip = None;
+              card = Reg_Card { suit = Spades; rank = Seven };
+              id = 5;
+            };
+            {
+              row = 1;
+              col = 1;
+              chip = Red;
+              card = Reg_Card { suit = Spades; rank = Eight };
+              id = 6;
+            };
+            {
+              row = 1;
+              col = 2;
+              chip = None;
+              card = Reg_Card { suit = Spades; rank = Nine };
+              id = 7;
+            };
+            {
+              row = 1;
+              col = 3;
+              chip = Red;
+              card = Reg_Card { suit = Spades; rank = Ten };
+              id = 8;
+            };
+            {
+              row = 1;
+              col = 4;
+              chip = None;
+              card = Reg_Card { suit = Spades; rank = Jack };
+              id = 9;
+            };
+          ];
+          [
+            {
+              row = 2;
+              col = 0;
+              chip = None;
+              card = Reg_Card { suit = Spades; rank = Queen };
+              id = 10;
+            };
+            {
+              row = 2;
+              col = 1;
+              chip = None;
+              card = Reg_Card { suit = Spades; rank = King };
+              id = 11;
+            };
+            {
+              row = 2;
+              col = 2;
+              chip = Red;
+              card = Reg_Card { suit = Spades; rank = Ace };
+              id = 12;
+            };
+            {
+              row = 2;
+              col = 3;
+              chip = None;
+              card = Reg_Card { suit = Spades; rank = Two };
+              id = 13;
+            };
+            {
+              row = 2;
+              col = 4;
+              chip = None;
+              card = Reg_Card { suit = Spades; rank = Three };
+              id = 14;
+            };
+          ];
+          [
+            {
+              row = 3;
+              col = 0;
+              chip = None;
+              card = Reg_Card { suit = Spades; rank = Four };
+              id = 15;
+            };
+            {
+              row = 3;
+              col = 1;
+              chip = None;
+              card = Reg_Card { suit = Spades; rank = Five };
+              id = 16;
+            };
+            {
+              row = 3;
+              col = 2;
+              chip = Red;
+              card = Reg_Card { suit = Spades; rank = Six };
+              id = 17;
+            };
+            {
+              row = 3;
+              col = 3;
+              chip = None;
+              card = Reg_Card { suit = Spades; rank = Seven };
+              id = 18;
+            };
+            {
+              row = 3;
+              col = 4;
+              chip = None;
+              card = Reg_Card { suit = Spades; rank = Eight };
+              id = 19;
+            };
+          ];
+          [
+            {
+              row = 4;
+              col = 0;
+              chip = None;
+              card = Reg_Card { suit = Spades; rank = Nine };
+              id = 20;
+            };
+            {
+              row = 4;
+              col = 1;
+              chip = None;
+              card = Reg_Card { suit = Spades; rank = Ten };
+              id = 21;
+            };
+            {
+              row = 4;
+              col = 2;
+              chip = Red;
+              card = Reg_Card { suit = Spades; rank = Jack };
+              id = 22;
+            };
+            {
+              row = 4;
+              col = 3;
+              chip = None;
+              card = Reg_Card { suit = Spades; rank = Queen };
+              id = 23;
+            };
+            {
+              row = 4;
+              col = 4;
+              chip = None;
+              card = Reg_Card { suit = Spades; rank = King };
+              id = 24;
+            };
+          ];
+        ]
+      in
+      assert_bool "win" (Board.is_win board) );
+    ( "horizontal_win_with_free_space" >:: fun _ ->
+      let board =
+        [
+          [
+            {
+              row = 0;
+              col = 0;
+              chip = Red;
+              card = Reg_Card { suit = Hearts; rank = Two };
+              id = 0;
+            };
+            {
+              row = 0;
+              col = 1;
+              chip = Red;
+              card = Reg_Card { suit = Hearts; rank = Three };
+              id = 1;
+            };
+            {
+              row = 0;
+              col = 2;
+              chip = Red;
+              card = Reg_Card { suit = Hearts; rank = Four };
+              id = 2;
+            };
+            {
+              row = 0;
+              col = 3;
+              chip = Red;
+              card = Reg_Card { suit = Hearts; rank = Five };
+              id = 3;
+            };
+            { row = 0; col = 4; chip = None; card = Free_space; id = 4 };
+          ];
+        ]
+      in
+      assert_bool "horizontal_win" (Board.is_win board) );
+    ( "vertical_win" >:: fun _ ->
+      let board =
+        [
+          [
+            {
+              row = 0;
+              col = 0;
+              chip = Red;
+              card = Reg_Card { suit = Diamonds; rank = Two };
+              id = 0;
+            };
+            {
+              row = 0;
+              col = 1;
+              chip = None;
+              card = Reg_Card { suit = Diamonds; rank = Three };
+              id = 1;
+            };
+          ];
+          [
+            {
+              row = 1;
+              col = 0;
+              chip = Red;
+              card = Reg_Card { suit = Diamonds; rank = Four };
+              id = 5;
+            };
+            {
+              row = 1;
+              col = 1;
+              chip = None;
+              card = Reg_Card { suit = Diamonds; rank = Five };
+              id = 6;
+            };
+          ];
+          [
+            {
+              row = 2;
+              col = 0;
+              chip = Red;
+              card = Reg_Card { suit = Diamonds; rank = Six };
+              id = 10;
+            };
+            {
+              row = 2;
+              col = 1;
+              chip = Red;
+              card = Reg_Card { suit = Diamonds; rank = Seven };
+              id = 11;
+            };
+          ];
+          [
+            {
+              row = 3;
+              col = 0;
+              chip = Red;
+              card = Reg_Card { suit = Diamonds; rank = Eight };
+              id = 15;
+            };
+            {
+              row = 3;
+              col = 1;
+              chip = None;
+              card = Reg_Card { suit = Diamonds; rank = Nine };
+              id = 16;
+            };
+          ];
+          [
+            {
+              row = 4;
+              col = 0;
+              chip = Red;
+              card = Reg_Card { suit = Diamonds; rank = Ten };
+              id = 20;
+            };
+            {
+              row = 4;
+              col = 1;
+              chip = None;
+              card = Reg_Card { suit = Diamonds; rank = Jack };
+              id = 21;
+            };
+          ];
+        ]
+      in
+      assert_bool "vertical_win" (Board.is_win board) );
+    ( "vertical_win_with_free_space" >:: fun _ ->
+      let board =
+        [
+          [
+            {
+              row = 0;
+              col = 0;
+              chip = Red;
+              card = Reg_Card { suit = Diamonds; rank = Two };
+              id = 0;
+            };
+            { row = 0; col = 1; chip = None; card = Free_space; id = 1 };
+          ];
+          [
+            {
+              row = 1;
+              col = 0;
+              chip = Red;
+              card = Reg_Card { suit = Diamonds; rank = Four };
+              id = 5;
+            };
+            {
+              row = 1;
+              col = 1;
+              chip = Red;
+              card = Reg_Card { suit = Diamonds; rank = Five };
+              id = 6;
+            };
+          ];
+          [
+            {
+              row = 2;
+              col = 0;
+              chip = Red;
+              card = Reg_Card { suit = Diamonds; rank = Six };
+              id = 10;
+            };
+            {
+              row = 2;
+              col = 1;
+              chip = Red;
+              card = Reg_Card { suit = Diamonds; rank = Seven };
+              id = 11;
+            };
+          ];
+        ]
+      in
+      assert_bool "vertical_win" (Board.is_win board) );
+    ( "vertical_win_with_free_space" >:: fun _ ->
+      let board =
+        [
+          [
+            {
+              row = 0;
+              col = 0;
+              chip = Blue;
+              card = Reg_Card { suit = Diamonds; rank = Two };
+              id = 0;
+            };
+            {
+              row = 0;
+              col = 1;
+              chip = Red;
+              card = Reg_Card { suit = Diamonds; rank = Three };
+              id = 1;
+            };
+          ];
+          [
+            {
+              row = 1;
+              col = 0;
+              chip = Blue;
+              card = Reg_Card { suit = Diamonds; rank = Four };
+              id = 5;
+            };
+            {
+              row = 1;
+              col = 1;
+              chip = Red;
+              card = Reg_Card { suit = Diamonds; rank = Five };
+              id = 6;
+            };
+          ];
+          [
+            {
+              row = 2;
+              col = 0;
+              chip = Blue;
+              card = Reg_Card { suit = Diamonds; rank = Six };
+              id = 10;
+            };
+            {
+              row = 2;
+              col = 1;
+              chip = Red;
+              card = Reg_Card { suit = Diamonds; rank = Seven };
+              id = 11;
+            };
+          ];
+          [
+            {
+              row = 3;
+              col = 0;
+              chip = Blue;
+              card = Reg_Card { suit = Diamonds; rank = Eight };
+              id = 15;
+            };
+            {
+              row = 3;
+              col = 1;
+              chip = Blue;
+              card = Reg_Card { suit = Diamonds; rank = Nine };
+              id = 16;
+            };
+          ];
+          [
+            { row = 4; col = 0; chip = Blue; card = Free_space; id = 1 };
+            { row = 4; col = 1; chip = None; card = Free_space; id = 21 };
+          ];
+        ]
+      in
+      assert_bool "vertical_win" (Board.is_win board) );
+  ]
 
 let suite =
   "test suite for Sequence"

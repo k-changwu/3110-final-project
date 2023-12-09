@@ -9,7 +9,7 @@ type result =
   | Draw
 
 (* Starts a new game with two players. *)
-val start : unit -> t
+val start : bool -> t
 
 (* Gets the current player's ID. *)
 val current_player_id : t -> int
