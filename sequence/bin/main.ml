@@ -28,9 +28,16 @@ let instructions () =
     "One eyed Jacks are anti-wild. They can be used to free any claimed spot \
      on the board.\n"
 
+let rec game_loop game =
+  match Sequence.Game.check_game_over game with
+  | Ongoing ->
+      Sequence.Game.play_turn game;
+      game_loop game
+  | _ -> Printf.printf "Game over!\n"
+
 let () =
   print_endline "\nWelcome to Sequence!\n";
   instructions ();
   print_endline "With that out of the way, let's begin the game!";
   let g = Sequence.Game.start () in
-  Sequence.Game.play_turn g
+  game_loop g
