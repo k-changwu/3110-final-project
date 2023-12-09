@@ -242,6 +242,16 @@ let board_tests =
     assert_bool "win" (Board.is_win board)
 );
 
+"horizontal_win_with_free_space" >:: (fun _ ->
+  let board = [
+    [{row=0; col=0; chip=Red; card=Reg_Card {suit=Hearts; rank=Two}; id=0};
+     {row=0; col=1; chip=Red; card=Reg_Card {suit=Hearts; rank=Three}; id=1};
+     {row=0; col=2; chip=Red; card=Reg_Card {suit=Hearts; rank=Four}; id=2};
+     {row=0; col=3; chip=Red; card=Reg_Card {suit=Hearts; rank=Five}; id=3};
+     {row=0; col=4; chip=None; card=Free_space; id=4}]
+  ] in
+  assert_bool "horizontal_win" (Board.is_win board)
+);
 
 "vertical_win" >:: (fun _ ->
   let board = [
@@ -259,9 +269,33 @@ let board_tests =
   assert_bool "vertical_win" (Board.is_win board)
 );
 
+"vertical_win_with_free_space" >:: (fun _ ->
+  let board = [
+    [{row=0; col=0; chip=Red; card=Reg_Card {suit=Diamonds; rank=Two}; id=0};
+     {row=0; col=1; chip=None; card=Free_space; id=1}];
+    [{row=1; col=0; chip=Red; card=Reg_Card {suit=Diamonds; rank=Four}; id=5};
+     {row=1; col=1; chip=Red; card=Reg_Card {suit=Diamonds; rank=Five}; id=6}];
+    [{row=2; col=0; chip=Red; card=Reg_Card {suit=Diamonds; rank=Six}; id=10};
+     {row=2; col=1; chip=Red; card=Reg_Card {suit=Diamonds; rank=Seven}; id=11}]
+  ] in
+  assert_bool "vertical_win" (Board.is_win board)
+);
 
-
-
+"vertical_win_with_free_space" >:: (fun _ ->
+  let board = [
+    [{row=0; col=0; chip=Blue; card=Reg_Card {suit=Diamonds; rank=Two}; id=0};
+     {row=0; col=1; chip=Red; card=Reg_Card {suit=Diamonds; rank=Three}; id=1}];
+    [{row=1; col=0; chip=Blue; card=Reg_Card {suit=Diamonds; rank=Four}; id=5};
+     {row=1; col=1; chip=Red; card=Reg_Card {suit=Diamonds; rank=Five}; id=6}];
+    [{row=2; col=0; chip=Blue; card=Reg_Card {suit=Diamonds; rank=Six}; id=10};
+     {row=2; col=1; chip=Red; card=Reg_Card {suit=Diamonds; rank=Seven}; id=11}];
+    [{row=3; col=0; chip=Blue; card=Reg_Card {suit=Diamonds; rank=Eight}; id=15};
+     {row=3; col=1; chip=Blue; card=Reg_Card {suit=Diamonds; rank=Nine}; id=16}];
+    [{row=4; col=0; chip=Blue; card=Free_space; id=1};
+     {row=4; col=1; chip=None; card=Free_space; id=21}]
+  ] in
+  assert_bool "vertical_win" (Board.is_win board)
+);
 
 ]
 
