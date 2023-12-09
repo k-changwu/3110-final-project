@@ -209,7 +209,7 @@ let diag_win b =
                   then if count = 4 then true else false
                   else false
               | hr2 :: tr2 ->
-                  let col = 10 - List.length t in
+                  let col = List.length hr2 - List.length t in
                   (* end of row *)
                   if col >= List.length hr2 then
                     if count = 5 then true else false

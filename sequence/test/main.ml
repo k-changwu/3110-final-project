@@ -22,11 +22,14 @@ let p2 = Player.create 2 []
 
 let player_tests =
   [
-    ( "create  non empty hand" >:: fun _ ->
+    ( "create non empty hand" >:: fun _ ->
       assert_equal 1 (get_id p1);
       assert_equal
         [ { suit = Clubs; rank = Three }; { suit = Spades; rank = Five } ]
         (get_hand p1) );
+    ( "create duplicate hand" >:: fun _ ->
+        let player = Player.create 3 [ { suit = Clubs; rank = Three }; { suit = Clubs; rank = Three } ] in 
+         assert_equal [ { suit = Clubs; rank = Three }; { suit = Clubs; rank = Three } ] (get_hand player));
     ( "create empty hand" >:: fun _ ->
       assert_equal 2 (get_id p2);
       assert_equal [] (get_hand p2) );
@@ -96,14 +99,33 @@ let player_tests =
       match Player.play_card player card_to_play with
       | None -> ()
       | Some _ -> assert_failure "Expected None for an invalid card" );
+    ( "play_card test invalid card" >:: fun _ ->
+      let initial_hand =
+        [ { suit = Hearts; rank = Two }; { suit = Hearts; rank = Ace} ]
+      in
+      let player = Player.create 1 initial_hand in
+      let card_to_play = { suit = Spades; rank = Six } in
+      match Player.play_card player card_to_play with
+      | None -> ()
+      | Some _ -> assert_failure "Expected None for an invalid card" );
     ( "hand_to_string empty hand" >:: fun _ ->
       let empty_hand = [] in
       assert_equal "[]" (Player.hand_to_string empty_hand) );
     ( "hand_to_string non-empty hand" >:: fun _ ->
       let hand =
+        [ { suit = Diamonds; rank = Nine } ]
+      in
+      assert_equal "[9 D]" (Player.hand_to_string hand) );
+    ( "hand_to_string non-empty hand" >:: fun _ ->
+      let hand =
         [ { suit = Hearts; rank = Two }; { suit = Diamonds; rank = Jack } ]
       in
       assert_equal "[2 H, J D]" (Player.hand_to_string hand) );
+     ( "hand_to_string duplicate hand" >:: fun _ ->
+      let hand =
+        [ { suit = Hearts; rank = Two }; { suit = Hearts; rank = Two } ]
+      in
+      assert_equal "[2 H, 2 H]" (Player.hand_to_string hand) );
     ( "hand_to_string non-empty hand" >:: fun _ ->
       let hand =
         [ { suit = Clubs; rank = King }; { suit = Diamonds; rank = Queen }; { suit = Hearts; rank = Two } ]
@@ -202,6 +224,28 @@ let board_tests =
         }
       in
       assert_equal "\027[39m 2 H5" (Board.square_to_string reg) );
+  ( "square_to_string regular card" >:: fun _ ->
+      let reg =
+        {
+          row = 2;
+          col = 3;
+          chip = Red;
+          card = Reg_Card { suit = Clubs; rank = Four };
+          id = 5;
+        }
+      in
+      assert_equal "\027[31m 4 C5" (Board.square_to_string reg) );
+    ( "square_to_string regular card" >:: fun _ ->
+      let reg =
+        {
+          row = 2;
+          col = 3;
+          chip = Blue;
+          card = Reg_Card { suit = Clubs; rank = Eight };
+          id = 5;
+        }
+      in
+      assert_equal "\027[34m 8 C5" (Board.square_to_string reg) );
     ( "place_chip red chip" >:: fun _ ->
       let board = Board.init in
       let card_to_place = Reg_Card { suit = Hearts; rank = Two } in
@@ -209,6 +253,13 @@ let board_tests =
       place_chip Red card_to_place id_to_place board;
       let chip_in_square = check_space card_to_place id_to_place board in
       assert_equal Red chip_in_square );
+      ( "place_chip red chip" >:: fun _ ->
+        let board = Board.init in
+        let card_to_place = Reg_Card { suit = Diamonds; rank = Ace } in
+        let id_to_place = 1 in
+        place_chip Red card_to_place id_to_place board;
+        let chip_in_square = check_space card_to_place id_to_place board in
+        assert_equal Red chip_in_square );
     ( "place_chip blue chip" >:: fun _ ->
       let board = Board.init in
       let card_to_place = Reg_Card { suit = Spades; rank = King } in
@@ -223,9 +274,38 @@ let board_tests =
       place_chip Free card_to_place id_to_place board;
       let chip_in_square = check_space card_to_place id_to_place board in
       assert_equal Free chip_in_square );
+    ( "place_chip free chip" >:: fun _ ->
+      let board = Board.init in
+      let card_to_place = Reg_Card { suit = Clubs; rank = Ace } in
+      let id_to_place = 1 in
+      place_chip Free card_to_place id_to_place board;
+      let chip_in_square = check_space card_to_place id_to_place board in
+      assert_equal Free chip_in_square );
+    ( "place_chip free chip" >:: fun _ ->
+      let board = Board.init in
+      let card_to_place = Reg_Card { suit = Spades; rank = Ace } in
+      let id_to_place = 1 in
+      place_chip None card_to_place id_to_place board;
+      let chip_in_square = check_space card_to_place id_to_place board in
+      assert_equal None chip_in_square );
+    ( "place_chip free chip" >:: fun _ ->
+      let board = Board.init in
+      let card_to_place = Reg_Card { suit = Hearts; rank = King } in
+      let id_to_place = 1 in
+      place_chip None card_to_place id_to_place board;
+      let chip_in_square = check_space card_to_place id_to_place board in
+      assert_equal None chip_in_square );
     ( "remove_chip " >:: fun _ ->
       let board = Board.init in
       let card_to_place = Reg_Card { suit = Diamonds; rank = Queen } in
+      let id_to_place = 1 in
+      place_chip Free card_to_place id_to_place board;
+      remove_chip card_to_place id_to_place board;
+      let chip_in_square = check_space card_to_place id_to_place board in
+      assert_equal None chip_in_square );
+    ( "remove_chip " >:: fun _ ->
+      let board = Board.init in
+      let card_to_place = Reg_Card { suit = Clubs; rank = Five } in
       let id_to_place = 1 in
       place_chip Free card_to_place id_to_place board;
       remove_chip card_to_place id_to_place board;
@@ -500,7 +580,7 @@ let board_tests_2 =
             {
               row = 3;
               col = 3;
-              chip = None;
+              chip = Red;
               card = Reg_Card { suit = Spades; rank = Seven };
               id = 18;
             };
@@ -544,7 +624,7 @@ let board_tests_2 =
             {
               row = 4;
               col = 4;
-              chip = None;
+              chip = Red;
               card = Reg_Card { suit = Spades; rank = King };
               id = 24;
             };
