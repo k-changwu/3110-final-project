@@ -199,7 +199,7 @@ let all_possible_cards () =
 let rec play_ai_card game current_player =
   let ai_hand = Player.get_hand current_player in
   match random_select ai_hand with
-  | Some card ->
+  | Some card -> (
       (match card.Deck.rank with
       | Jack -> begin
           match card.Deck.suit with
@@ -234,7 +234,9 @@ let rec play_ai_card game current_player =
               in
               begin
                 match random_select opponent_chip_locations with
-                | Some (c, id) -> Board.remove_chip c id game.board
+                | Some (c, id) ->
+                    ignore (Player.play_card current_player card);
+                    Board.remove_chip c id game.board
                 | None -> play_ai_card game current_player
               end
           | _ -> ()
@@ -251,6 +253,7 @@ let rec play_ai_card game current_player =
           else if Board.check_space (Board.Reg_Card card) 1 game.board = None
           then (
             (* Call Board.place_chip with the arguments card & square *)
+            ignore (Player.play_card current_player card);
             Board.place_chip
               (if game.current_player_id = 1 then Board.Red else Board.Blue)
               (Board.Reg_Card card) 1 game.board;
@@ -258,7 +261,11 @@ let rec play_ai_card game current_player =
               (if game.current_player_id = 1 then "Red" else "Blue")
               (Deck.to_string card) 1)
           else play_ai_card game current_player);
-      ignore (Player.play_card current_player card)
+      match Player.play_card current_player card with
+      | Some updated_player ->
+          (* Update the array with the new player state *)
+          Array.set game.players (game.current_player_id - 1) updated_player
+      | None -> Printf.printf "Card not in hand. Please choose another card.\n")
   | None -> ()
 
 let play_turn game =
