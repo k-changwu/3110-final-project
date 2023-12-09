@@ -592,7 +592,7 @@ let board_tests_2 =
         ]
       in
       assert_bool "win" (Board.is_win board) );
-    ( "horizontal_win_with_free_space" >:: fun _ ->
+    ( "horizontal 4-in a row no win" >:: fun _ ->
       let board =
         [
           [
@@ -628,7 +628,7 @@ let board_tests_2 =
           ];
         ]
       in
-      assert_bool "horizontal_win" (Board.is_win board) );
+      assert_bool "horizontal_win" (not (Board.is_win board)) );
     ( "vertical_win" >:: fun _ ->
       let board =
         [
@@ -715,7 +715,7 @@ let board_tests_2 =
         ]
       in
       assert_bool "vertical_win" (Board.is_win board) );
-    ( "vertical_win_with_free_space" >:: fun _ ->
+    ( "no win with_free_space" >:: fun _ ->
       let board =
         [
           [
@@ -762,7 +762,7 @@ let board_tests_2 =
           ];
         ]
       in
-      assert_bool "vertical_win" (Board.is_win board) );
+      assert_bool "no win" (not (Board.is_win board)) );
     ( "vertical_win_with_free_space" >:: fun _ ->
       let board =
         [
@@ -841,6 +841,6 @@ let board_tests_2 =
 
 let suite =
   "test suite for Sequence"
-  >::: List.flatten [ player_tests; deck_tests; board_tests ]
+  >::: List.flatten [ player_tests; deck_tests; board_tests; board_tests_2  ]
 
 let () = run_test_tt_main suite
