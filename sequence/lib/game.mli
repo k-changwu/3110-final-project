@@ -12,7 +12,10 @@ type result =
 val start : unit -> t
 
 (* Gets the current player's ID. *)
-val current_player : t -> int
+val current_player_id : t -> int
+
+(* Gets the current player *)
+val current_player_id : t -> Player.t
 
 (* Handles a player's turn with the given card and board position. Returns an
    updated game state. *)

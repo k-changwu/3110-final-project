@@ -11,7 +11,7 @@ type t = {
 
 type result =
   | Ongoing
-  | Won of int
+  | Won
   | Draw
 
 let start () =
@@ -27,7 +27,8 @@ let start () =
     (* current card to play *)
   }
 
-let current_player game = game.current_player_id
+let current_player_id game = game.current_player_id
+let current_player game = Array.get game.players (game.current_player_id - 1)
 
 let next_player game =
   game.current_player_id <- (if game.current_player_id = 1 then 2 else 1)
@@ -37,9 +38,7 @@ let draw_card game =
   | [] -> None (* deck is empty *)
   | card :: remaining_deck ->
       (* Update the current player's hand *)
-      let current_player =
-        Array.get game.players (game.current_player_id - 1)
-      in
+      let current_player = current_player game in
       let updated_player = Player.add_card current_player card in
       Array.set game.players (game.current_player_id - 1) updated_player;
 
@@ -87,11 +86,12 @@ let rec get_card_square_and_id () =
     Printf.printf "Enter the card ID (1 or 2): ";
     match read_int_opt () with
     | Some id when id = 1 || id = 2 -> Some (card, id)
-    | _ -> Printf.printf "Invalid card ID. Try again.\n"; 
+    | _ ->
+        Printf.printf "Invalid card ID. Try again.\n";
+        get_card_square_and_id ()
+  with Failure _ ->
+    Printf.printf "Invalid card format. Try again.\n";
     get_card_square_and_id ()
-  with
-  | Failure _ -> Printf.printf "Invalid card format. Try again.\n"; 
-  get_card_square_and_id ()
 
 (* Apply special functionality for one-eyed or two-eyed jacks *)
 let apply_jack_effect board player_id card =
@@ -148,9 +148,54 @@ let play_card game card id =
       Printf.printf "You don't have that card. Please choose another.\n";
       None
 
-let play_turn game = 
-  Board.print_board game.board;
-  
+let check_game_over g = if Board.is_win g.board then Won else Ongoing
 
-let check_game_over g = if Board.is_win g.board then Won 0 else Ongoing
+let play_turn game =
+  (* Print the board *)
+  Board.print_board game.board;
+
+  let current_player = Array.get game.players (game.current_player_id - 1) in
+  Printf.printf "Player %d's turn.\n" game.current_player_id;
+  Printf.printf "Your Hand: %s\n"
+    (Player.hand_to_string (Player.get_hand current_player));
+
+  let card = ask_for_card current_player in
+  let square = ask_for_square () in
+
+  (* Check if the card can be played *)
+  if Board.check_space (Board.Reg_Card card) square game.board = None then begin
+    (* Call Board.place_chip with the arguments card & square *)
+    Board.place_chip
+      (if game.current_player_id = 1 then Board.Red else Board.Blue)
+      (Board.Reg_Card card) square game.board;
+    Printf.printf "Placed %s Token on %s%d\n"
+      (if game.current_player_id = 1 then "Red" else "Blue")
+      (Deck.to_string card) square;
+
+    (* Update the player's hand *)
+    (match Player.play_card current_player card with
+    | Some updated_player ->
+        (* Update the array with the new player state *)
+        Array.set game.players (game.current_player_id - 1) updated_player
+    | None ->
+        (* Handle the case where the card is not in the player's hand -
+           shouldn't happen as ask_for_card forces card in hand *)
+        Printf.printf "Card not in hand. Please choose another card.\n");
+    (* Check if the game is over *)
+    if check_game_over game = Won then
+      Printf.printf "Player %d wins!\n" game.current_player_id
+    else begin
+      (* Draw a card for the player *)
+      (match draw_card game with
+      | Some card -> Printf.printf "You drew %s\n" (Deck.to_string card)
+      | None -> Printf.printf "No more cards to draw.\n");
+
+      (* Change players *)
+      game.current_player_id <- (if game.current_player_id = 1 then 2 else 1)
+    end
+  end
+  else
+    Printf.printf
+      "That move is not possible. Please choose another card or square.\n"
+
 let current_card = failwith "unimp"
