@@ -17,7 +17,7 @@ type currTurn =
 (* create takes an integer id and returns a new player with the given ID and an
    empty hand of cards. This function is used to initialize a new player when
    the game starts. *)
-let create i = { id = i; hand = [] }
+let create i cards = { id = i; hand = cards }
 
 (* deal_cards is used to give a list of cards to a player. It takes a player and
    a list of cards, and it returns a new player that has the same ID but with
