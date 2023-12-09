@@ -19,10 +19,6 @@ type currTurn =
    the game starts. *)
 let create i cards = { id = i; hand = cards }
 
-(* deal_cards is used to give a list of cards to a player. It takes a player and
-   a list of cards, and it returns a new player that has the same ID but with
-   the hand replaced by the new list of cards. *)
-let deal_cards player cards = { player with hand = cards }
 
 (* get_hand function retrieves the list of cards (hand) from a player. *)
 let get_hand player = player.hand

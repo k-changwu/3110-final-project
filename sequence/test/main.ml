@@ -11,47 +11,71 @@ open Board
    acc ^ "..." (* stop printing long list *) else loop (n + 1) (acc ^ pp_elt h1
    ^ "; ") t' in loop 0 "" lst in "[" ^ pp_elts lst ^ "]" *)
 
-let p1 = Player.create 1
-let p2 = Player.create 2
+let p1 = Player.create 1  [ { suit = Clubs; rank = Three }; { suit = Spades; rank = Five } ]
+let p2 = Player.create 2 []
 
 let player_tests =
-  [ (* ("create test" >:: fun _ -> assert_equal 1 (get_id p1)); ( "deal_card
-       test empty initial hand" >:: fun _ -> let cards_to_deal = Deck.full_deck
-       () in let player_after = Player.deal_cards p1 cards_to_deal in let
-       new_hand = Player.get_hand player_after in assert_equal cards_to_deal
-       new_hand ); ( "get_hand test" >:: fun _ -> let cards_to_deal = [ { suit =
-       Clubs; rank = Three }; { suit = Spades; rank = Five } ] in let
-       player_after = Player.deal_cards p2 cards_to_deal in let new_hand =
-       Player.get_hand player_after in assert_equal cards_to_deal new_hand ); (
-       "has_card test card exists" >:: fun _ -> let initial_hand = [ { suit =
-       Hearts; rank = Two }; { suit = Diamonds; rank = Jack } ] in let
-       initial_player = Player.create 1 in let player = Player.deal_cards
-       initial_player initial_hand in let target_card = { suit = Diamonds; rank
-       = Jack } in assert_equal true (Player.has_card player target_card) ); (
-       "has_card test card does not exist" >:: fun _ -> let initial_hand = [ {
-       suit = Hearts; rank = Two }; { suit = Diamonds; rank = Jack } ] in let
-       initial_player = Player.create 1 in let player = Player.deal_cards
-       initial_player initial_hand in let target_card = { suit = Spades; rank =
-       Seven } in assert_equal false (Player.has_card player target_card) ); (
-       "play_card test valid card" >:: fun _ -> let initial_hand = [ { suit =
-       Hearts; rank = Two }; { suit = Diamonds; rank = Jack } ] in let
-       initial_player = Player.create 1 in let player = Player.deal_cards
-       initial_player initial_hand in let card_to_play = { suit = Hearts; rank =
-       Two } in match Player.play_card player card_to_play with | Some
-       player_after -> let new_hand = Player.get_hand player_after in
-       assert_equal [ { suit = Diamonds; rank = Jack } ] new_hand | None ->
-       assert_failure "Failed to play the card" ); ( "play_card test invalid
-       card" >:: fun _ -> let initial_hand = [ { suit = Hearts; rank = Two }; {
-       suit = Diamonds; rank = Jack } ] in let initial_player = Player.create 1
-       in let player = Player.deal_cards initial_player initial_hand in let
-       card_to_play = { suit = Clubs; rank = Seven } in match Player.play_card
-       player card_to_play with | None -> (* This is the expected behavior for
-       an invalid card *) () | Some _ -> assert_failure "Expected None for an
-       invalid card" ); ( "hand_to_string empty hand" >:: fun _ -> let
-       empty_hand = [] in assert_equal "[]" (Player.hand_to_string empty_hand));
-       ( "hand_to_string non-empty hand" >:: fun _ -> let hand = [ { suit =
-       Hearts; rank = Two }; { suit = Diamonds; rank = Jack} ] in assert_equal
-       "[2 H, J D]" (Player.hand_to_string hand)); *) ]
+  [
+    ("create  non empty hand" >:: fun _ -> 
+      assert_equal 1 (get_id p1);
+      assert_equal [ { suit = Clubs; rank = Three }; { suit = Spades; rank = Five } ] (get_hand p1));
+    ("create empty hand" >:: fun _ -> 
+      assert_equal 2 (get_id p2);
+      assert_equal [] (get_hand p2) );
+    ( "get_hand test" >:: fun _ ->
+      let cards_to_deal =
+        [ { suit = Clubs; rank = Three }; { suit = Spades; rank = Five } ]
+      in
+      let player = Player.create 3 cards_to_deal in
+      let new_hand = Player.get_hand player in
+      assert_equal cards_to_deal new_hand );
+    ( "has_card test card exists" >:: fun _ ->
+      let initial_hand =
+        [ { suit = Hearts; rank = Two }; { suit = Diamonds; rank = Jack } ]
+      in
+      let player = Player.create 1 initial_hand in
+      let target_card = { suit = Diamonds; rank = Jack } in
+      assert_equal true (Player.has_card player target_card) );
+    ( "has_card test card does not exist" >:: fun _ ->
+      let initial_hand =
+        [ { suit = Hearts; rank = Two }; { suit = Diamonds; rank = Jack } ]
+      in
+      let player = Player.create 1 initial_hand in
+      let target_card = { suit = Spades; rank = Seven } in
+      assert_equal false (Player.has_card player target_card) );
+    ( "play_card test valid card" >:: fun _ ->
+      let initial_hand =
+        [ { suit = Hearts; rank = Two }; { suit = Diamonds; rank = Jack } ]
+      in
+      let player = Player.create 1 initial_hand  in
+      let card_to_play = { suit = Hearts; rank = Two } in
+      match Player.play_card player card_to_play with
+      | Some player_after ->
+          let new_hand = Player.get_hand player_after in
+          assert_equal [ { suit = Diamonds; rank = Jack } ] new_hand
+      | None -> assert_failure "Failed to play the card" );
+    ( "play_card test invalid card" >:: fun _ ->
+      let initial_hand =
+        [ { suit = Hearts; rank = Two }; { suit = Diamonds; rank = Jack } ]
+      in
+      let player = Player.create 1 initial_hand in
+      let card_to_play = { suit = Clubs; rank = Seven } in
+      match Player.play_card player card_to_play with
+      | None ->
+          (* This is the expected behavior for an invalid card *)
+          ()
+      | Some _ -> assert_failure "Expected None for an invalid card" );
+    ( "hand_to_string empty hand" >:: fun _ -> 
+      let empty_hand = [] in 
+      assert_equal "[]" (Player.hand_to_string empty_hand));
+    ( "hand_to_string non-empty hand" >:: fun _ -> 
+      let hand = [ 
+        { suit = Hearts; rank = Two }; 
+        { suit = Diamonds; rank = Jack}
+      ] in 
+      assert_equal "[2 H, J D]" (Player.hand_to_string hand));
+       
+    ]
 
 let deck_tests =
   [
@@ -141,8 +165,37 @@ let board_tests =
     (* hello this is a push *)
   ]
 
+  let board_tests_2 = [
+  "is_win test horizontal win" >:: (fun _ ->
+    let board = [
+      [{row=0; col=0; chip=Red; card=Reg_Card {suit=Hearts; rank=Two}; id=0};
+       {row=0; col=1; chip=Red; card=Reg_Card {suit=Hearts; rank=Three}; id=1};
+       {row=0; col=2; chip=Red; card=Reg_Card {suit=Hearts; rank=Four}; id=2};
+       {row=0; col=3; chip=Red; card=Reg_Card {suit=Hearts; rank=Five}; id=3};
+       {row=0; col=4; chip=Red; card=Reg_Card {suit=Hearts; rank=Six}; id=4}];
+    ] in
+    assert_bool "win" (Board.is_win board)
+  );
+
+  "is_win test vertical win" >:: (fun _ ->
+    let board = [
+      [{row=0; col=0; chip=Red; card=Reg_Card {suit=Spades; rank=Two}; id=0};
+       {row=0; col=1; chip=None; card=Reg_Card {suit=Spades; rank=Three}; id=1}];
+      [{row=1; col=0; chip=Red; card=Reg_Card {suit=Spades; rank=Four}; id=5};
+       {row=1; col=1; chip=None; card=Reg_Card {suit=Spades; rank=Five}; id=6}];
+      [{row=2; col=0; chip=Red; card=Reg_Card {suit=Spades; rank=Six}; id=10};
+       {row=2; col=1; chip=None; card=Reg_Card {suit=Spades; rank=Seven}; id=11}];
+      [{row=3; col=0; chip=Red; card=Reg_Card {suit=Spades; rank=Eight}; id=15};
+       {row=3; col=1; chip=None; card=Reg_Card {suit=Spades; rank=Nine}; id=16}];
+      [{row=4; col=0; chip=Red; card=Reg_Card {suit=Spades; rank=Ten}; id=20};
+       {row=4; col=1; chip=None; card=Reg_Card {suit=Spades; rank=Jack}; id=21}]
+    ] in
+    assert_bool "win" (Board.is_win board)
+  );
+]
+
 let suite =
   "test suite for Sequence"
-  >::: List.flatten [ player_tests; deck_tests; board_tests ]
+  >::: List.flatten [ player_tests; deck_tests; board_tests; board_tests_2 ]
 
 let () = run_test_tt_main suite
