@@ -500,7 +500,7 @@ let board_tests_2 =
             {
               row = 3;
               col = 3;
-              chip = None;
+              chip = Red;
               card = Reg_Card { suit = Spades; rank = Seven };
               id = 18;
             };
@@ -544,7 +544,7 @@ let board_tests_2 =
             {
               row = 4;
               col = 4;
-              chip = None;
+              chip = Red;
               card = Reg_Card { suit = Spades; rank = King };
               id = 24;
             };
