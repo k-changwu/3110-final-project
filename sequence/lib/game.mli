@@ -19,7 +19,7 @@ val current_player: t -> Player.t
 
 (* Handles a player's turn with the given card and board position. Returns an
    updated game state. *)
-val play_turn : t -> int -> int -> t
+val play_turn : t -> unit
 
 (* Checks the game state for a win or draw. *)
 val check_game_over : t -> result
