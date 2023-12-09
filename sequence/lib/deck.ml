@@ -94,17 +94,25 @@ let rank_of_string s =
   | "9" -> Nine
   | "10" -> Ten
   | "J" -> Jack
+  | "j" -> Jack
   | "Q" -> Queen
+  | "q" -> Queen
   | "K" -> King
+  | "k" -> King
   | "A" -> Ace
+  | "a" -> Ace
   | _ -> failwith "Invalid rank"
 
 let suit_of_char c =
   match c with
   | 'H' -> Hearts
+  | 'h' -> Hearts
   | 'D' -> Diamonds
+  | 'd' -> Diamonds
   | 'C' -> Clubs
+  | 'c' -> Clubs
   | 'S' -> Spades
+  | 's' -> Spades
   | _ -> failwith "Invalid suit"
 
 let card_of_string str =
