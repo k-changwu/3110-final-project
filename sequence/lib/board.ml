@@ -148,35 +148,59 @@ let check_space (c : card) (id : int) (b : t) : chip =
   in
   find_chip (List.flatten b)
 
-(*return a list of squares representing the specified column.*)
-let extract_col (b : t) col_index =
-  List.map (fun row -> List.nth row col_index) b
+(* return a list of squares representing the specified column. let extract_col
+   (b : t) col_index = List.map (fun row -> List.nth row col_index) b
 
-(*extracts the left-to-right diagonal from the board [b]*)
-let extract_diag1 (b : t) = List.mapi (fun i row -> List.nth row i) b
+   (*extracts the left-to-right diagonal from the board [b]*) let extract_diag1
+   (b : t) = List.mapi (fun i row -> List.nth row i) b
 
-(*extracts the right-to-left diagonal from the board [b]*)
-let extract_diag2 (b : t) =
-  List.mapi (fun i row -> List.nth row (List.length row - 1 - i)) b
+   (*extracts the right-to-left diagonal from the board [b]*) let extract_diag2
+   (b : t) = List.mapi (fun i row -> List.nth row (List.length row - 1 - i))
+   b *)
 
 (*checks if there is a winning sequence in a line*)
-let check_line_for_win line =
-  let rec aux count = function
-    | [] -> count >= 4
-    | { chip = None; _ } :: t -> aux 0 t
-    | h :: ({ chip = ch; _ } :: _ as t) when h.chip = ch -> aux (count + 1) t
-    | _ :: t -> aux 1 t
+(* let check_line_for_win line = let rec aux count = function | [] -> count >= 5
+   | { chip = None; _ } :: t -> aux 0 t | h :: ({ chip = ch; _ } :: _ as t) when
+   h.chip = ch -> aux (count + 1) t | _ :: t -> aux 1 t in aux 0 line *)
+
+let row_win b =
+  let rec win_in_row chip count r =
+    match r with
+    | [] -> if count = 5 then true else false
+    | square :: t ->
+        if square.chip = None then win_in_row None 0 t
+        else if chip = Free || chip = square.chip then
+          if count = 4 then true else win_in_row square.chip (count + 1) t
+        else win_in_row square.chip 1 t
   in
-  aux 0 line
+  List.fold_left ( || ) false (List.map (win_in_row None 0) b)
+
+let col_win b =
+  let transpose_square_list lst =
+    List.map
+      (fun i -> List.map (fun row -> List.nth row i) lst)
+      (List.init (List.length (List.hd lst)) (fun x -> x))
+  in
+  row_win (transpose_square_list b)
+
+let diag_win b =
+  let check_diag chip count board =
+    match board with
+    | [] -> if count = 5 then true else false
+    | [] :: t -> if count = 5 then true else false
+    | r :: r1 -> (
+        match r with
+        | [] -> if count = 5 then true else false
+        | h :: t -> false)
+  in
+  check_diag None 0 b
 
 (* returns true if there is a win on the board*)
 let is_win (b : t) : bool =
-  let row_win = List.exists check_line_for_win b in
-  let col_win =
-    List.exists
-      (fun i -> check_line_for_win (extract_col b i))
-      (List.init (List.length (List.hd b)) (fun x -> x))
-  in
-  let diag1_win = check_line_for_win (extract_diag1 b) in
-  let diag2_win = check_line_for_win (extract_diag2 b) in
-  row_win || col_win || diag1_win || diag2_win
+  if row_win b then true else if col_win b then true else false
+(* let row_win = List.exists check_line_for_win b in if row_win then true else
+   let col_win = List.exists (fun i -> check_line_for_win (extract_col b i))
+   (List.init (List.length (List.hd b)) (fun x -> x)) in if col_win then true
+   else let diag1_win = check_line_for_win (extract_diag1 b) in if diag1_win
+   then true else let diag2_win = check_line_for_win (extract_diag2 b) in
+   diag2_win *)
