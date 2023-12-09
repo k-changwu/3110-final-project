@@ -54,6 +54,7 @@ let () =
   print_endline "\nWelcome to Sequence!\n";
   instructions ();
   print_endline "With that out of the way, let's begin the game!";
+  Random.self_init ();
   let vs_ai = ask_game_mode () in
   let g = Sequence.Game.start vs_ai in
   game_loop g
