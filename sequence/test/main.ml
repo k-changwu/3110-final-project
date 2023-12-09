@@ -192,6 +192,22 @@ let board_tests =
     ] in
     assert_bool "win" (Board.is_win board)
   );
+
+  "diagonal_win_left_to_right" >:: (fun _ ->
+    let board = [
+      [{row=0; col=0; chip=Red; card=Reg_Card {suit=Spades; rank=Two}; id=0};
+       {row=0; col=1; chip=None; card=Reg_Card {suit=Spades; rank=Three}; id=1};
+       {row=0; col=2; chip=None; card=Reg_Card {suit=Spades; rank=Four}; id=2}];
+      [{row=1; col=0; chip=None; card=Reg_Card {suit=Spades; rank=Five}; id=3};
+       {row=1; col=1; chip=Red; card=Reg_Card {suit=Spades; rank=Six}; id=4};
+       {row=1; col=2; chip=None; card=Reg_Card {suit=Spades; rank=Seven}; id=5}];
+      [{row=2; col=0; chip=None; card=Reg_Card {suit=Spades; rank=Eight}; id=6};
+       {row=2; col=1; chip=None; card=Reg_Card {suit=Spades; rank=Nine}; id=7};
+       {row=2; col=2; chip=Red; card=Reg_Card {suit=Spades; rank=Ten}; id=8}]
+    ] in
+    assert_bool "win" (Board.is_win board)
+  );
+
 ]
 
 let suite =
