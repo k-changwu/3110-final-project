@@ -139,6 +139,9 @@ let deck_tests =
     ( "full_deck tests" >:: fun _ ->
       let deck = Deck.full_deck () in
       let expected_size = 52 * 2 in
+      assert_equal expected_size (List.length deck));
+     ( "full_deck tests" >:: fun _ ->
+      let deck = Deck.full_deck () in
       let count_jacks =
         List.filter
           (fun card ->
@@ -146,7 +149,6 @@ let deck_tests =
           deck
         |> List.length
       in
-      assert_equal expected_size (List.length deck);
       assert_equal 8 count_jacks );
     ( "shuffle test" >:: fun _ ->
       let sorted_deck = Deck.full_deck () in
@@ -1089,6 +1091,6 @@ let game_test =
 
 let suite =
   "test suite for Sequence"
-  >::: List.flatten [ player_tests; deck_tests; board_tests; ]
+  >::: List.flatten [ player_tests; deck_tests; board_tests; board_tests_2 ]
 
 let () = run_test_tt_main suite
