@@ -20,6 +20,3 @@ val play_turn : t -> unit
 
 (* Checks the game state for a win or draw. *)
 val check_game_over : t -> result
-
-(* Returns the card that the current player can play. *)
-val current_card : t -> Deck.t
